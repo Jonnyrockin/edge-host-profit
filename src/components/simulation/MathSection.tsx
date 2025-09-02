@@ -34,7 +34,10 @@ export function MathSection({ state, calculations }: MathSectionProps) {
           edge × scenPrice × rural × green = <span className="text-number-blue">{edgeTierMultiplier(state.devices).toFixed(2)}</span> × <span className="text-number-blue">{scenario.price.toFixed(2)}</span> × <span className="text-number-blue">{(1 + state.rural).toFixed(2)}</span> × <span className="text-number-blue">{(1 + state.greenUplift / 100).toFixed(2)}</span> = <span className="text-number-blue">{mult}</span>
         </div>
         <div className="ml-4">
-          Price per call = <span className="text-number-blue">${state.pricePerCallBase.toFixed(4)}</span> × factor = <span className="text-number-blue">${calculations.pricePerCall.toFixed(4)}</span>
+          Base price per call = <span className="text-number-blue">${(state.baseInferencePrice ? state.baseInferencePrice / 1000000 : state.pricePerCallBase).toFixed(6)}</span> {state.baseInferencePrice ? '(from inference provider)' : '(fallback)'}
+        </div>
+        <div className="ml-4">
+          Final price per call = base × factor = <span className="text-number-blue">${calculations.pricePerCall.toFixed(6)}</span>
         </div>
         
         <div className="mt-4">Monthly Calls</div>
