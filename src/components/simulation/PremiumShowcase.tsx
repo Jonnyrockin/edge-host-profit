@@ -13,7 +13,7 @@ interface PremiumShowcaseProps {
 
 export function PremiumShowcase({ state, onStateChange }: PremiumShowcaseProps) {
   const selectedProvider = getCloudProviderById(state.baselineProvider || 'market-average');
-  const baselinePrice = selectedProvider?.pricePerCall || 0.0038;
+  const baselinePrice = selectedProvider?.pricePerCall || 0.00076;
   const multiplier = state.premiumMultiplier || 8;
   const edgePrice = baselinePrice * multiplier;
 
@@ -107,7 +107,7 @@ export function PremiumShowcase({ state, onStateChange }: PremiumShowcaseProps) 
               max="0.01"
               step="0.0001"
               value={baselinePrice}
-              onChange={(e) => handleBaselineChange(parseFloat(e.target.value) || 0.0038)}
+              onChange={(e) => handleBaselineChange(parseFloat(e.target.value) || 0.00076)}
               className="w-full text-center font-mono text-sm h-8"
               placeholder="Custom price"
             />

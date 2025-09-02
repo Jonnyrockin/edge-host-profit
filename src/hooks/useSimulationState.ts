@@ -12,7 +12,7 @@ const defaultState: SimulationState = {
   util: 0.50,
   callsPerJob: 2,
   secondsInMonth: 30 * 24 * 60 * 60,
-  pricePerCallBase: 0.0304,
+  pricePerCallBase: 0.00608,
   devices: [{ id: 'vz-studio', vendor: 'Vizrt', label: 'Vizrt Node — Studio', ips: 85, latencyTier: '50–100ms', qty: 3 }],
   costs: { energy: 1600, rent: 900, staff: 700, misc: 200, insurance: 150, maintenance: 120, licenses: 250, fibre: 180 },
   connectivityProvider: 'Bell Business Fibre 1G',
@@ -25,7 +25,7 @@ const defaultState: SimulationState = {
   inferenceProvider: 'openai',
   inferenceModel: 'gpt-4o-mini',
   baseInferencePrice: 0.375,
-  baselineCloudPrice: 0.0038,
+  baselineCloudPrice: 0.00076,
   premiumMultiplier: 8,
   baselineProvider: 'market-average',
 };
