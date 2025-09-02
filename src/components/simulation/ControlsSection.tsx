@@ -33,7 +33,7 @@ export function ControlsSection({ state, onStateChange, onResetToPreset }: Contr
       <div className="text-lg font-semibold text-foreground">Deployment Scenario</div>
       <div className="text-help text-sm mb-3">Tune assumptions (persisted in localStorage).</div>
       
-      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-4 items-end">
+      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4 items-end">
         <div>
           <div className="text-help text-sm mb-2">Scenario</div>
           <Select value={state.scenario} onValueChange={(value) => {
@@ -106,16 +106,6 @@ export function ControlsSection({ state, onStateChange, onResetToPreset }: Contr
             onChange={(e) => onStateChange({ pricePerCallBase: Math.max(0, parseFloat(e.target.value) || 0) })}
             className="w-28 font-mono bg-input border-input-border"
           />
-        </div>
-        
-        <div>
-          <Button 
-            variant="outline" 
-            onClick={onResetToPreset}
-            className="border-input-border hover:border-glass-border"
-          >
-            Reset to preset
-          </Button>
         </div>
       </div>
       
