@@ -49,9 +49,22 @@ export function PremiumShowcase({ state, onStateChange }: PremiumShowcaseProps) 
 
   return (
     <div className="bg-gradient-to-br from-primary/5 to-secondary/5 border border-primary/20 rounded-2xl p-6 mb-6">
-      <div className="flex items-center gap-2 mb-4">
-        <TrendingUp className="w-5 h-5 text-primary" />
-        <h2 className="text-xl font-bold text-foreground">Edge AI Premium Positioning</h2>
+      <div className="flex items-center justify-between mb-4">
+        <div className="flex items-center gap-2">
+          <TrendingUp className="w-5 h-5 text-primary" />
+          <h2 className="text-xl font-bold text-foreground">Edge AI Premium Positioning</h2>
+        </div>
+        
+        {/* Provider Chip */}
+        {selectedProvider && (
+          <div className="bg-muted/30 border border-border/50 rounded-full px-3 py-1.5 flex items-center gap-2">
+            <div className="text-xs font-medium text-foreground">{selectedProvider.name}</div>
+            <div className="w-1 h-1 bg-muted-foreground rounded-full"></div>
+            <div className="text-xs text-muted-foreground">{selectedProvider.description}</div>
+            <div className="w-1 h-1 bg-muted-foreground rounded-full"></div>
+            <div className="text-xs text-muted-foreground">{selectedProvider.lastUpdated}</div>
+          </div>
+        )}
       </div>
       
       <div className="text-sm text-muted-foreground mb-6">
@@ -153,18 +166,6 @@ export function PremiumShowcase({ state, onStateChange }: PremiumShowcaseProps) 
           </div>
         </div>
       </div>
-
-      {/* Provider Details */}
-      {selectedProvider && (
-        <div className="mt-4 p-3 bg-muted/30 rounded-lg text-center">
-          <div className="text-sm font-medium text-foreground mb-1">{selectedProvider.name}</div>
-          <div className="text-xs text-muted-foreground mb-1">{selectedProvider.description}</div>
-          <div className="text-xs text-muted-foreground">
-            Last updated: {selectedProvider.lastUpdated}
-            {selectedProvider.id === 'market-average' && ' • Averaged across 5 major providers'}
-          </div>
-        </div>
-      )}
 
       {/* Value Justification */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6 pt-4 border-t border-border/50">
