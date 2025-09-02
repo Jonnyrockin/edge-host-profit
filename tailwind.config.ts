@@ -63,6 +63,8 @@ export default {
 				kpi: 'hsl(var(--kpi-bg))',
 				'kpi-foreground': 'hsl(var(--kpi-foreground))',
 				'input-border': 'hsl(var(--input-border))',
+				'slider-blue': 'hsl(var(--slider-blue))',
+				'number-blue': 'hsl(var(--number-blue))',
 				success: {
 					DEFAULT: 'hsl(var(--success))',
 					foreground: 'hsl(var(--success-foreground))'

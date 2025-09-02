@@ -11,23 +11,6 @@ export function MathSection({ state, calculations }: MathSectionProps) {
   const scenario = SCENARIOS[state.scenario as keyof typeof SCENARIOS] || SCENARIOS.Median;
   const mult = (edgeTierMultiplier(state.devices) * scenario.price * (1 + state.rural) * (1 + state.greenUplift / 100)).toFixed(2);
 
-  const mathText = [
-    `Pricing Baselines`,
-    `  city(${state.city}) × PRICE_FACTOR = 1.00`,
-    `  edge × scenPrice × rural × green = ${edgeTierMultiplier(state.devices).toFixed(2)} × ${scenario.price.toFixed(2)} × ${(1 + state.rural).toFixed(2)} × ${(1 + state.greenUplift / 100).toFixed(2)} = ${mult}`,
-    `  Price per call = $${state.pricePerCallBase.toFixed(4)} × factor = $${calculations.pricePerCall.toFixed(4)}`,
-    ``,
-    `Monthly Calls`,
-    `  IPS(${calculations.inventoryIPS}) × Calls/job(${state.callsPerJob}) × Util(${(state.util * scenario.util).toFixed(2)}) × Seconds(${state.secondsInMonth}) = ${calculations.monthlyCalls.toLocaleString()}`,
-    ``,
-    `Gross Revenue (Monthly)`,
-    `  Gross = Calls × Price = ${calculations.monthlyCalls.toLocaleString()} × $${calculations.pricePerCall.toFixed(4)} = $${Math.round(calculations.gross).toLocaleString()}`,
-    ``,
-    `Platform Fee & Cash Net (Monthly)`,
-    `  PlatformFee = Gross × 25% = $${Math.round(calculations.platformFee).toLocaleString()}`,
-    `  CashNet = Gross − PlatformFee − OPEX = $${Math.round(calculations.cashNet).toLocaleString()}`
-  ].join('\n');
-
   const tests = [
     ['scenario defined', !!state.scenario],
     ['pricePerCall positive', calculations.pricePerCall > 0],
@@ -42,16 +25,43 @@ export function MathSection({ state, calculations }: MathSectionProps) {
       <div className="text-help text-sm">
         Baselines → multipliers → traffic → gross → fees → OPEX → Cash Net.
       </div>
-      <pre className="font-mono text-sm whitespace-pre-wrap mt-2 text-foreground">
-        {mathText}
-      </pre>
+      <div className="font-mono text-sm mt-2 text-foreground space-y-2">
+        <div>Pricing Baselines</div>
+        <div className="ml-4">
+          city({state.city}) × PRICE_FACTOR = <span className="text-number-blue">1.00</span>
+        </div>
+        <div className="ml-4">
+          edge × scenPrice × rural × green = <span className="text-number-blue">{edgeTierMultiplier(state.devices).toFixed(2)}</span> × <span className="text-number-blue">{scenario.price.toFixed(2)}</span> × <span className="text-number-blue">{(1 + state.rural).toFixed(2)}</span> × <span className="text-number-blue">{(1 + state.greenUplift / 100).toFixed(2)}</span> = <span className="text-number-blue">{mult}</span>
+        </div>
+        <div className="ml-4">
+          Price per call = <span className="text-number-blue">${state.pricePerCallBase.toFixed(4)}</span> × factor = <span className="text-number-blue">${calculations.pricePerCall.toFixed(4)}</span>
+        </div>
+        
+        <div className="mt-4">Monthly Calls</div>
+        <div className="ml-4">
+          IPS(<span className="text-number-blue">{calculations.inventoryIPS}</span>) × Calls/job(<span className="text-number-blue">{state.callsPerJob}</span>) × Util(<span className="text-number-blue">{(state.util * scenario.util).toFixed(2)}</span>) × Seconds(<span className="text-number-blue">{state.secondsInMonth}</span>) = <span className="text-number-blue">{calculations.monthlyCalls.toLocaleString()}</span>
+        </div>
+        
+        <div className="mt-4">Gross Revenue (Monthly)</div>
+        <div className="ml-4">
+          Gross = Calls × Price = <span className="text-number-blue">{calculations.monthlyCalls.toLocaleString()}</span> × <span className="text-number-blue">${calculations.pricePerCall.toFixed(4)}</span> = <span className="text-number-blue">${Math.round(calculations.gross).toLocaleString()}</span>
+        </div>
+        
+        <div className="mt-4">Platform Fee & Cash Net (Monthly)</div>
+        <div className="ml-4">
+          PlatformFee = Gross × 25% = <span className="text-number-blue">${Math.round(calculations.platformFee).toLocaleString()}</span>
+        </div>
+        <div className="ml-4">
+          CashNet = Gross − PlatformFee − OPEX = <span className="text-number-blue">${Math.round(calculations.cashNet).toLocaleString()}</span>
+        </div>
+      </div>
 
       <div className="mt-4">
         <div className="text-lg font-semibold text-foreground">SEL Tests</div>
         <ul className="mt-2 space-y-1 text-sm">
           {tests.map(([name, ok], index) => (
             <li key={index} className="flex items-center gap-2">
-              <span className={ok ? 'text-success' : 'text-destructive'}>
+              <span className={ok ? 'text-muted-foreground' : 'text-muted-foreground'}>
                 {ok ? '✅' : '❌'}
               </span>
               <span className="text-foreground">{name}</span>
