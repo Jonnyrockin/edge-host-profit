@@ -41,6 +41,10 @@
     --input: 0 0% 8%;
     --input-border: 0 0% 20%;
     --ring: 0 0% 30%;
+    
+    /* Popover & Dropdown */
+    --popover: 0 0% 10%;
+    --popover-foreground: 0 0% 90%;
 
     /* Special Elements - Clean grayscale */
     --chip: 0 0% 15%;
