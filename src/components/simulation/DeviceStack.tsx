@@ -43,7 +43,7 @@ export function DeviceStack({ devices, onAddDevice, onUpdateDevice, onRemoveDevi
               <th className="text-left py-2">Vendor</th>
               <th className="text-right py-2">Latency</th>
               <th className="text-right py-2">IPS / row</th>
-              <th className="text-right py-2">Qty</th>
+              <th className="text-center py-2">Qty</th>
               <th className="text-right py-2">Actions</th>
             </tr>
           </thead>
@@ -61,16 +61,16 @@ export function DeviceStack({ devices, onAddDevice, onUpdateDevice, onRemoveDevi
                   <td className="py-2 text-foreground">{device.vendor}</td>
                   <td className="py-2 text-right text-foreground">{device.latencyTier}</td>
                   <td className="py-2 text-right text-foreground">{device.ips}</td>
-                   <td className="py-2 text-right">
-                     <Input
-                       type="number"
-                       min="0"
-                       step="1"
-                       value={device.qty}
-                       onChange={(e) => onUpdateDevice(device.id, { qty: Math.max(0, parseInt(e.target.value) || 0) })}
-                       className="w-16 font-mono bg-input border-input-border text-right"
-                     />
-                   </td>
+                  <td className="py-2 text-center">
+                    <Input
+                      type="number"
+                      min="0"
+                      step="1"
+                      value={device.qty}
+                      onChange={(e) => onUpdateDevice(device.id, { qty: Math.max(0, parseInt(e.target.value) || 0) })}
+                      className="w-16 font-mono bg-input border-input-border text-center mx-auto"
+                    />
+                  </td>
                   <td className="py-2 text-right">
                     <Button
                       variant="outline"
