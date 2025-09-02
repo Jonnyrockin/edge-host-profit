@@ -38,6 +38,7 @@ const Index = () => {
         {/* Deployment Scenario */}
         <ControlsSection
           state={state}
+          calculations={calculations}
           onStateChange={updateState}
           onResetToPreset={resetToPreset}
         />

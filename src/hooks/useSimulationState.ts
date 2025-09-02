@@ -14,7 +14,7 @@ const defaultState: SimulationState = {
   secondsInMonth: 30 * 24 * 60 * 60,
   pricePerCallBase: 0.00608,
   devices: [{ id: 'vz-studio', vendor: 'Vizrt', label: 'Vizrt Node — Studio', ips: 85, latencyTier: '50–100ms', qty: 3 }],
-  costs: { energy: 1600, rent: 900, staff: 700, misc: 200, insurance: 150, maintenance: 120, licenses: 250, fibre: 180 },
+  costs: { energy: 1600, rent: 900, staff: 700, misc: 200, insurance: 150, maintenance: 120, licenses: 250, fibre: 180, legal: 300 },
   connectivityProvider: 'Bell Business Fibre 1G',
   linkRate: true,
   energyProvider: 'Toronto Hydro (regulated)',

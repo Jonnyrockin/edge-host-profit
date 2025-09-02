@@ -99,7 +99,7 @@ export const PRESETS: Preset[] = [
       util: 0.45,
       callsPerJob: 2,
       rural: 0,
-      costs: { energy: 1600, rent: 900, staff: 700, misc: 200, insurance: 150, maintenance: 120, licenses: 250, fibre: 180 }
+      costs: { energy: 1600, rent: 900, staff: 700, misc: 200, insurance: 150, maintenance: 120, licenses: 250, fibre: 180, legal: 300 }
     }
   },
   {
@@ -111,7 +111,7 @@ export const PRESETS: Preset[] = [
       util: 0.50,
       callsPerJob: 2,
       rural: 0.1,
-      costs: { energy: 1800, rent: 1000, staff: 800, misc: 200, insurance: 150, maintenance: 120, licenses: 250, fibre: 200 }
+      costs: { energy: 1800, rent: 1000, staff: 800, misc: 200, insurance: 150, maintenance: 120, licenses: 250, fibre: 200, legal: 350 }
     }
   },
   {
@@ -126,7 +126,7 @@ export const PRESETS: Preset[] = [
       util: 0.50,
       callsPerJob: 2,
       rural: 0.05,
-      costs: { energy: 1700, rent: 900, staff: 700, misc: 200, insurance: 150, maintenance: 120, licenses: 250, fibre: 190 }
+      costs: { energy: 1700, rent: 900, staff: 700, misc: 200, insurance: 150, maintenance: 120, licenses: 250, fibre: 190, legal: 325 }
     }
   }
 ];

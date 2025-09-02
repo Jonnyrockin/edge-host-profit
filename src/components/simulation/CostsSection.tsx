@@ -27,7 +27,7 @@ export function CostsSection({ state, calculations, onStateChange }: CostsSectio
     <div className="bg-card border border-border rounded-xl p-4 lg:col-span-2 relative">
       <div className="flex items-center justify-between">
         <div>
-          <div className="text-lg font-semibold text-foreground">Costs</div>
+          <div className="text-lg font-semibold text-foreground">Costs/Expenditures</div>
           <div className="text-help text-sm mb-3">Expanded monthly operating costs. Common aware.</div>
         </div>
         <div className="absolute top-4 right-4 text-right">
@@ -38,97 +38,102 @@ export function CostsSection({ state, calculations, onStateChange }: CostsSectio
         </div>
       </div>
 
-      {/* Connectivity */}
-      <div className="mt-2">
-        <div className="font-semibold text-foreground">Connectivity</div>
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-3 items-end mt-2">
+      {/* Provider Sub-Panel */}
+      <div className="bg-muted/20 border border-border/50 rounded-lg p-4 mt-2">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          {/* Connectivity */}
           <div>
-            <div className="text-help text-sm mb-2">Business Fibre Provider</div>
-            <Select 
-              value={state.connectivityProvider} 
-              onValueChange={(value) => onStateChange({ connectivityProvider: value })}
-            >
-              <SelectTrigger className="bg-input border-input-border">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                {fibreProviders.map(provider => (
-                  <SelectItem key={provider.name} value={provider.name}>
-                    {provider.name} — ${provider.rate}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+            <div className="font-semibold text-foreground mb-3">Connectivity</div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 items-end">
+              <div>
+                <div className="text-help text-sm mb-2">Business Fibre Provider</div>
+                <Select 
+                  value={state.connectivityProvider} 
+                  onValueChange={(value) => onStateChange({ connectivityProvider: value })}
+                >
+                  <SelectTrigger className="bg-input border-input-border">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {fibreProviders.map(provider => (
+                      <SelectItem key={provider.name} value={provider.name}>
+                        {provider.name} — ${provider.rate}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+              <div>
+                <div className="text-help text-sm mb-2">Fibre (per/mo)</div>
+                <Input
+                  type="number"
+                  min="0"
+                  step="10"
+                  value={state.costs.fibre}
+                  onChange={(e) => handleCostChange('fibre', parseFloat(e.target.value) || 0)}
+                  className="w-30 font-mono bg-input border-input-border"
+                />
+              </div>
+            </div>
+            <div className="flex items-center gap-2 mt-3">
+              <Checkbox
+                id="link-rate"
+                checked={state.linkRate}
+                onCheckedChange={(checked) => onStateChange({ linkRate: !!checked })}
+              />
+              <label htmlFor="link-rate" className="text-help text-sm">
+                Link cost to provider rate
+              </label>
+            </div>
           </div>
-          <div>
-            <div className="text-help text-sm mb-2">Fibre (per/mo)</div>
-            <Input
-              type="number"
-              min="0"
-              step="10"
-              value={state.costs.fibre}
-              onChange={(e) => handleCostChange('fibre', parseFloat(e.target.value) || 0)}
-              className="w-30 font-mono bg-input border-input-border"
-            />
-          </div>
-          <div className="col-span-2 flex items-center gap-2 mt-6">
-            <Checkbox
-              id="link-rate"
-              checked={state.linkRate}
-              onCheckedChange={(checked) => onStateChange({ linkRate: !!checked })}
-            />
-            <label htmlFor="link-rate" className="text-help text-sm">
-              Link cost to provider rate
-            </label>
-          </div>
-        </div>
-      </div>
 
-      {/* Energy */}
-      <div className="mt-6">
-        <div className="font-semibold text-foreground">Energy</div>
-        <div className="grid grid-cols-2 md:grid-cols-6 gap-x-6 gap-y-3 items-end mt-2">
-          <div className="md:col-span-2">
-            <div className="text-help text-sm mb-2">Energy Provider</div>
-            <Select 
-              value={state.energyProvider} 
-              onValueChange={(value) => onStateChange({ energyProvider: value })}
-            >
-              <SelectTrigger className="bg-input border-input-border">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                {energyProviders.map(provider => (
-                  <SelectItem key={provider.name} value={provider.name}>
-                    {provider.name}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
+          {/* Energy */}
           <div>
-            <div className="text-help text-sm mb-2">Green uplift (%)</div>
-            <Input
-              type="number"
-              min="0"
-              step="1"
-              value={state.greenUplift}
-              onChange={(e) => onStateChange({ greenUplift: parseFloat(e.target.value) || 0 })}
-              className="w-24 font-mono bg-input border-input-border"
-              title="Uplift = usage % from renewables (not a price markup)"
-            />
-          </div>
-          <div>
-            <div className="text-help text-sm mb-2">Green premium (%)</div>
-            <Input
-              type="number"
-              min="0"
-              step="1"
-              value={state.greenPremium}
-              onChange={(e) => onStateChange({ greenPremium: parseFloat(e.target.value) || 0 })}
-              className="w-24 font-mono bg-input border-input-border"
-              title="Premium = price markup due to green sourcing"
-            />
+            <div className="font-semibold text-foreground mb-3">Energy</div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3 items-end">
+              <div>
+                <div className="text-help text-sm mb-2">Energy Provider</div>
+                <Select 
+                  value={state.energyProvider} 
+                  onValueChange={(value) => onStateChange({ energyProvider: value })}
+                >
+                  <SelectTrigger className="bg-input border-input-border">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {energyProviders.map(provider => (
+                      <SelectItem key={provider.name} value={provider.name}>
+                        {provider.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+              <div>
+                <div className="text-help text-sm mb-2">Green uplift (%)</div>
+                <Input
+                  type="number"
+                  min="0"
+                  step="1"
+                  value={state.greenUplift}
+                  onChange={(e) => onStateChange({ greenUplift: parseFloat(e.target.value) || 0 })}
+                  className="w-24 font-mono bg-input border-input-border"
+                  title="Uplift = usage % from renewables (not a price markup)"
+                />
+              </div>
+              <div>
+                <div className="text-help text-sm mb-2">Green premium (%)</div>
+                <Input
+                  type="number"
+                  min="0"
+                  step="1"
+                  value={state.greenPremium}
+                  onChange={(e) => onStateChange({ greenPremium: parseFloat(e.target.value) || 0 })}
+                  className="w-24 font-mono bg-input border-input-border"
+                  title="Premium = price markup due to green sourcing"
+                />
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -209,6 +214,17 @@ export function CostsSection({ state, calculations, onStateChange }: CostsSectio
             step="25"
             value={state.costs.licenses}
             onChange={(e) => handleCostChange('licenses', parseFloat(e.target.value) || 0)}
+            className="w-30 font-mono bg-input border-input-border"
+          />
+        </div>
+        <div>
+          <div className="text-help text-sm mb-2">Legal Fees (per/mo)</div>
+          <Input
+            type="number"
+            min="0"
+            step="25"
+            value={state.costs.legal}
+            onChange={(e) => handleCostChange('legal', parseFloat(e.target.value) || 0)}
             className="w-30 font-mono bg-input border-input-border"
           />
         </div>

@@ -5,17 +5,23 @@ import { Button } from '../ui/button';
 import { Checkbox } from '../ui/checkbox';
 import { Label } from '../ui/label';
 import { Upload } from 'lucide-react';
-import { SimulationState } from '../../types/simulation';
+import { SimulationState, CalculationResult } from '../../types/simulation';
 import { CITY_OPTIONS, SCENARIOS } from '../../data/constants';
 import { ruralFactorFromKm } from '../../utils/calculations';
 
 interface ControlsSectionProps {
   state: SimulationState;
+  calculations: CalculationResult;
   onStateChange: (updates: Partial<SimulationState>) => void;
   onResetToPreset: () => void;
 }
 
-export function ControlsSection({ state, onStateChange, onResetToPreset }: ControlsSectionProps) {
+export function ControlsSection({ state, calculations, onStateChange, onResetToPreset }: ControlsSectionProps) {
+  // Calculate IPS capacity
+  const totalCapacityIPS = state.devices.reduce((total, device) => total + (device.ips * device.qty), 0);
+  const totalCapacityMonthly = totalCapacityIPS * state.secondsInMonth;
+  const usedCapacityMonthly = calculations.monthlyCalls;
+  const utilizationPercentage = totalCapacityMonthly > 0 ? Math.min((usedCapacityMonthly / totalCapacityMonthly) * 100, 100) : 0;
   const handleRuralClick = (km: number) => {
     const ruralFactor = ruralFactorFromKm(km) - 1;
     onStateChange({ rural: ruralFactor });
@@ -106,6 +112,42 @@ export function ControlsSection({ state, onStateChange, onResetToPreset }: Contr
             onChange={(e) => onStateChange({ pricePerCallBase: Math.max(0, parseFloat(e.target.value) || 0) })}
             className="w-28 font-mono bg-input border-input-border"
           />
+        </div>
+      </div>
+
+      {/* IPS Capacity Visualization */}
+      <div className="mt-6 pt-4 border-t border-border">
+        <div className="mb-4">
+          <div className="text-help text-sm mb-2">Total Available IPS per Month</div>
+          <div className="flex items-center gap-4 mb-2">
+            <div className="text-sm text-foreground">
+              <span className="font-semibold text-number-blue">{totalCapacityIPS.toLocaleString()}</span> IPS
+            </div>
+            <div className="text-sm text-muted-foreground">
+              = <span className="font-mono">{(totalCapacityMonthly / 1_000_000).toFixed(1)}M</span> calls/month capacity
+            </div>
+          </div>
+          
+          {/* Capacity Bar */}
+          <div className="relative w-full h-6 bg-muted/30 rounded-lg overflow-hidden">
+            <div 
+              className="h-full bg-gradient-to-r from-primary/60 to-primary transition-all duration-300"
+              style={{ width: `${utilizationPercentage}%` }}
+            />
+            <div className="absolute inset-0 flex items-center justify-between px-3 text-xs font-medium">
+              <span className="text-foreground">
+                {(usedCapacityMonthly / 1_000_000).toFixed(1)}M used
+              </span>
+              <span className="text-muted-foreground">
+                {utilizationPercentage.toFixed(1)}% capacity
+              </span>
+            </div>
+          </div>
+          
+          <div className="flex justify-between text-xs text-muted-foreground mt-1">
+            <span>0</span>
+            <span>{(totalCapacityMonthly / 1_000_000).toFixed(1)}M calls</span>
+          </div>
         </div>
       </div>
       

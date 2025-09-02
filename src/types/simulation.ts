@@ -16,6 +16,7 @@ export interface Costs {
   maintenance: number;
   licenses: number;
   fibre: number;
+  legal: number;
 }
 
 export interface SimulationState {
