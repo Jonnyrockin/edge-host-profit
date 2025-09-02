@@ -130,21 +130,33 @@ export function PremiumShowcase({ state, onStateChange }: PremiumShowcaseProps) 
         {/* Arrow and Multiplier */}
         <div className="text-center">
           <ArrowRight className="w-8 h-8 text-primary mx-auto mb-4" />
-          <div className="bg-primary/10 rounded-xl p-4">
-            <div className="text-sm font-medium text-foreground mb-3">Premium Multiplier</div>
-            <div className="text-3xl font-bold text-primary mb-4">
-              {multiplier}x
+          
+          {/* Premium Multiplier */}
+          <div className="bg-card border border-border rounded-xl p-4 min-h-[280px] flex flex-col">
+            <div className="flex items-center justify-between mb-4">
+              <div className="text-sm font-medium text-foreground">Premium Multiplier</div>
             </div>
-            <Slider
-              value={[multiplier]}
-              onValueChange={handleMultiplierChange}
-              min={5}
-              max={15}
-              step={0.5}
-              className="mb-2"
-            />
-            <div className="text-xs text-muted-foreground">
-              5x (standard) to 15x (ultra-premium)
+            
+            <div className="flex-1 flex flex-col justify-center">
+              <div className="mb-6">
+                <div className="flex items-center justify-between mb-3">
+                  <span className="text-xs text-muted-foreground">5.0x</span>
+                  <span className="text-xs text-muted-foreground">15.0x</span>
+                </div>
+                <Slider
+                  value={[multiplier]}
+                  onValueChange={handleMultiplierChange}
+                  min={5}
+                  max={15}
+                  step={0.5}
+                  className="w-full"
+                />
+              </div>
+              
+              <div className="text-center">
+                <div className="text-3xl font-bold text-number-blue">{multiplier.toFixed(1)}x</div>
+                <div className="text-xs text-muted-foreground">Premium Factor</div>
+              </div>
             </div>
           </div>
         </div>
@@ -167,8 +179,19 @@ export function PremiumShowcase({ state, onStateChange }: PremiumShowcaseProps) 
         </div>
       </div>
 
+      {/* Premium Justification Explainer - Spans across bottom */}
+      <div className="bg-gradient-to-r from-primary/5 to-primary/10 border border-primary/20 rounded-xl p-4 mt-6">
+        <div className="text-sm font-medium text-foreground mb-2">Why Premium Pricing Works</div>
+        <div className="text-xs text-muted-foreground space-y-1">
+          <div>• <strong>Performance Gap:</strong> Edge AI delivers 4-20x faster response times than cloud solutions</div>
+          <div>• <strong>Market Positioning:</strong> Mission-critical workloads justify premium pricing for guaranteed performance</div>
+          <div>• <strong>Value Creation:</strong> Reduced latency enables new use cases impossible with cloud infrastructure</div>
+          <div>• <strong>Cost Comparison:</strong> While higher per-call, total solution cost is often lower due to efficiency gains</div>
+        </div>
+      </div>
+
       {/* Value Justification */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6 pt-4 border-t border-border/50">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4 pt-4 border-t border-border/50">
         <div className="text-center">
           <div className="text-xs font-semibold text-success mb-1">Ultra-Low Latency</div>
           <div className="text-xs text-muted-foreground">&lt;25ms vs 100-500ms cloud</div>

@@ -50,13 +50,19 @@ export function KPIDashboard({ state, calculations, onStateChange }: KPIDashboar
         </div>
         
         <div className="bg-card border border-border rounded-xl p-3 min-h-[86px] flex flex-col">
-          <div className="text-help text-sm">Monthly Calls</div>
+          <div className="flex items-center gap-1">
+            <div className="text-help text-sm">Monthly Calls</div>
+            <InfoTooltip content="Total AI inference calls per month calculated from: Device IPS × Calls per job × Utilization rate × Seconds in month. Higher utilization means more calls and revenue." />
+          </div>
           <div className="text-2xl font-semibold">{calculations.monthlyCalls.toLocaleString()}</div>
           <div className="text-help text-xs">{state.devices.length} device rows</div>
         </div>
         
         <div className="bg-card border border-border rounded-xl p-3 min-h-[86px] flex flex-col">
-          <div className="text-help text-sm">Gross (per/mo)</div>
+          <div className="flex items-center gap-1">
+            <div className="text-help text-sm">Gross (per/mo)</div>
+            <InfoTooltip content={`Monthly gross revenue before fees and expenses. Calculated as: ${calculations.monthlyCalls.toLocaleString()} calls × $${calculations.pricePerCall.toFixed(4)} per call = $${Math.round(calculations.gross).toLocaleString()}`} />
+          </div>
           <div className="text-2xl font-semibold">${Math.round(calculations.gross).toLocaleString()}</div>
           <div className="text-help text-xs">${calculations.pricePerCall.toFixed(4)} /call</div>
         </div>
