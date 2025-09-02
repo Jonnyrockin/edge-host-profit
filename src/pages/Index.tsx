@@ -5,6 +5,7 @@ import { DeviceStack } from '../components/simulation/DeviceStack';
 import { CostsSection } from '../components/simulation/CostsSection';
 import { MathSection } from '../components/simulation/MathSection';
 import { PricingPanel } from '../components/simulation/PricingPanel';
+import { PremiumShowcase } from '../components/simulation/PremiumShowcase';
 import { useSimulationState } from '../hooks/useSimulationState';
 
 const Index = () => {
@@ -24,6 +25,9 @@ const Index = () => {
       <div className="max-w-7xl mx-auto p-4 md:p-6">
         {/* KPI Dashboard - Sticky Header */}
         <KPIDashboard state={state} calculations={calculations} onStateChange={updateState} />
+
+        {/* Premium Positioning Showcase */}
+        <PremiumShowcase state={state} onStateChange={updateState} />
 
         {/* Presets / Host Profile */}
         <PresetsSection 

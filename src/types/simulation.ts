@@ -38,6 +38,8 @@ export interface SimulationState {
   inferenceProvider?: string;
   inferenceModel?: string;
   baseInferencePrice?: number;
+  baselineCloudPrice?: number;
+  premiumMultiplier?: number;
 }
 
 export interface CalculationResult {
