@@ -33,6 +33,8 @@ export interface SimulationState {
   energyProvider: string;
   greenUplift: number;
   greenPremium: number;
+  esgEnabled: boolean;
+  esgFile?: string;
 }
 
 export interface CalculationResult {

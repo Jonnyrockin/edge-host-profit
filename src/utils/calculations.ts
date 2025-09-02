@@ -36,11 +36,13 @@ export function calculateRevenue(state: SimulationState): CalculationResult {
   const devicesRows = state.devices.map(d => `${d.qty}× ${d.label}`).join(', ');
 
   // Price factor calculation
+  const esgMultiplier = state.esgEnabled ? 1.1 : 1.0;
   const priceFactor = cityPriceFactor(state.city) * 
                      edgeTierMultiplier(state.devices) * 
                      scenario.price * 
                      (1 + (state.rural || 0)) * 
-                     (1 + (state.greenUplift || 0) / 100);
+                     (1 + (state.greenUplift || 0) / 100) *
+                     esgMultiplier;
   
   const pricePerCall = state.pricePerCallBase * priceFactor;
   const monthlyCalls = Math.round(inventoryIPS * util * state.secondsInMonth * state.callsPerJob);

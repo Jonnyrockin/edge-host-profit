@@ -24,9 +24,19 @@ export function CostsSection({ state, calculations, onStateChange }: CostsSectio
   };
 
   return (
-    <div className="bg-card border border-border rounded-xl p-4 lg:col-span-2">
-      <div className="text-lg font-semibold text-foreground">Costs</div>
-      <div className="text-help text-sm mb-3">Expanded monthly operating costs. Common aware.</div>
+    <div className="bg-card border border-border rounded-xl p-4 lg:col-span-2 relative">
+      <div className="flex items-center justify-between">
+        <div>
+          <div className="text-lg font-semibold text-foreground">Costs</div>
+          <div className="text-help text-sm mb-3">Expanded monthly operating costs. Common aware.</div>
+        </div>
+        <div className="absolute top-4 right-4 text-right">
+          <div className="text-lg text-warning font-semibold">
+            ${Math.round(calculations.opex * 12).toLocaleString()}
+          </div>
+          <div className="text-xs text-help">Estimated Annual OPEX</div>
+        </div>
+      </div>
 
       {/* Connectivity */}
       <div className="mt-2">
@@ -58,7 +68,7 @@ export function CostsSection({ state, calculations, onStateChange }: CostsSectio
               step="10"
               value={state.costs.fibre}
               onChange={(e) => handleCostChange('fibre', parseFloat(e.target.value) || 0)}
-              className="w-20 font-mono bg-input border-input-border"
+              className="w-30 font-mono bg-input border-input-border"
             />
           </div>
           <div className="col-span-2 flex items-center gap-2 mt-6">
@@ -104,7 +114,7 @@ export function CostsSection({ state, calculations, onStateChange }: CostsSectio
               step="1"
               value={state.greenUplift}
               onChange={(e) => onStateChange({ greenUplift: parseFloat(e.target.value) || 0 })}
-              className="w-16 font-mono bg-input border-input-border"
+              className="w-24 font-mono bg-input border-input-border"
               title="Uplift = usage % from renewables (not a price markup)"
             />
           </div>
@@ -116,7 +126,7 @@ export function CostsSection({ state, calculations, onStateChange }: CostsSectio
               step="1"
               value={state.greenPremium}
               onChange={(e) => onStateChange({ greenPremium: parseFloat(e.target.value) || 0 })}
-              className="w-16 font-mono bg-input border-input-border"
+              className="w-24 font-mono bg-input border-input-border"
               title="Premium = price markup due to green sourcing"
             />
           </div>
@@ -133,7 +143,7 @@ export function CostsSection({ state, calculations, onStateChange }: CostsSectio
             step="50"
             value={state.costs.energy}
             onChange={(e) => handleCostChange('energy', parseFloat(e.target.value) || 0)}
-            className="w-20 font-mono bg-input border-input-border"
+            className="w-30 font-mono bg-input border-input-border"
           />
         </div>
         <div>
@@ -144,7 +154,7 @@ export function CostsSection({ state, calculations, onStateChange }: CostsSectio
             step="50"
             value={state.costs.rent}
             onChange={(e) => handleCostChange('rent', parseFloat(e.target.value) || 0)}
-            className="w-20 font-mono bg-input border-input-border"
+            className="w-30 font-mono bg-input border-input-border"
           />
         </div>
         <div>
@@ -155,7 +165,7 @@ export function CostsSection({ state, calculations, onStateChange }: CostsSectio
             step="50"
             value={state.costs.staff}
             onChange={(e) => handleCostChange('staff', parseFloat(e.target.value) || 0)}
-            className="w-20 font-mono bg-input border-input-border"
+            className="w-30 font-mono bg-input border-input-border"
           />
         </div>
         <div>
@@ -166,7 +176,7 @@ export function CostsSection({ state, calculations, onStateChange }: CostsSectio
             step="25"
             value={state.costs.misc}
             onChange={(e) => handleCostChange('misc', parseFloat(e.target.value) || 0)}
-            className="w-20 font-mono bg-input border-input-border"
+            className="w-30 font-mono bg-input border-input-border"
           />
         </div>
         <div>
@@ -177,7 +187,7 @@ export function CostsSection({ state, calculations, onStateChange }: CostsSectio
             step="25"
             value={state.costs.insurance}
             onChange={(e) => handleCostChange('insurance', parseFloat(e.target.value) || 0)}
-            className="w-20 font-mono bg-input border-input-border"
+            className="w-30 font-mono bg-input border-input-border"
           />
         </div>
         <div>
@@ -188,7 +198,7 @@ export function CostsSection({ state, calculations, onStateChange }: CostsSectio
             step="25"
             value={state.costs.maintenance}
             onChange={(e) => handleCostChange('maintenance', parseFloat(e.target.value) || 0)}
-            className="w-20 font-mono bg-input border-input-border"
+            className="w-30 font-mono bg-input border-input-border"
           />
         </div>
         <div>
@@ -199,7 +209,7 @@ export function CostsSection({ state, calculations, onStateChange }: CostsSectio
             step="25"
             value={state.costs.licenses}
             onChange={(e) => handleCostChange('licenses', parseFloat(e.target.value) || 0)}
-            className="w-20 font-mono bg-input border-input-border"
+            className="w-30 font-mono bg-input border-input-border"
           />
         </div>
       </div>
@@ -222,12 +232,6 @@ export function CostsSection({ state, calculations, onStateChange }: CostsSectio
           Estimated Monthly OPEX:
           <span className="text-foreground font-semibold ml-1">
             ${Math.round(calculations.opex).toLocaleString()}
-          </span>
-        </div>
-        <div className="text-lg text-muted-foreground">
-          Estimated Annual OPEX:
-          <span className="text-foreground font-semibold ml-1">
-            ${Math.round(calculations.opex * 12).toLocaleString()}
           </span>
         </div>
       </div>

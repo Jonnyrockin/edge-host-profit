@@ -74,6 +74,12 @@ export default {
 					foreground: 'hsl(var(--warning-foreground))'
 				}
 			},
+			width: {
+				'30': '7.5rem'
+			},
+			spacing: {
+				'30': '7.5rem'
+			},
 			backdropBlur: {
 				glass: 'var(--backdrop-blur)'
 			},

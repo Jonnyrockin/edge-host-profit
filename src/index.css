@@ -28,11 +28,11 @@
     --muted: 0 0% 12%;
     --muted-foreground: 0 0% 60%;
 
-    /* Status Colors - Removed, using grayscale */
+    /* Status Colors */
     --success: 0 0% 20%;
     --success-foreground: 0 0% 90%;
-    --warning: 0 0% 20%;
-    --warning-foreground: 0 0% 90%;
+    --warning: 45 93% 47%;
+    --warning-foreground: 0 0% 0%;
     --destructive: 0 0% 25%;
     --destructive-foreground: 0 0% 90%;
 

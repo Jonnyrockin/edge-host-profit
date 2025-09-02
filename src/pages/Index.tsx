@@ -4,6 +4,7 @@ import { ControlsSection } from '../components/simulation/ControlsSection';
 import { DeviceStack } from '../components/simulation/DeviceStack';
 import { CostsSection } from '../components/simulation/CostsSection';
 import { MathSection } from '../components/simulation/MathSection';
+import { PricingPanel } from '../components/simulation/PricingPanel';
 import { useSimulationState } from '../hooks/useSimulationState';
 
 const Index = () => {
@@ -22,16 +23,15 @@ const Index = () => {
     <div className="min-h-screen bg-background text-foreground">
       <div className="max-w-7xl mx-auto p-4 md:p-6">
         {/* KPI Dashboard - Sticky Header */}
-        <KPIDashboard state={state} calculations={calculations} />
+        <KPIDashboard state={state} calculations={calculations} onStateChange={updateState} />
 
-        {/* Presets / Scenarios / Host Profile */}
+        {/* Presets / Host Profile */}
         <PresetsSection 
           state={state}
-          onStateChange={updateState}
           onApplyPreset={applyPreset}
         />
 
-        {/* Controls */}
+        {/* Deployment Scenario */}
         <ControlsSection
           state={state}
           onStateChange={updateState}
@@ -46,14 +46,18 @@ const Index = () => {
           onRemoveDevice={removeDevice}
         />
 
-        {/* Costs + Math */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mt-4">
+        {/* Costs + Math + Pricing */}
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 mt-4">
           <CostsSection
             state={state}
             calculations={calculations}
             onStateChange={updateState}
           />
           <MathSection
+            state={state}
+            calculations={calculations}
+          />
+          <PricingPanel
             state={state}
             calculations={calculations}
           />

@@ -19,7 +19,9 @@ const defaultState: SimulationState = {
   linkRate: true,
   energyProvider: 'Toronto Hydro (regulated)',
   greenUplift: 0,
-  greenPremium: 2
+  greenPremium: 2,
+  esgEnabled: false,
+  esgFile: undefined
 };
 
 export function useSimulationState() {

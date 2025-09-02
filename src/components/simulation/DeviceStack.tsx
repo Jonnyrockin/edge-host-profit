@@ -20,7 +20,7 @@ export function DeviceStack({ devices, onAddDevice, onUpdateDevice, onRemoveDevi
       </div>
       
       {/* Device Picker */}
-      <div className="flex flex-wrap gap-2 mb-4">
+      <div className="flex flex-wrap gap-2 mb-8">
         {CATALOG.map(device => (
           <Button
             key={device.id}
@@ -55,7 +55,7 @@ export function DeviceStack({ devices, onAddDevice, onUpdateDevice, onRemoveDevi
                 </td>
               </tr>
             ) : (
-              devices.map(device => (
+              [...devices].reverse().map(device => (
                 <tr key={device.id} className="border-t border-border">
                   <td className="py-2 text-foreground">{device.label}</td>
                   <td className="py-2 text-foreground">{device.vendor}</td>
