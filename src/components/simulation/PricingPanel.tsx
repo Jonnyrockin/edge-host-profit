@@ -3,6 +3,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '.
 import { Button } from '../ui/button';
 import { ExternalLink } from 'lucide-react';
 import { INFERENCE_PROVIDERS, getProviderById, getModelById } from '../../data/inference-providers';
+import { InfoTooltip } from '../ui/info-tooltip';
 
 interface PricingPanelProps {
   state: SimulationState;
@@ -63,7 +64,10 @@ export function PricingPanel({ state, calculations, onStateChange }: PricingPane
       {/* Inference Provider Selection */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
         <div>
-          <label className="block text-sm font-medium mb-2">Provider</label>
+          <div className="flex items-center gap-2">
+            <label className="block text-sm font-medium mb-2">Provider</label>
+            <InfoTooltip content="AI inference provider for processing. Different providers offer varying performance, pricing, and model availability." />
+          </div>
           <Select value={state.inferenceProvider || 'openai'} onValueChange={handleProviderChange}>
             <SelectTrigger>
               <SelectValue />

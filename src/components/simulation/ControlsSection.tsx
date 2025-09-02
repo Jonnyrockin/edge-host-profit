@@ -8,6 +8,7 @@ import { Upload } from 'lucide-react';
 import { SimulationState, CalculationResult } from '../../types/simulation';
 import { CITY_OPTIONS, SCENARIOS } from '../../data/constants';
 import { ruralFactorFromKm } from '../../utils/calculations';
+import { InfoTooltip } from '../ui/info-tooltip';
 
 interface ControlsSectionProps {
   state: SimulationState;
@@ -41,7 +42,10 @@ export function ControlsSection({ state, calculations, onStateChange, onResetToP
       
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4 items-end">
         <div>
-          <div className="text-help text-sm mb-2">Scenario</div>
+          <div className="flex items-center gap-2">
+            <div className="text-help text-sm mb-2">Scenario</div>
+            <InfoTooltip content="Predefined configurations for different business models. Each scenario has optimized utilization rates and call patterns." />
+          </div>
           <Select value={state.scenario} onValueChange={(value) => {
             const scenario = SCENARIOS[value as keyof typeof SCENARIOS];
             onStateChange({ 
@@ -61,7 +65,10 @@ export function ControlsSection({ state, calculations, onStateChange, onResetToP
         </div>
         
         <div>
-          <div className="text-help text-sm mb-2">City</div>
+          <div className="flex items-center gap-2">
+            <div className="text-help text-sm mb-2">City</div>
+            <InfoTooltip content="Geographic location affects baseline pricing, available connectivity providers, and energy costs." />
+          </div>
           <Select value={state.city} onValueChange={(value) => onStateChange({ city: value })}>
             <SelectTrigger className="bg-input border-input-border">
               <SelectValue />
@@ -75,7 +82,10 @@ export function ControlsSection({ state, calculations, onStateChange, onResetToP
         </div>
         
         <div>
-          <div className="text-help text-sm mb-2">Utilization (%)</div>
+          <div className="flex items-center gap-2">
+            <div className="text-help text-sm mb-2">Utilization (%)</div>
+            <InfoTooltip content="Percentage of total processing capacity actively used. Higher utilization = more revenue but less headroom for spikes." />
+          </div>
           <Slider
             value={[Math.round(state.util * 100)]}
             onValueChange={([value]) => onStateChange({ util: value / 100 })}
@@ -88,7 +98,10 @@ export function ControlsSection({ state, calculations, onStateChange, onResetToP
         </div>
         
         <div>
-          <div className="text-help text-sm mb-2">Calls per Job</div>
+          <div className="flex items-center gap-2">
+            <div className="text-help text-sm mb-2">Calls per Job</div>
+            <InfoTooltip content="How many AI inference calls each customer job requires. Complex tasks need more calls." />
+          </div>
           <Input
             type="number"
             min="1"
@@ -103,7 +116,10 @@ export function ControlsSection({ state, calculations, onStateChange, onResetToP
         </div>
         
         <div>
-          <div className="text-help text-sm mb-2">Base price per call ($)</div>
+          <div className="flex items-center gap-2">
+            <div className="text-help text-sm mb-2">Base price per call ($)</div>
+            <InfoTooltip content="Starting price before applying location, rural, and premium multipliers. This sets your baseline pricing strategy." />
+          </div>
           <Input
             type="number"
             min="0"
@@ -118,7 +134,10 @@ export function ControlsSection({ state, calculations, onStateChange, onResetToP
       {/* IPS Capacity Visualization */}
       <div className="mt-6 pt-4 border-t border-border">
         <div className="mb-4">
-          <div className="text-help text-sm mb-2">Total Available IPS per Month</div>
+          <div className="flex items-center gap-2 mb-2">
+            <div className="text-help text-sm">Total Available IPS per Month</div>
+            <InfoTooltip content="Your hardware's maximum processing capacity. Shows total inferences per second across all devices and monthly capacity limit." />
+          </div>
           <div className="flex items-center gap-4 mb-2">
             <div className="text-sm text-foreground">
               <span className="font-semibold text-number-blue">{totalCapacityIPS.toLocaleString()}</span> IPS
@@ -153,8 +172,11 @@ export function ControlsSection({ state, calculations, onStateChange, onResetToP
       
       {/* Rural Offset and ESG Section */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6 pt-4 border-t border-border">
-        <div>
-          <div className="text-help text-sm mb-2">Rural offset presets</div>
+          <div>
+            <div className="flex items-center gap-2">
+              <div className="text-help text-sm mb-2">Rural offset presets</div>
+              <InfoTooltip content="Distance from city center adds pricing premium due to higher infrastructure costs and lower competition." />
+            </div>
           <div className="grid grid-cols-6 gap-1">
             {[0, 50, 100, 200, 300, 500].map(km => (
               <Button
@@ -171,8 +193,11 @@ export function ControlsSection({ state, calculations, onStateChange, onResetToP
           </div>
         </div>
         
-        <div>
-          <div className="text-help text-sm mb-2">ESG Compliance</div>
+          <div>
+            <div className="flex items-center gap-2">
+              <div className="text-help text-sm mb-2">ESG Compliance</div>
+              <InfoTooltip content="Environmental, Social, and Governance compliance allows you to charge a 10% premium for sustainable computing practices." />
+            </div>
           <div className="flex items-center gap-4">
             <div className="flex items-center space-x-2">
               <Checkbox

@@ -3,6 +3,7 @@ import { Input } from '../ui/input';
 import { Checkbox } from '../ui/checkbox';
 import { SimulationState, CalculationResult } from '../../types/simulation';
 import { FIBRE_PROVIDERS, ENERGY_PROVIDERS } from '../../data/constants';
+import { InfoTooltip } from '../ui/info-tooltip';
 
 interface CostsSectionProps {
   state: SimulationState;
@@ -42,11 +43,17 @@ export function CostsSection({ state, calculations, onStateChange }: CostsSectio
       <div className="bg-muted/20 border border-border/50 rounded-lg p-4 mt-2">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Connectivity */}
-          <div>
-            <div className="font-semibold text-foreground mb-3">Connectivity</div>
+            <div>
+              <div className="flex items-center gap-2">
+                <div className="font-semibold text-foreground mb-3">Connectivity</div>
+                <InfoTooltip content="Internet connectivity affects operational costs and service quality. Fibre providers vary significantly in price and reliability." />
+              </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3 items-end">
               <div>
-                <div className="text-help text-sm mb-2">Business Fibre Provider</div>
+                <div className="flex items-center gap-2">
+                  <div className="text-help text-sm mb-2">Business Fibre Provider</div>
+                  <InfoTooltip content="Different fibre providers offer varying speeds, reliability, and pricing. Provider choice impacts monthly connectivity costs." />
+                </div>
                 <Select 
                   value={state.connectivityProvider} 
                   onValueChange={(value) => onStateChange({ connectivityProvider: value })}
@@ -64,7 +71,10 @@ export function CostsSection({ state, calculations, onStateChange }: CostsSectio
                 </Select>
               </div>
               <div>
-                <div className="text-help text-sm mb-2">Fibre (per/mo)</div>
+                <div className="flex items-center gap-2">
+                  <div className="text-help text-sm mb-2">Fibre (per/mo)</div>
+                  <InfoTooltip content="Monthly fibre internet cost. Higher speeds cost more but enable better service quality and more concurrent users." />
+                </div>
                 <Input
                   type="number"
                   min="0"
@@ -84,15 +94,22 @@ export function CostsSection({ state, calculations, onStateChange }: CostsSectio
               <label htmlFor="link-rate" className="text-help text-sm">
                 Link cost to provider rate
               </label>
+              <InfoTooltip content="Automatically update fibre cost when provider changes. Uncheck to set custom pricing independent of provider selection." />
             </div>
           </div>
 
           {/* Energy */}
           <div>
-            <div className="font-semibold text-foreground mb-3">Energy</div>
+            <div className="flex items-center gap-2">
+              <div className="font-semibold text-foreground mb-3">Energy</div>
+              <InfoTooltip content="Power costs vary by provider and green energy sourcing. Energy efficiency directly impacts operational profitability." />
+            </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-3 items-end">
               <div>
-                <div className="text-help text-sm mb-2">Energy Provider</div>
+                <div className="flex items-center gap-2">
+                  <div className="text-help text-sm mb-2">Energy Provider</div>
+                  <InfoTooltip content="Different energy providers offer various rates and green energy options. Choice affects monthly power costs and ESG positioning." />
+                </div>
                 <Select 
                   value={state.energyProvider} 
                   onValueChange={(value) => onStateChange({ energyProvider: value })}
@@ -110,7 +127,10 @@ export function CostsSection({ state, calculations, onStateChange }: CostsSectio
                 </Select>
               </div>
               <div>
-                <div className="text-help text-sm mb-2">Green uplift (%)</div>
+                <div className="flex items-center gap-2">
+                  <div className="text-help text-sm mb-2">Green uplift (%)</div>
+                  <InfoTooltip content="Percentage of energy from renewable sources. Higher uplift improves ESG credentials but may increase costs." />
+                </div>
                 <Input
                   type="number"
                   min="0"
@@ -122,7 +142,10 @@ export function CostsSection({ state, calculations, onStateChange }: CostsSectio
                 />
               </div>
               <div>
-                <div className="text-help text-sm mb-2">Green premium (%)</div>
+                <div className="flex items-center gap-2">
+                  <div className="text-help text-sm mb-2">Green premium (%)</div>
+                  <InfoTooltip content="Price markup for green energy sourcing. Allows you to charge customers extra for sustainable computing." />
+                </div>
                 <Input
                   type="number"
                   min="0"
@@ -141,7 +164,10 @@ export function CostsSection({ state, calculations, onStateChange }: CostsSectio
       {/* OPEX Lines */}
       <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-x-6 gap-y-3 items-end mt-6">
         <div>
-          <div className="text-help text-sm mb-2">Energy (per/mo)</div>
+          <div className="flex items-center gap-2">
+            <div className="text-help text-sm mb-2">Energy (per/mo)</div>
+            <InfoTooltip content="Monthly electricity costs for powering servers and cooling systems. Scales with device count and utilization." />
+          </div>
           <Input
             type="number"
             min="0"
@@ -152,7 +178,10 @@ export function CostsSection({ state, calculations, onStateChange }: CostsSectio
           />
         </div>
         <div>
-          <div className="text-help text-sm mb-2">Rent (per/mo)</div>
+          <div className="flex items-center gap-2">
+            <div className="text-help text-sm mb-2">Rent (per/mo)</div>
+            <InfoTooltip content="Facility rental costs including data center space, cooling, and physical security. Fixed monthly expense." />
+          </div>
           <Input
             type="number"
             min="0"
@@ -218,7 +247,10 @@ export function CostsSection({ state, calculations, onStateChange }: CostsSectio
           />
         </div>
         <div>
-          <div className="text-help text-sm mb-2">Legal Fees (per/mo)</div>
+          <div className="flex items-center gap-2">
+            <div className="text-help text-sm mb-2">Legal Fees (per/mo)</div>
+            <InfoTooltip content="Legal and compliance costs including contracts, regulatory compliance, and intellectual property protection." />
+          </div>
           <Input
             type="number"
             min="0"
@@ -233,7 +265,10 @@ export function CostsSection({ state, calculations, onStateChange }: CostsSectio
       {/* Totals */}
       <div className="mt-4 pt-4 border-t border-border flex flex-wrap items-center gap-x-6 gap-y-3">
         <div>
-          <div className="text-help">Platform fee (HyperEdgeX)</div>
+          <div className="flex items-center gap-2">
+            <div className="text-help">Platform fee (HyperEdgeX)</div>
+            <InfoTooltip content="Fixed 25% revenue share with the platform provider. This covers infrastructure, support, and business development." />
+          </div>
           <div className="px-2 py-1 inline-block bg-secondary border border-border rounded text-secondary-foreground select-none">
             25% (fixed)
           </div>

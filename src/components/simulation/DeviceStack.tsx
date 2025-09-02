@@ -3,6 +3,7 @@ import { Input } from '../ui/input';
 import { Trash2 } from 'lucide-react';
 import { Device } from '../../types/simulation';
 import { CATALOG } from '../../data/constants';
+import { InfoTooltip } from '../ui/info-tooltip';
 
 interface DeviceStackProps {
   devices: Device[];
@@ -41,9 +42,18 @@ export function DeviceStack({ devices, onAddDevice, onUpdateDevice, onRemoveDevi
             <tr>
               <th className="text-left py-2">Device</th>
               <th className="text-left py-2">Vendor</th>
-              <th className="text-right py-2">Latency</th>
-              <th className="text-right py-2">IPS / row</th>
-              <th className="text-center py-2">Qty</th>
+              <th className="text-left py-2 flex items-center gap-1">
+                Latency
+                <InfoTooltip content="Response time categories: <25ms (ultra-fast), 25-50ms (fast), 50-100ms (standard). Lower latency commands premium pricing." />
+              </th>
+              <th className="text-right py-2 flex items-center gap-1 justify-end">
+                IPS / row
+                <InfoTooltip content="Inferences Per Second - maximum AI processing capacity per device. Higher IPS = more concurrent jobs." />
+              </th>
+              <th className="text-center py-2 flex items-center gap-1 justify-center">
+                Qty
+                <InfoTooltip content="Number of identical devices. More devices = higher total capacity and redundancy." />
+              </th>
               <th className="text-right py-2">Actions</th>
             </tr>
           </thead>
