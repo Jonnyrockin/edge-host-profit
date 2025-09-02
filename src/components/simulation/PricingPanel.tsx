@@ -125,7 +125,7 @@ export function PricingPanel({ state, calculations, onStateChange }: PricingPane
         <div className="bg-secondary/20 rounded-lg p-3">
           <div className="text-help text-sm">Single AI Inference Token</div>
           <div className="text-2xl font-semibold text-number-blue">
-            ${finalPrice.toFixed(6)}
+            ${finalPrice < 0.000001 ? finalPrice.toExponential(3) : finalPrice.toFixed(6)}
           </div>
           <div className="text-xs text-help">
             Including location, rural, and ESG premiums
