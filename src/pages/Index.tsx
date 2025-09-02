@@ -5,6 +5,7 @@ import { DeviceStack } from '../components/simulation/DeviceStack';
 import { CostsSection } from '../components/simulation/CostsSection';
 import { MathSection } from '../components/simulation/MathSection';
 import { PricingPanel } from '../components/simulation/PricingPanel';
+import { InferenceProviderSection } from '../components/simulation/InferenceProviderSection';
 import { useSimulationState } from '../hooks/useSimulationState';
 
 const Index = () => {
@@ -44,6 +45,12 @@ const Index = () => {
           onAddDevice={addDevice}
           onUpdateDevice={updateDevice}
           onRemoveDevice={removeDevice}
+        />
+
+        {/* Inference Provider Selection */}
+        <InferenceProviderSection
+          state={state}
+          onStateChange={updateState}
         />
 
         {/* Costs + Math + Pricing */}

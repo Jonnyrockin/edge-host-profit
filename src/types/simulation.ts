@@ -35,6 +35,9 @@ export interface SimulationState {
   greenPremium: number;
   esgEnabled: boolean;
   esgFile?: string;
+  inferenceProvider?: string;
+  inferenceModel?: string;
+  baseInferencePrice?: number;
 }
 
 export interface CalculationResult {

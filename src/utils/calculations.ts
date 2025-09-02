@@ -35,16 +35,18 @@ export function calculateRevenue(state: SimulationState): CalculationResult {
   const inventoryIPS = state.devices.reduce((sum, device) => sum + (device.ips || 0) * (device.qty || 1), 0);
   const devicesRows = state.devices.map(d => `${d.qty}× ${d.label}`).join(', ');
 
-  // Price factor calculation
+  // Price factor calculation with inference pricing
   const esgMultiplier = state.esgEnabled ? 1.1 : 1.0;
-  const priceFactor = cityPriceFactor(state.city) * 
-                     edgeTierMultiplier(state.devices) * 
-                     scenario.price * 
-                     (1 + (state.rural || 0)) * 
-                     (1 + (state.greenUplift || 0) / 100) *
-                     esgMultiplier;
   
-  const pricePerCall = state.pricePerCallBase * priceFactor;
+  // Use inference provider pricing if available, otherwise fall back to base price
+  const basePrice = state.baseInferencePrice ? state.baseInferencePrice / 1000000 : state.pricePerCallBase;
+  const locationMultiplier = cityPriceFactor(state.city) * 
+                           edgeTierMultiplier(state.devices) * 
+                           scenario.price * 
+                           (1 + (state.rural || 0) / 100) * 
+                           (1 + (state.greenUplift || 0) / 100);
+  
+  const pricePerCall = basePrice * locationMultiplier * esgMultiplier;
   const monthlyCalls = Math.round(inventoryIPS * util * state.secondsInMonth * state.callsPerJob);
 
   // OPEX calculation

@@ -21,7 +21,10 @@ const defaultState: SimulationState = {
   greenUplift: 0,
   greenPremium: 2,
   esgEnabled: false,
-  esgFile: undefined
+  esgFile: undefined,
+  inferenceProvider: 'openai',
+  inferenceModel: 'gpt-4o-mini',
+  baseInferencePrice: 0.375
 };
 
 export function useSimulationState() {
