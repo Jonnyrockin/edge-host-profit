@@ -1,11 +1,63 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { KPIDashboard } from '../components/simulation/KPIDashboard';
+import { PresetsSection } from '../components/simulation/PresetsSection';
+import { ControlsSection } from '../components/simulation/ControlsSection';
+import { DeviceStack } from '../components/simulation/DeviceStack';
+import { CostsSection } from '../components/simulation/CostsSection';
+import { MathSection } from '../components/simulation/MathSection';
+import { useSimulationState } from '../hooks/useSimulationState';
 
 const Index = () => {
+  const {
+    state,
+    calculations,
+    updateState,
+    applyPreset,
+    addDevice,
+    updateDevice,
+    removeDevice,
+    resetToPreset
+  } = useSimulationState();
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
+    <div className="min-h-screen bg-background text-foreground">
+      <div className="max-w-7xl mx-auto p-4 md:p-6">
+        {/* KPI Dashboard - Sticky Header */}
+        <KPIDashboard state={state} calculations={calculations} />
+
+        {/* Presets / Scenarios / Host Profile */}
+        <PresetsSection 
+          state={state}
+          onStateChange={updateState}
+          onApplyPreset={applyPreset}
+        />
+
+        {/* Controls */}
+        <ControlsSection
+          state={state}
+          onStateChange={updateState}
+          onResetToPreset={resetToPreset}
+        />
+
+        {/* Device Stack */}
+        <DeviceStack
+          devices={state.devices}
+          onAddDevice={addDevice}
+          onUpdateDevice={updateDevice}
+          onRemoveDevice={removeDevice}
+        />
+
+        {/* Costs + Math */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mt-4">
+          <CostsSection
+            state={state}
+            calculations={calculations}
+            onStateChange={updateState}
+          />
+          <MathSection
+            state={state}
+            calculations={calculations}
+          />
+        </div>
       </div>
     </div>
   );
