@@ -59,6 +59,37 @@ export function MathSection({ state, calculations }: MathSectionProps) {
         </div>
       </div>
 
+      {/* Jobs Per Day Analysis */}
+      <div className="mt-4">
+        <div className="text-lg font-semibold text-foreground">Jobs Per Day Analysis</div>
+        <div className="text-help text-sm mb-2">
+          Jobs/day = (IPS × Utilization × 86,400 sec) ÷ Calls per job
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+          <div className="bg-muted/30 rounded-lg p-3">
+            <div className="text-xs text-muted-foreground mb-1">Conservative (40%)</div>
+            <div className="text-lg font-semibold text-number-blue">
+              {Math.round((calculations.inventoryIPS * 0.40 * 86400) / state.callsPerJob).toLocaleString()}
+            </div>
+            <div className="text-xs text-muted-foreground">jobs/day</div>
+          </div>
+          <div className="bg-muted/30 rounded-lg p-3">
+            <div className="text-xs text-muted-foreground mb-1">Current ({Math.round(state.util * scenario.util * 100)}%)</div>
+            <div className="text-lg font-semibold text-number-blue">
+              {Math.round((calculations.inventoryIPS * state.util * scenario.util * 86400) / state.callsPerJob).toLocaleString()}
+            </div>
+            <div className="text-xs text-muted-foreground">jobs/day</div>
+          </div>
+          <div className="bg-muted/30 rounded-lg p-3">
+            <div className="text-xs text-muted-foreground mb-1">Optimistic (80%)</div>
+            <div className="text-lg font-semibold text-number-blue">
+              {Math.round((calculations.inventoryIPS * 0.80 * 86400) / state.callsPerJob).toLocaleString()}
+            </div>
+            <div className="text-xs text-muted-foreground">jobs/day</div>
+          </div>
+        </div>
+      </div>
+
       <div className="mt-4">
         <div className="text-lg font-semibold text-foreground">SEL Tests</div>
         <ul className="mt-2 space-y-1 text-sm">
