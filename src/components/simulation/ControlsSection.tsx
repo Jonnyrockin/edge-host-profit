@@ -6,7 +6,7 @@ import { Checkbox } from '../ui/checkbox';
 import { Label } from '../ui/label';
 import { Upload } from 'lucide-react';
 import { SimulationState } from '../../types/simulation';
-import { CITY_OPTIONS } from '../../data/constants';
+import { CITY_OPTIONS, SCENARIOS } from '../../data/constants';
 import { ruralFactorFromKm } from '../../utils/calculations';
 
 interface ControlsSectionProps {
@@ -33,7 +33,27 @@ export function ControlsSection({ state, onStateChange, onResetToPreset }: Contr
       <div className="text-lg font-semibold text-foreground">Deployment Scenario</div>
       <div className="text-help text-sm mb-3">Tune assumptions (persisted in localStorage).</div>
       
-      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4 items-end">
+      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-4 items-end">
+        <div>
+          <div className="text-help text-sm mb-2">Scenario</div>
+          <Select value={state.scenario} onValueChange={(value) => {
+            const scenario = SCENARIOS[value as keyof typeof SCENARIOS];
+            onStateChange({ 
+              scenario: value,
+              callsPerJob: scenario?.callsPerJob || state.callsPerJob
+            });
+          }}>
+            <SelectTrigger className="bg-input border-input-border">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              {Object.keys(SCENARIOS).map(scenario => (
+                <SelectItem key={scenario} value={scenario}>{scenario}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+        
         <div>
           <div className="text-help text-sm mb-2">City</div>
           <Select value={state.city} onValueChange={(value) => onStateChange({ city: value })}>
@@ -71,6 +91,9 @@ export function ControlsSection({ state, onStateChange, onResetToPreset }: Contr
             onChange={(e) => onStateChange({ callsPerJob: Math.max(1, parseInt(e.target.value) || 1) })}
             className="w-20 font-mono bg-input border-input-border"
           />
+          <div className="text-xs text-muted-foreground mt-1">
+            Scenario: {SCENARIOS[state.scenario as keyof typeof SCENARIOS]?.callsPerJob || 'N/A'}
+          </div>
         </div>
         
         <div>

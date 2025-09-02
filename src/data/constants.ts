@@ -84,9 +84,9 @@ export const CATALOG: Device[] = [
 ];
 
 export const SCENARIOS = {
-  Conservative: { util: 0.9, price: 0.95 },
-  Median: { util: 1.0, price: 1.00 },
-  Optimistic: { util: 1.1, price: 1.08 }
+  Conservative: { util: 0.9, price: 0.95, callsPerJob: 2 },
+  Median: { util: 1.0, price: 1.00, callsPerJob: 5 },
+  Optimistic: { util: 1.1, price: 1.08, callsPerJob: 12 }
 };
 
 export const PRESETS: Preset[] = [
