@@ -3,7 +3,7 @@ import { SimulationState, Device } from '../types/simulation';
 import { PRESETS, FIBRE_PROVIDERS, ENERGY_PROVIDERS, CATALOG } from '../data/constants';
 import { calculateRevenue, getSelectedFibreRate } from '../utils/calculations';
 
-const LS_KEY = 'hex_v5c_state';
+const LS_KEY = 'hex_v5c_state_v2'; // Updated for new pricing model
 
 const defaultState: SimulationState = {
   city: 'Toronto',
