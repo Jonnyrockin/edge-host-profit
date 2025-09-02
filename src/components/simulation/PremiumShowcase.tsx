@@ -1,7 +1,10 @@
 import { SimulationState } from '../../types/simulation';
 import { Slider } from '../ui/slider';
 import { Input } from '../ui/input';
-import { ArrowRight, TrendingUp } from 'lucide-react';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
+import { Button } from '../ui/button';
+import { ArrowRight, TrendingUp, ExternalLink } from 'lucide-react';
+import { CLOUD_BASELINES, getCloudProviderById } from '../../data/cloud-baselines';
 
 interface PremiumShowcaseProps {
   state: SimulationState;
@@ -9,9 +12,22 @@ interface PremiumShowcaseProps {
 }
 
 export function PremiumShowcase({ state, onStateChange }: PremiumShowcaseProps) {
-  const baselinePrice = state.baselineCloudPrice || 0.002;
+  const selectedProvider = getCloudProviderById(state.baselineProvider || 'market-average');
+  const baselinePrice = selectedProvider?.pricePerCall || 0.0038;
   const multiplier = state.premiumMultiplier || 8;
   const edgePrice = baselinePrice * multiplier;
+
+  const handleProviderChange = (providerId: string) => {
+    const provider = getCloudProviderById(providerId);
+    if (provider) {
+      const newEdgePrice = provider.pricePerCall * multiplier;
+      onStateChange({
+        baselineProvider: providerId,
+        baselineCloudPrice: provider.pricePerCall,
+        pricePerCallBase: newEdgePrice
+      });
+    }
+  };
 
   const handleMultiplierChange = (value: number[]) => {
     const newMultiplier = value[0];
@@ -26,7 +42,8 @@ export function PremiumShowcase({ state, onStateChange }: PremiumShowcaseProps) 
     const newEdgePrice = value * multiplier;
     onStateChange({ 
       baselineCloudPrice: value,
-      pricePerCallBase: newEdgePrice
+      pricePerCallBase: newEdgePrice,
+      baselineProvider: 'custom' // Mark as custom when manually edited
     });
   };
 
@@ -45,21 +62,56 @@ export function PremiumShowcase({ state, onStateChange }: PremiumShowcaseProps) 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-center">
         
         {/* Baseline Cloud Price */}
-        <div className="bg-card/50 border border-border rounded-xl p-4 text-center">
+        <div className="bg-card/50 border border-border rounded-xl p-4 text-center space-y-3">
           <div className="text-sm text-muted-foreground mb-2">Baseline Cloud Compute</div>
           <div className="text-4xl font-bold text-muted-foreground mb-2">
             ${baselinePrice.toFixed(4)}
           </div>
           <div className="text-xs text-muted-foreground mb-3">per call</div>
-          <Input
-            type="number"
-            min="0.0001"
-            max="0.01"
-            step="0.0001"
-            value={baselinePrice}
-            onChange={(e) => handleBaselineChange(parseFloat(e.target.value) || 0.002)}
-            className="w-full text-center font-mono text-sm"
-          />
+          
+          {/* Provider Selection */}
+          <div className="space-y-2">
+            <Select value={state.baselineProvider || 'market-average'} onValueChange={handleProviderChange}>
+              <SelectTrigger className="w-full text-sm">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                {CLOUD_BASELINES.map(provider => (
+                  <SelectItem key={provider.id} value={provider.id}>
+                    <div className="flex flex-col items-start">
+                      <div className="font-medium">{provider.name}</div>
+                      <div className="text-xs text-muted-foreground">{provider.description}</div>
+                    </div>
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            
+            {/* Source Link */}
+            {selectedProvider?.sourceUrl && (
+              <Button variant="ghost" size="sm" asChild className="h-6 text-xs">
+                <a href={selectedProvider.sourceUrl} target="_blank" rel="noopener noreferrer">
+                  <ExternalLink className="w-3 h-3 mr-1" />
+                  View Pricing
+                </a>
+              </Button>
+            )}
+          </div>
+          
+          {/* Manual Override */}
+          <div className="pt-2 border-t border-border/30">
+            <div className="text-xs text-muted-foreground mb-1">Custom Price Override</div>
+            <Input
+              type="number"
+              min="0.0001"
+              max="0.01"
+              step="0.0001"
+              value={baselinePrice}
+              onChange={(e) => handleBaselineChange(parseFloat(e.target.value) || 0.0038)}
+              className="w-full text-center font-mono text-sm h-8"
+              placeholder="Custom price"
+            />
+          </div>
         </div>
 
         {/* Arrow and Multiplier */}
@@ -101,6 +153,18 @@ export function PremiumShowcase({ state, onStateChange }: PremiumShowcaseProps) 
           </div>
         </div>
       </div>
+
+      {/* Provider Details */}
+      {selectedProvider && (
+        <div className="mt-4 p-3 bg-muted/30 rounded-lg text-center">
+          <div className="text-sm font-medium text-foreground mb-1">{selectedProvider.name}</div>
+          <div className="text-xs text-muted-foreground mb-1">{selectedProvider.description}</div>
+          <div className="text-xs text-muted-foreground">
+            Last updated: {selectedProvider.lastUpdated}
+            {selectedProvider.id === 'market-average' && ' • Averaged across 5 major providers'}
+          </div>
+        </div>
+      )}
 
       {/* Value Justification */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6 pt-4 border-t border-border/50">

@@ -40,6 +40,7 @@ export interface SimulationState {
   baseInferencePrice?: number;
   baselineCloudPrice?: number;
   premiumMultiplier?: number;
+  baselineProvider?: string;
 }
 
 export interface CalculationResult {
