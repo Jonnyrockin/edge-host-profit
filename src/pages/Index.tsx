@@ -46,9 +46,16 @@ const Index = () => {
           onRemoveDevice={removeDevice}
         />
 
-        {/* Costs + Math + Pricing */}
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 mt-4">
-          <CostsSection
+        {/* Costs */}
+        <CostsSection
+          state={state}
+          calculations={calculations}
+          onStateChange={updateState}
+        />
+
+        {/* Pricing + Math in two-column layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-4">
+          <PricingPanel
             state={state}
             calculations={calculations}
             onStateChange={updateState}
@@ -56,11 +63,6 @@ const Index = () => {
           <MathSection
             state={state}
             calculations={calculations}
-          />
-          <PricingPanel
-            state={state}
-            calculations={calculations}
-            onStateChange={updateState}
           />
         </div>
       </div>

@@ -68,7 +68,7 @@ export function DeviceStack({ devices, onAddDevice, onUpdateDevice, onRemoveDevi
                       step="1"
                       value={device.qty}
                       onChange={(e) => onUpdateDevice(device.id, { qty: Math.max(0, parseInt(e.target.value) || 0) })}
-                      className="w-20 font-mono bg-input border-input-border"
+                      className="w-20 font-mono bg-input border-input-border text-right"
                     />
                   </td>
                   <td className="py-2 text-right">
