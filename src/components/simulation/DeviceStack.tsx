@@ -61,16 +61,16 @@ export function DeviceStack({ devices, onAddDevice, onUpdateDevice, onRemoveDevi
                   <td className="py-2 text-foreground">{device.vendor}</td>
                   <td className="py-2 text-right text-foreground">{device.latencyTier}</td>
                   <td className="py-2 text-right text-foreground">{device.ips}</td>
-                  <td className="py-2 text-right">
-                    <Input
-                      type="number"
-                      min="0"
-                      step="1"
-                      value={device.qty}
-                      onChange={(e) => onUpdateDevice(device.id, { qty: Math.max(0, parseInt(e.target.value) || 0) })}
-                      className="w-20 font-mono bg-input border-input-border text-right"
-                    />
-                  </td>
+                   <td className="py-2 text-right">
+                     <Input
+                       type="number"
+                       min="0"
+                       step="1"
+                       value={device.qty}
+                       onChange={(e) => onUpdateDevice(device.id, { qty: Math.max(0, parseInt(e.target.value) || 0) })}
+                       className="w-16 font-mono bg-input border-input-border text-right"
+                     />
+                   </td>
                   <td className="py-2 text-right">
                     <Button
                       variant="outline"
