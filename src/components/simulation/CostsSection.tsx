@@ -32,10 +32,14 @@ export function CostsSection({ state, calculations, onStateChange }: CostsSectio
           <div className="text-help text-core mb-3">Expanded monthly operating costs. Common aware.</div>
         </div>
         <div className="absolute top-4 right-4 text-right">
-          <div className="text-headline text-warning font-semibold">
+          <div className="text-headline text-foreground font-semibold">
+            ${Math.round(calculations.opex).toLocaleString()}/mo
+          </div>
+          <div className="text-core text-muted-foreground">Total Monthly OPEX</div>
+          <div className="text-headline text-warning font-semibold mt-xs">
             ${Math.round(calculations.opex * 12).toLocaleString()}
           </div>
-          <div className="text-core text-help">Estimated Annual OPEX</div>
+          <div className="text-core text-muted-foreground">Estimated Annual OPEX</div>
         </div>
       </div>
 
@@ -277,12 +281,6 @@ export function CostsSection({ state, calculations, onStateChange }: CostsSectio
           Fiber Internet:
           <span className="text-foreground font-semibold ml-1">
             ${Math.round(calculations.fibreCost).toLocaleString()}/mo
-          </span>
-        </div>
-        <div className="text-headline text-muted-foreground">
-          Total Monthly OPEX:
-          <span className="text-foreground font-semibold ml-1">
-            ${Math.round(calculations.opex).toLocaleString()}
           </span>
         </div>
       </div>
