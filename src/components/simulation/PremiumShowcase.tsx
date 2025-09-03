@@ -48,15 +48,15 @@ export function PremiumShowcase({ state, onStateChange }: PremiumShowcaseProps) 
   };
 
   return (
-    <div className="bg-card border border-border rounded-2xl p-4 md:p-6 mb-6">
-      <div className="flex items-center justify-between mb-3">
-        <div className="flex items-center gap-2">
+    <div className="bg-card border border-border rounded-2xl p-panel-padding mb-panel">
+      <div className="flex items-center justify-between mb-panel-gap">
+        <div className="flex items-center gap-md">
           <h2 className="text-headline font-semibold text-foreground">Edge AI Premium Positioning</h2>
         </div>
         
         {/* Provider Chip */}
         {selectedProvider && (
-          <div className="bg-muted/30 border border-border/50 rounded-full px-2 py-1 flex items-center gap-1.5">
+          <div className="bg-muted/30 border border-border/50 rounded-full px-md py-xs flex items-center gap-xs">
             <div className="text-xs font-medium text-foreground">{selectedProvider.name}</div>
             <div className="w-0.5 h-0.5 bg-muted-foreground rounded-full"></div>
             <div className="text-xs text-muted-foreground">{selectedProvider.lastUpdated}</div>
@@ -65,12 +65,12 @@ export function PremiumShowcase({ state, onStateChange }: PremiumShowcaseProps) 
       </div>
 
       {/* Premium Comparison Display */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-lg">
         
         {/* Baseline Cloud Price */}
-        <div className="bg-card border border-border rounded-lg p-3 text-center space-y-2 flex flex-col">
+        <div className="bg-card border border-border rounded-lg p-panel-gap text-center space-y-md flex flex-col">
           <div className="text-core text-muted-foreground">Baseline Cloud Compute</div>
-          <div className="flex items-baseline justify-center gap-1">
+          <div className="flex items-baseline justify-center gap-xs">
             <div className="text-3xl font-bold text-number-blue">
               ${baselinePrice.toFixed(4)}
             </div>
@@ -78,7 +78,7 @@ export function PremiumShowcase({ state, onStateChange }: PremiumShowcaseProps) 
           </div>
           
           {/* Provider Selection */}
-          <div className="space-y-2 mt-3 flex-1">
+          <div className="space-y-md mt-panel-gap flex-1">
             <Select value={state.baselineProvider || 'market-average'} onValueChange={handleProviderChange}>
               <SelectTrigger className="w-full text-sm h-[4.375rem]">
                 <SelectValue />

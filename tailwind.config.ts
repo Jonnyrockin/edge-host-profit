@@ -83,7 +83,13 @@ export default {
 			spacing: {
 				'30': '7.5rem',
 				'panel': 'var(--panel-margin)',
-				'panel-padding': 'var(--panel-padding)'
+				'panel-padding': 'var(--panel-padding)',
+				'panel-gap': 'var(--panel-gap)',
+				'xs': 'var(--spacing-xs)',
+				'sm': 'var(--spacing-sm)', 
+				'md': 'var(--spacing-md)',
+				'lg': 'var(--spacing-lg)',
+				'xl': 'var(--spacing-xl)'
 			},
 			fontSize: {
 				'headline': 'var(--font-headline)',

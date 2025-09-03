@@ -23,9 +23,9 @@ export function DeviceStack({ devices, state, calculations, onAddDevice, onUpdat
   const utilizationPercentage = calculations.util * 100;
 
   return (
-    <div className="bg-card border border-border rounded-lg p-panel-padding mt-panel">
+    <div className="bg-card border border-border rounded-2xl p-panel-padding mb-panel">
       <div className="text-headline font-semibold text-foreground">Node Stack</div>
-      <div className="text-help text-core mb-3">
+      <div className="text-help text-core mb-panel-gap">
         Add device rows from the catalog. Quantity = how many identical nodes you operate.
       </div>
       

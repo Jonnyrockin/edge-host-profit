@@ -25,7 +25,7 @@ export function CostsSection({ state, calculations, onStateChange }: CostsSectio
   };
 
   return (
-    <div className="bg-card border border-border rounded-lg p-panel-padding lg:col-span-2 relative">
+    <div className="bg-card border border-border rounded-2xl p-panel-padding mb-panel lg:col-span-2 relative">
       <div className="flex items-center justify-between">
         <div>
           <div className="text-headline font-semibold text-foreground">Costs/Expenditures</div>

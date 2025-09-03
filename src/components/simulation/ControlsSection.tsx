@@ -31,14 +31,14 @@ export function ControlsSection({ state, calculations, onStateChange, onResetToP
   };
 
   return (
-    <div className="bg-card border border-border rounded-lg p-panel-padding mt-panel">
+    <div className="bg-card border border-border rounded-2xl p-panel-padding mb-panel">
       <div className="text-headline font-semibold text-foreground">Deployment Scenario</div>
-      <div className="text-help text-core mb-3">Tune assumptions (persisted in localStorage).</div>
+      <div className="text-help text-core mb-panel-gap">Tune assumptions (persisted in localStorage).</div>
       
-      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4 items-end">
+      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-lg items-end">
         <div>
-          <div className="flex items-center gap-2">
-            <div className="text-help text-core mb-2">Scenario</div>
+          <div className="flex items-center gap-md">
+            <div className="text-help text-core mb-md">Scenario</div>
             <InfoTooltip content="Predefined configurations for different business models. Each scenario has optimized utilization rates and call patterns." />
           </div>
           <Select value={state.scenario} onValueChange={(value) => {
@@ -60,8 +60,8 @@ export function ControlsSection({ state, calculations, onStateChange, onResetToP
         </div>
         
         <div>
-          <div className="flex items-center gap-2">
-            <div className="text-help text-core mb-2">City</div>
+          <div className="flex items-center gap-md">
+            <div className="text-help text-core mb-md">City</div>
             <InfoTooltip content="Geographic location affects baseline pricing, available connectivity providers, and energy costs." />
           </div>
           <Select value={state.city} onValueChange={(value) => onStateChange({ city: value })}>
@@ -77,8 +77,8 @@ export function ControlsSection({ state, calculations, onStateChange, onResetToP
         </div>
         
         <div>
-          <div className="flex items-center gap-2">
-            <div className="text-help text-core mb-2">Utilization (%)</div>
+          <div className="flex items-center gap-md">
+            <div className="text-help text-core mb-md">Utilization (%)</div>
             <InfoTooltip content="Percentage of total processing capacity actively used. Higher utilization = more revenue but less headroom for spikes." />
           </div>
           <Slider
@@ -87,14 +87,14 @@ export function ControlsSection({ state, calculations, onStateChange, onResetToP
             min={10}
             max={100}
             step={1}
-            className="mb-2"
+            className="mb-md"
           />
           <div className="text-core text-foreground">{Math.round(state.util * 100)}%</div>
         </div>
         
         <div>
-          <div className="flex items-center gap-2">
-            <div className="text-help text-core mb-2">Calls per Job</div>
+          <div className="flex items-center gap-md">
+            <div className="text-help text-core mb-md">Calls per Job</div>
             <InfoTooltip content="How many AI inference calls each customer job requires. Complex tasks need more calls." />
           </div>
           <Input
@@ -105,14 +105,14 @@ export function ControlsSection({ state, calculations, onStateChange, onResetToP
             onChange={(e) => onStateChange({ callsPerJob: Math.max(1, parseInt(e.target.value) || 1) })}
             className="w-20 font-mono bg-input border-input-border"
           />
-          <div className="text-xs text-muted-foreground mt-1">
+          <div className="text-xs text-muted-foreground mt-xs">
             Scenario: {SCENARIOS[state.scenario as keyof typeof SCENARIOS]?.callsPerJob || 'N/A'}
           </div>
         </div>
         
         <div>
-          <div className="flex items-center gap-2">
-            <div className="text-help text-core mb-2">Base price per call ($)</div>
+          <div className="flex items-center gap-md">
+            <div className="text-help text-core mb-md">Base price per call ($)</div>
             <InfoTooltip content="Starting price before applying location, rural, and premium multipliers. This sets your baseline pricing strategy." />
           </div>
           <Input
@@ -127,13 +127,13 @@ export function ControlsSection({ state, calculations, onStateChange, onResetToP
       </div>
       
       {/* Rural Offset and ESG Section */}
-      <div className="flex flex-col lg:flex-row justify-between items-start gap-6 mt-6 pt-4 border-t border-border">
+      <div className="flex flex-col lg:flex-row justify-between items-start gap-xl mt-xl pt-lg border-t border-border">
         <div className="flex-1">
-          <div className="flex items-center gap-2">
-            <div className="text-help text-core mb-2">Rural offset presets</div>
+          <div className="flex items-center gap-md">
+            <div className="text-help text-core mb-md">Rural offset presets</div>
             <InfoTooltip content="Distance from city center adds pricing premium due to higher infrastructure costs and lower competition." />
           </div>
-          <div className="grid grid-cols-6 gap-1">
+          <div className="grid grid-cols-6 gap-xs">
             {[0, 50, 100, 200, 300, 500].map(km => (
               <Button
                 key={km}
@@ -150,12 +150,12 @@ export function ControlsSection({ state, calculations, onStateChange, onResetToP
         </div>
         
         <div className="lg:ml-auto">
-          <div className="flex items-center gap-2">
-            <div className="text-help text-core mb-2">ESG Compliance</div>
+          <div className="flex items-center gap-md">
+            <div className="text-help text-core mb-md">ESG Compliance</div>
             <InfoTooltip content="Environmental, Social, and Governance compliance allows you to charge a 10% premium for sustainable computing practices." />
           </div>
-          <div className="flex items-center gap-4">
-            <div className="flex items-center space-x-2">
+          <div className="flex items-center gap-lg">
+            <div className="flex items-center space-x-md">
               <Checkbox
                 id="esg-enabled"
                 checked={state.esgEnabled}
@@ -163,7 +163,7 @@ export function ControlsSection({ state, calculations, onStateChange, onResetToP
               />
               <Label htmlFor="esg-enabled" className="text-core">Enable ESG (+10% premium)</Label>
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-md">
               <input
                 type="file"
                 id="esg-file"

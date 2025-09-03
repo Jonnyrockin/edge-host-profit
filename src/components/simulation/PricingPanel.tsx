@@ -44,8 +44,8 @@ export function PricingPanel({ state, calculations, onStateChange }: PricingPane
   const priceFor1M = finalPrice * 1000000;
   
   return (
-    <div className="bg-card border border-border rounded-lg p-panel-padding mt-panel">
-      <div className="flex items-center justify-between mb-4">
+    <div className="bg-card border border-border rounded-2xl p-panel-padding mb-panel">
+      <div className="flex items-center justify-between mb-lg">
         <div className="text-headline font-semibold text-foreground">Pricing Overview</div>
         {selectedProvider && (
           <Button variant="ghost" size="sm" asChild>

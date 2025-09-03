@@ -21,12 +21,12 @@ export function MathSection({ state, calculations }: MathSectionProps) {
   ];
 
   return (
-    <div className="bg-card border border-border rounded-lg p-panel-padding mt-panel">
+    <div className="bg-card border border-border rounded-2xl p-panel-padding mb-panel">
       <div className="text-headline font-semibold text-foreground">The Math</div>
       <div className="text-help text-core">
         Baselines → multipliers → traffic → gross → fees → OPEX → Cash Net.
       </div>
-      <div className="font-mono text-sm mt-2 text-foreground space-y-2">
+      <div className="font-mono text-sm mt-md text-foreground space-y-md">
         <div>Pricing Baselines</div>
         <div className="ml-4">
           city({state.city}) × PRICE_FACTOR = <span className="text-number-blue">1.00</span>
@@ -41,17 +41,17 @@ export function MathSection({ state, calculations }: MathSectionProps) {
           Final price per call = base × factor = <span className="text-number-blue">${calculations.pricePerCall.toFixed(6)}</span>
         </div>
         
-        <div className="mt-4">Monthly Calls</div>
+        <div className="mt-lg">Monthly Calls</div>
         <div className="ml-4">
           IPS(<span className="text-number-blue">{calculations.inventoryIPS}</span>) × Calls/job(<span className="text-number-blue">{state.callsPerJob}</span>) × Util(<span className="text-number-blue">{(state.util * scenario.util).toFixed(2)}</span>) × Seconds(<span className="text-number-blue">{state.secondsInMonth}</span>) = <span className="text-number-blue">{calculations.monthlyCalls.toLocaleString()}</span>
         </div>
         
-        <div className="mt-4">Gross Revenue (Monthly)</div>
+        <div className="mt-lg">Gross Revenue (Monthly)</div>
         <div className="ml-4">
           Gross = Calls × Price = <span className="text-number-blue">{calculations.monthlyCalls.toLocaleString()}</span> × <span className="text-number-blue">${calculations.pricePerCall.toFixed(4)}</span> = <span className="text-number-blue">${Math.round(calculations.gross).toLocaleString()}</span>
         </div>
         
-        <div className="mt-4">Platform Fee & Cash Net (Monthly)</div>
+        <div className="mt-lg">Platform Fee & Cash Net (Monthly)</div>
         <div className="ml-4">
           PlatformFee = Gross × 25% = <span className="text-number-blue">${Math.round(calculations.platformFee).toLocaleString()}</span>
         </div>
@@ -61,12 +61,12 @@ export function MathSection({ state, calculations }: MathSectionProps) {
       </div>
 
       {/* Jobs Per Day Analysis */}
-      <div className="mt-4">
+      <div className="mt-lg">
         <div className="text-core font-semibold text-foreground">Jobs Per Day Analysis</div>
-        <div className="text-help text-core mb-2">
+        <div className="text-help text-core mb-md">
           Jobs/day = (IPS × Utilization × 86,400 sec) ÷ Calls per job
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-panel-gap">
           <div className="bg-muted/30 rounded-lg p-3 relative group cursor-help">
             <div className="text-xs text-muted-foreground mb-1 flex items-center gap-1">
               Conservative (40%)
@@ -100,18 +100,20 @@ export function MathSection({ state, calculations }: MathSectionProps) {
         </div>
       </div>
 
-      <div className="mt-4">
+      <div className="mt-lg">
         <div className="text-core font-semibold text-foreground">SEL Tests</div>
-        <ul className="mt-2 space-y-1 text-core">
-          {tests.map(([name, ok], index) => (
-            <li key={index} className="flex items-center gap-2">
-              <span className={ok ? 'text-muted-foreground' : 'text-muted-foreground'}>
-                {ok ? '✅' : '❌'}
-              </span>
-              <span className="text-foreground">{name}</span>
-            </li>
-          ))}
-        </ul>
+        <div className="mt-md space-y-xs text-core">
+          <ul>
+            {tests.map(([name, ok], index) => (
+              <li key={index} className="flex items-center gap-md">
+                <span className={ok ? 'text-muted-foreground' : 'text-muted-foreground'}>
+                  {ok ? '✅' : '❌'}
+                </span>
+                <span className="text-foreground">{name}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     </div>
   );
