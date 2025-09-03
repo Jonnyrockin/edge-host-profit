@@ -60,6 +60,7 @@
     /* KPI Panel Colors - Inverted with transparency */
     --kpi-panel-bg: 0 0% 85%; /* Light grey instead of white */
     --kpi-card-bg: 0 0% 100% / 0.5; /* White with 50% transparency */
+    --kpi-card-border: 0 0% 20% / 0.25; /* 25% transparent borders */
 
     /* Blue accent for slider and numbers only */
     --slider-blue: 217 91% 60%;
@@ -79,7 +80,7 @@
     --panel-margin: 1rem;      /* 16px - Standard margin between panels */
     --panel-padding: 0.75rem;  /* 12px - Standard padding within panels */
 
-    --radius: 0.6rem;          /* Reduced by 20% from 0.75rem */
+    --radius: 0.45rem;          /* Reduced by 25% from 0.6rem */
     --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
