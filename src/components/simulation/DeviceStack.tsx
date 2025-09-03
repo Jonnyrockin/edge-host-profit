@@ -47,7 +47,7 @@ export function DeviceStack({ devices, state, calculations, onAddDevice, onUpdat
                 Qty
                 <InfoTooltip content="Number of identical devices. More devices = higher total capacity and redundancy." />
               </th>
-              <th className="text-right py-1 text-xs">Actions</th>
+              <th className="text-center py-1 text-sm font-medium">Actions</th>
             </tr>
           </thead>
           <tbody>
