@@ -118,16 +118,16 @@ export function DeviceStack({ devices, state, calculations, onAddDevice, onUpdat
         </div>
         
         {/* Utilization Bar */}
-        <div className="relative w-full h-8 bg-muted/30 rounded-md overflow-hidden">
+        <div className="relative w-full h-6 bg-muted/30 rounded-md overflow-hidden">
           <div 
             className="h-full bg-slider-blue transition-all duration-300"
             style={{ width: `${utilizationPercentage}%` }}
           />
           <div 
-            className="absolute top-0 right-2 h-full flex items-center"
-            style={{ left: `${Math.min(utilizationPercentage, 85)}%` }}
+            className="absolute top-0 h-full flex items-center"
+            style={{ left: `${utilizationPercentage}%`, transform: 'translateX(8px)' }}
           >
-            <span className="text-headline font-semibold text-foreground">
+            <span className="text-headline font-semibold text-foreground whitespace-nowrap">
               {utilizationPercentage.toFixed(0)}% utilization
             </span>
           </div>
