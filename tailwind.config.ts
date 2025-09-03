@@ -85,7 +85,8 @@ export default {
 			fontSize: {
 				'headline': 'var(--font-headline)',
 				'core': 'var(--font-core)',
-				'label': 'var(--font-label)'
+				'label': 'var(--font-label)',
+				'title': 'var(--font-title)'
 			},
 			backdropBlur: {
 				glass: 'var(--backdrop-blur)'
