@@ -69,9 +69,9 @@ export function PremiumShowcase({ state, onStateChange }: PremiumShowcaseProps) 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
         
         {/* Baseline Cloud Price */}
-        <div className="bg-card/50 border border-border rounded-lg p-3 text-center space-y-2">
+        <div className="bg-card border border-border rounded-lg p-3 text-center space-y-2">
           <div className="text-sm text-muted-foreground">Baseline Cloud Compute</div>
-          <div className="text-3xl font-bold text-muted-foreground">
+          <div className="text-3xl font-bold text-number-blue">
             ${baselinePrice.toFixed(4)}
           </div>
           <div className="text-xs text-muted-foreground">per call</div>
@@ -157,31 +157,31 @@ export function PremiumShowcase({ state, onStateChange }: PremiumShowcaseProps) 
         </div>
 
         {/* Edge Price Result */}
-        <div className="bg-primary/10 border border-primary/30 rounded-lg p-3 text-center">
-          <div className="text-sm text-primary font-medium mb-1">Edge AI Premium Price</div>
-          <div className="text-3xl font-bold text-primary mb-1">
+        <div className="bg-card border border-border rounded-lg p-3 text-center">
+          <div className="text-sm text-muted-foreground mb-1">Edge AI Premium Price</div>
+          <div className="text-3xl font-bold text-number-blue mb-1">
             ${edgePrice.toFixed(4)}
           </div>
-          <div className="text-xs text-primary/80 mb-2">per call</div>
-          <div className="bg-primary/20 rounded-lg p-2 mb-3">
-            <div className="text-sm font-semibold text-primary">
+          <div className="text-xs text-muted-foreground mb-2">per call</div>
+          <div className="bg-muted/30 border border-border/50 rounded-lg p-2 mb-3">
+            <div className="text-sm font-semibold text-number-blue">
               +{((multiplier - 1) * 100).toFixed(0)}% Premium
             </div>
-            <div className="text-xs text-primary/80">
+            <div className="text-xs text-muted-foreground">
               vs. baseline cloud
             </div>
           </div>
 
           {/* Value Metrics */}
-          <div className="grid grid-cols-1 gap-2 text-center pt-2 border-t border-primary/20">
+          <div className="grid grid-cols-1 gap-2 text-center pt-2 border-t border-border">
             <div>
-              <div className="text-xs font-semibold text-success">&lt;25ms Latency</div>
+              <div className="text-xs font-semibold text-foreground">&lt;25ms Latency</div>
             </div>
             <div>
-              <div className="text-xs font-semibold text-warning">Local Privacy</div>
+              <div className="text-xs font-semibold text-foreground">Local Privacy</div>
             </div>
             <div>
-              <div className="text-xs font-semibold text-primary">Premium Market</div>
+              <div className="text-xs font-semibold text-foreground">Premium Market</div>
             </div>
           </div>
         </div>
