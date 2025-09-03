@@ -128,10 +128,15 @@ export function CostsSection({ state, calculations, onStateChange }: CostsSectio
                   <SelectTrigger className="bg-input border-input-border">
                     <SelectValue />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="z-50">
                     {energyProviders.map(provider => (
                       <SelectItem key={provider.name} value={provider.name}>
-                        {provider.name}
+                        <div className="flex flex-col items-start">
+                          <div className="font-medium">{provider.name}</div>
+                          <div className="text-xs text-muted-foreground">
+                            ${provider.rate?.toFixed(3)}/kWh {provider.green ? '🌱' : ''}
+                          </div>
+                        </div>
                       </SelectItem>
                     ))}
                   </SelectContent>

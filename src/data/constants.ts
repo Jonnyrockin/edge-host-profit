@@ -42,34 +42,34 @@ export const FIBRE_PROVIDERS: Record<string, Provider[]> = {
 
 export const ENERGY_PROVIDERS: Record<string, Provider[]> = {
   Toronto: [
-    { name: 'Toronto Hydro (regulated)', green: false },
-    { name: 'Bullfrog Power (RECs)', green: true },
-    { name: 'Hydro One Biz', green: false }
+    { name: 'Toronto Hydro (regulated)', rate: 0.12, green: false },
+    { name: 'Bullfrog Power (RECs)', rate: 0.14, green: true },
+    { name: 'Hydro One Business', rate: 0.13, green: false }
   ],
   'New York': [
-    { name: 'Con Edison Biz', green: false },
-    { name: 'Green Mountain Energy', green: true }
+    { name: 'Con Edison Business', rate: 0.18, green: false },
+    { name: 'Green Mountain Energy Biz', rate: 0.21, green: true }
   ],
   London: [
-    { name: 'Octopus Energy Biz', green: true },
-    { name: 'British Gas Biz', green: false }
+    { name: 'Octopus Energy Business', rate: 0.25, green: true },
+    { name: 'British Gas Business', rate: 0.22, green: false }
   ],
   Sydney: [
-    { name: 'AGL Biz', green: false },
-    { name: 'Origin Energy Green', green: true },
-    { name: 'Simply Energy', green: false }
+    { name: 'AGL Business', rate: 0.28, green: false },
+    { name: 'Origin Energy Green Biz', rate: 0.32, green: true },
+    { name: 'Simply Energy Business', rate: 0.26, green: false }
   ],
   Singapore: [
-    { name: 'SP Group (regulated)', green: false },
-    { name: 'Sembcorp Green', green: true }
+    { name: 'SP Group (business)', rate: 0.20, green: false },
+    { name: 'Sembcorp Green Business', rate: 0.23, green: true }
   ],
   Portland: [
-    { name: 'PGE', green: false },
-    { name: 'Pacific Power Blue Sky', green: true }
+    { name: 'PGE Business', rate: 0.10, green: false },
+    { name: 'Pacific Power Blue Sky Biz', rate: 0.12, green: true }
   ],
   Atlanta: [
-    { name: 'Georgia Power', green: false },
-    { name: 'Green-e RECs', green: true }
+    { name: 'Georgia Power Business', rate: 0.11, green: false },
+    { name: 'Green-e RECs Business', rate: 0.14, green: true }
   ]
 };
 

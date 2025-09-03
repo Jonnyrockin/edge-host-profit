@@ -1,5 +1,5 @@
 import { SimulationState, CalculationResult, Device } from '../types/simulation';
-import { SCENARIOS, FIBRE_PROVIDERS } from '../data/constants';
+import { SCENARIOS, FIBRE_PROVIDERS, ENERGY_PROVIDERS } from '../data/constants';
 
 export function cityPriceFactor(city: string): number {
   return 1.00; // Base factor for all cities
@@ -29,6 +29,12 @@ export function getSelectedFibreRate(state: SimulationState): number {
   return provider?.rate || 0;
 }
 
+export function getSelectedEnergyRate(state: SimulationState): number {
+  const providers = ENERGY_PROVIDERS[state.city] || [];
+  const provider = providers.find(p => p.name === state.energyProvider) || providers[0];
+  return provider?.rate || 0.12; // Default fallback rate per kWh
+}
+
 export function calculateRevenue(state: SimulationState): CalculationResult {
   const scenario = SCENARIOS[state.scenario as keyof typeof SCENARIOS] || SCENARIOS.Median;
   const util = Math.min(1, Math.max(0, state.util * scenario.util));
@@ -49,7 +55,13 @@ export function calculateRevenue(state: SimulationState): CalculationResult {
 
   // OPEX calculation
   const fibreCost = state.linkRate ? getSelectedFibreRate(state) : (state.costs.fibre || 0);
-  const energyCost = (state.costs.energy || 0) * (1 + (state.greenPremium || 0) / 100);
+  
+  // Energy cost calculation with provider rates
+  const baseEnergyRate = getSelectedEnergyRate(state);
+  const monthlyKwh = (state.costs.energy || 0) / 0.12; // Assume previous cost was at $0.12/kWh
+  const energyCostFromProvider = monthlyKwh * baseEnergyRate;
+  const energyCost = energyCostFromProvider * (1 + (state.greenPremium || 0) / 100);
+  
   const opex = energyCost + 
                (state.costs.rent || 0) + 
                (state.costs.staff || 0) + 
@@ -57,6 +69,7 @@ export function calculateRevenue(state: SimulationState): CalculationResult {
                (state.costs.insurance || 0) + 
                (state.costs.maintenance || 0) + 
                (state.costs.licenses || 0) + 
+               (state.costs.legal || 0) +
                fibreCost;
 
   const gross = monthlyCalls * pricePerCall;

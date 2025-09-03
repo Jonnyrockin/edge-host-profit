@@ -67,8 +67,13 @@ export function useSimulationState() {
         newState.connectivityProvider = fibreProviders[0]?.name || '';
         newState.energyProvider = energyProviders[0]?.name || '';
         
+        // Auto-update costs when city changes
         if (newState.linkRate && fibreProviders[0]?.rate) {
           newState.costs = { ...newState.costs, fibre: fibreProviders[0].rate };
+        }
+        if (energyProviders[0]?.rate) {
+          const monthlyKwh = 13333; // Standard business usage
+          newState.costs = { ...newState.costs, energy: Math.round(monthlyKwh * energyProviders[0].rate) };
         }
       }
       
@@ -76,6 +81,17 @@ export function useSimulationState() {
       if (updates.linkRate !== undefined && updates.linkRate) {
         const rate = getSelectedFibreRate(newState);
         newState.costs = { ...newState.costs, fibre: rate };
+      }
+      
+      // Handle energy provider change
+      if (updates.energyProvider && updates.energyProvider !== prevState.energyProvider) {
+        const energyProviders = ENERGY_PROVIDERS[newState.city] || [];
+        const provider = energyProviders.find(p => p.name === updates.energyProvider);
+        if (provider?.rate) {
+          // Calculate monthly energy cost based on assumed 13,333 kWh usage (from $1600 at $0.12/kWh)
+          const monthlyKwh = 13333; 
+          newState.costs = { ...newState.costs, energy: Math.round(monthlyKwh * provider.rate) };
+        }
       }
       
       return newState;
