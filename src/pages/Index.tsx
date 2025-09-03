@@ -26,6 +26,14 @@ const Index = () => {
         {/* KPI Dashboard - Sticky Header */}
         <KPIDashboard state={state} calculations={calculations} onStateChange={updateState} />
 
+        {/* Deployment Scenario */}
+        <ControlsSection
+          state={state}
+          calculations={calculations}
+          onStateChange={updateState}
+          onResetToPreset={resetToPreset}
+        />
+
         {/* Premium Positioning Showcase */}
         <PremiumShowcase state={state} onStateChange={updateState} />
 
@@ -33,14 +41,6 @@ const Index = () => {
         <PresetsSection 
           state={state}
           onApplyPreset={applyPreset}
-        />
-
-        {/* Deployment Scenario */}
-        <ControlsSection
-          state={state}
-          calculations={calculations}
-          onStateChange={updateState}
-          onResetToPreset={resetToPreset}
         />
 
         {/* Device Stack */}

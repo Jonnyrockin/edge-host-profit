@@ -89,12 +89,12 @@ export function PricingPanel({ state, calculations, onStateChange }: PricingPane
             onValueChange={handleModelChange}
             disabled={!selectedProvider}
           >
-            <SelectTrigger>
+            <SelectTrigger className="h-10">
               <SelectValue />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent className="z-50">
               {selectedProvider?.models.map(model => (
-                <SelectItem key={model.id} value={model.id}>
+                <SelectItem key={model.id} value={model.id} className="py-2">
                   {model.name}
                 </SelectItem>
               ))}
