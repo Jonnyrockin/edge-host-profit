@@ -58,8 +58,8 @@
     --kpi-foreground: 0 0% 90%;
     
     /* KPI Panel Colors - Inverted with transparency */
-    --kpi-panel-bg: 0 0% 85%; /* Light grey instead of white */
-    --kpi-card-bg: 0 0% 100% / 0.5; /* White with 50% transparency */
+    --kpi-panel-bg: 0 0% 68% / 0.85; /* 20% darker gray + 15% more transparent */
+    --kpi-card-bg: 0 0% 100% / 0.125; /* White with 87.5% transparency (75% more than 50%) */
     --kpi-card-border: 0 0% 20% / 0.25; /* 25% transparent borders */
 
     /* Blue accent for slider and numbers only */
