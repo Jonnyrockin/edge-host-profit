@@ -23,6 +23,17 @@ export function ControlsSection({ state, calculations, onStateChange, onResetToP
     onStateChange({ rural: ruralFactor });
   };
 
+  // Determine which rural button is active based on current rural value
+  const getCurrentRuralKm = () => {
+    const currentFactor = state.rural + 1;
+    if (currentFactor <= 1.0) return 0;
+    if (currentFactor <= 1.05) return 50;
+    if (currentFactor <= 1.1) return 100;
+    if (currentFactor <= 1.2) return 200;
+    if (currentFactor <= 1.3) return 300;
+    return 500;
+  };
+
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
@@ -134,18 +145,23 @@ export function ControlsSection({ state, calculations, onStateChange, onResetToP
             <InfoTooltip content="Distance from city center adds pricing premium due to higher infrastructure costs and lower competition." />
           </div>
           <div className="grid grid-cols-6 gap-xs">
-            {[0, 50, 100, 200, 300, 500].map(km => (
-              <Button
-                key={km}
-                variant="outline"
-                size="sm"
-                onClick={() => handleRuralClick(km)}
-                className="px-2 py-1 border-input-border hover:border-glass-border text-core"
-                title={km === 0 ? 'City core (no rural premium)' : `${km}km from core (adds premium)`}
-              >
-                {km === 0 ? 'Core' : `${km}km`}
-              </Button>
-            ))}
+            {[0, 50, 100, 200, 300, 500].map(km => {
+              const isActive = getCurrentRuralKm() === km;
+              return (
+                <Button
+                  key={km}
+                  variant="outline"
+                  size="sm"
+                  onClick={() => handleRuralClick(km)}
+                  className={`px-2 py-1 border-input-border hover:border-glass-border text-core ${
+                    isActive ? 'bg-slider-blue text-white border-slider-blue' : ''
+                  }`}
+                  title={km === 0 ? 'City core (no rural premium)' : `${km}km from core (adds premium)`}
+                >
+                  {km === 0 ? 'Core' : `${km}km`}
+                </Button>
+              );
+            })}
           </div>
         </div>
         
