@@ -62,10 +62,6 @@ export default {
 				help: 'hsl(var(--help))',
 				kpi: 'hsl(var(--kpi-bg))',
 				'kpi-foreground': 'hsl(var(--kpi-foreground))',
-				'kpi-panel-bg': 'hsl(var(--kpi-panel-bg))',
-				'kpi-panel-foreground': 'hsl(var(--kpi-panel-foreground))',
-				'kpi-card-bg': 'hsl(var(--kpi-card-bg))',
-				'kpi-card-foreground': 'hsl(var(--kpi-card-foreground))',
 				'input-border': 'hsl(var(--input-border))',
 				'slider-blue': 'hsl(var(--slider-blue))',
 				'number-blue': 'hsl(var(--number-blue))',
@@ -88,9 +84,9 @@ export default {
 			},
 			fontSize: {
 				'headline': 'var(--font-headline)',
-				'massive': 'var(--font-massive)',
 				'core': 'var(--font-core)',
-				'label': 'var(--font-label)'
+				'label': 'var(--font-label)',
+				'title': 'var(--font-title)'
 			},
 			backdropBlur: {
 				glass: 'var(--backdrop-blur)'
