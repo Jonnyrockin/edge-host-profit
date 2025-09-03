@@ -56,6 +56,10 @@
     /* KPI Colors - Clean grayscale */
     --kpi-bg: 0 0% 12%;
     --kpi-foreground: 0 0% 90%;
+    
+    /* KPI Panel Colors - Inverted with transparency */
+    --kpi-panel-bg: 0 0% 85%; /* Light grey instead of white */
+    --kpi-card-bg: 0 0% 100% / 0.5; /* White with 50% transparency */
 
     /* Blue accent for slider and numbers only */
     --slider-blue: 217 91% 60%;

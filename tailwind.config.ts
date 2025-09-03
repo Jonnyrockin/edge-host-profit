@@ -62,6 +62,8 @@ export default {
 				help: 'hsl(var(--help))',
 				kpi: 'hsl(var(--kpi-bg))',
 				'kpi-foreground': 'hsl(var(--kpi-foreground))',
+				'kpi-panel-bg': 'hsl(var(--kpi-panel-bg))',
+				'kpi-card-bg': 'hsl(var(--kpi-card-bg))',
 				'input-border': 'hsl(var(--input-border))',
 				'slider-blue': 'hsl(var(--slider-blue))',
 				'number-blue': 'hsl(var(--number-blue))',
