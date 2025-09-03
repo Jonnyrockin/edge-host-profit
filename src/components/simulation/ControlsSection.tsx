@@ -90,7 +90,7 @@ export function ControlsSection({ state, calculations, onStateChange, onResetToP
         <div>
           <div className="flex items-center gap-md">
             <div className="text-help text-core mb-md">Utilization (%)</div>
-            <InfoTooltip content="Percentage of total processing capacity actively used. Higher utilization = more revenue but less headroom for spikes." />
+            <InfoTooltip content="Base utilization percentage gets multiplied by scenario factor. Conservative=0.9×, Median=1.0×, Optimistic=1.1×" />
           </div>
           <div className="flex items-center gap-md">
             <Slider
@@ -101,7 +101,9 @@ export function ControlsSection({ state, calculations, onStateChange, onResetToP
               step={1}
               className="flex-1"
             />
-            <div className="text-core text-foreground font-semibold">{Math.round(state.util * 100)}%</div>
+            <div className="text-core text-foreground font-semibold">
+              {Math.round(state.util * 100)}% → {Math.round(calculations.util * 100)}%
+            </div>
           </div>
         </div>
         
