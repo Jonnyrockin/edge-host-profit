@@ -44,9 +44,9 @@ export function PricingPanel({ state, calculations, onStateChange }: PricingPane
   const priceFor1M = finalPrice * 1000000;
   
   return (
-    <div className="bg-card border border-border rounded-xl p-4">
+    <div className="bg-card border border-border rounded-lg p-panel-padding mt-panel">
       <div className="flex items-center justify-between mb-4">
-        <div className="text-lg font-semibold text-foreground">Pricing Overview</div>
+        <div className="text-headline font-semibold text-foreground">Pricing Overview</div>
         {selectedProvider && (
           <Button variant="ghost" size="sm" asChild>
             <a href={selectedProvider.sourceUrl} target="_blank" rel="noopener noreferrer">
@@ -57,7 +57,7 @@ export function PricingPanel({ state, calculations, onStateChange }: PricingPane
         )}
       </div>
       
-      <div className="text-help text-sm mb-4">
+      <div className="text-help text-label mb-4">
         Current pricing with geo location and rural premiums applied.
       </div>
 
@@ -65,7 +65,7 @@ export function PricingPanel({ state, calculations, onStateChange }: PricingPane
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
         <div>
           <div className="flex items-center gap-2">
-            <label className="block text-sm font-medium mb-2">Provider</label>
+            <label className="block text-label font-medium mb-2">Provider</label>
             <InfoTooltip content="AI inference provider for processing. Different providers offer varying performance, pricing, and model availability." />
           </div>
           <Select value={state.inferenceProvider || 'openai'} onValueChange={handleProviderChange}>
@@ -83,7 +83,7 @@ export function PricingPanel({ state, calculations, onStateChange }: PricingPane
         </div>
 
         <div>
-          <label className="block text-sm font-medium mb-2">Model</label>
+          <label className="block text-label font-medium mb-2">Model</label>
           <Select 
             value={state.inferenceModel || selectedProvider?.models[0]?.id} 
             onValueChange={handleModelChange}
@@ -106,8 +106,8 @@ export function PricingPanel({ state, calculations, onStateChange }: PricingPane
       {/* Base Inference Pricing */}
       {selectedModel && (
         <div className="bg-muted/50 rounded-lg p-3 mb-4">
-          <div className="text-sm font-medium mb-2">Base Inference Pricing</div>
-          <div className="grid grid-cols-3 gap-4 text-sm">
+          <div className="text-core font-medium mb-2">Base Inference Pricing</div>
+          <div className="grid grid-cols-3 gap-4 text-label">
             <div>
               <div className="text-muted-foreground">Input</div>
               <div className="font-mono text-blue-400">${selectedModel.inputPricePer1M}/1M</div>
@@ -127,27 +127,27 @@ export function PricingPanel({ state, calculations, onStateChange }: PricingPane
       {/* Final Pricing with Premiums */}
       <div className="space-y-4">
         <div className="bg-secondary/20 rounded-lg p-3">
-          <div className="text-help text-sm">Single AI Inference Token</div>
-          <div className="text-2xl font-semibold text-number-blue">
+          <div className="text-help text-label">Single AI Inference Token</div>
+          <div className="text-core font-semibold text-number-blue">
             ${finalPrice < 0.000001 ? finalPrice.toExponential(3) : finalPrice.toFixed(6)}
           </div>
-          <div className="text-xs text-help">
+          <div className="text-label text-help">
             Including location, rural, and ESG premiums
           </div>
         </div>
         
         <div className="bg-secondary/20 rounded-lg p-3">
-          <div className="text-help text-sm">1 Million Calls</div>
-          <div className="text-2xl font-semibold text-number-blue">
+          <div className="text-help text-label">1 Million Calls</div>
+          <div className="text-core font-semibold text-number-blue">
             ${Math.round(priceFor1M).toLocaleString()}
           </div>
-          <div className="text-xs text-help">
+          <div className="text-label text-help">
             Based on {state.city} location {state.rural > 0 && `+ ${state.rural}% rural premium`}
           </div>
         </div>
         
         {state.esgEnabled && (
-          <div className="text-xs text-success bg-success/10 rounded p-2">
+          <div className="text-label text-success bg-success/10 rounded p-2">
             ✓ ESG Compliance enabled - customers pay 10% premium for green computing
           </div>
         )}

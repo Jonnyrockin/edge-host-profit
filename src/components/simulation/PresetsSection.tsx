@@ -9,11 +9,11 @@ interface PresetsSectionProps {
 
 export function PresetsSection({ state, onApplyPreset }: PresetsSectionProps) {
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-panel mt-panel">
       {/* Presets */}
-      <div className="bg-card border border-border rounded-xl p-4">
-        <div className="text-lg font-semibold mb-1 text-foreground">Presets</div>
-        <div className="text-help mb-3 text-sm">Quick-start configurations (devices, utilization, costs).</div>
+      <div className="bg-card border border-border rounded-lg p-panel-padding">
+        <div className="text-headline font-semibold mb-1 text-foreground">Presets</div>
+        <div className="text-help mb-3 text-core">Quick-start configurations (devices, utilization, costs).</div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
           {PRESETS.map(preset => (
             <Button
@@ -30,10 +30,10 @@ export function PresetsSection({ state, onApplyPreset }: PresetsSectionProps) {
       </div>
 
       {/* Host Profile */}
-      <div className="bg-card border border-border rounded-xl p-4">
-        <div className="text-lg font-semibold mb-1 text-foreground">Host profile</div>
-        <div className="text-help mb-2 text-sm">Auto-filled from your current selections.</div>
-        <div className="space-y-1 text-sm">
+      <div className="bg-card border border-border rounded-lg p-panel-padding">
+        <div className="text-headline font-semibold mb-1 text-foreground">Host profile</div>
+        <div className="text-help mb-2 text-core">Auto-filled from your current selections.</div>
+        <div className="space-y-1 text-label">
           <div>
             <span className="text-help">Geo:</span> City: {state.city}
           </div>

@@ -21,9 +21,9 @@ export function MathSection({ state, calculations }: MathSectionProps) {
   ];
 
   return (
-    <div className="bg-card border border-border rounded-xl p-4">
-      <div className="text-lg font-semibold text-foreground">The Math</div>
-      <div className="text-help text-sm">
+    <div className="bg-card border border-border rounded-lg p-panel-padding mt-panel">
+      <div className="text-headline font-semibold text-foreground">The Math</div>
+      <div className="text-help text-label">
         Baselines → multipliers → traffic → gross → fees → OPEX → Cash Net.
       </div>
       <div className="font-mono text-sm mt-2 text-foreground space-y-2">
@@ -62,8 +62,8 @@ export function MathSection({ state, calculations }: MathSectionProps) {
 
       {/* Jobs Per Day Analysis */}
       <div className="mt-4">
-        <div className="text-lg font-semibold text-foreground">Jobs Per Day Analysis</div>
-        <div className="text-help text-sm mb-2">
+        <div className="text-core font-semibold text-foreground">Jobs Per Day Analysis</div>
+        <div className="text-help text-label mb-2">
           Jobs/day = (IPS × Utilization × 86,400 sec) ÷ Calls per job
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
@@ -72,7 +72,7 @@ export function MathSection({ state, calculations }: MathSectionProps) {
               Conservative (40%)
               <InfoTooltip content="Conservative utilization scenario: 40% of total device capacity. Represents cautious adoption with stable, predictable workloads." />
             </div>
-            <div className="text-lg font-semibold text-number-blue">
+            <div className="text-core font-semibold text-number-blue">
               {Math.round((calculations.inventoryIPS * 0.40 * 86400) / state.callsPerJob).toLocaleString()}
             </div>
             <div className="text-xs text-muted-foreground">jobs/day</div>
@@ -82,7 +82,7 @@ export function MathSection({ state, calculations }: MathSectionProps) {
               Current ({Math.round(state.util * scenario.util * 100)}%)
               <InfoTooltip content="Current utilization based on your scenario selection and base utilization settings. This reflects your expected realistic usage pattern." />
             </div>
-            <div className="text-lg font-semibold text-number-blue">
+            <div className="text-core font-semibold text-number-blue">
               {Math.round((calculations.inventoryIPS * state.util * scenario.util * 86400) / state.callsPerJob).toLocaleString()}
             </div>
             <div className="text-xs text-muted-foreground">jobs/day</div>
@@ -92,7 +92,7 @@ export function MathSection({ state, calculations }: MathSectionProps) {
               Optimistic (80%)
               <InfoTooltip content="Optimistic utilization scenario: 80% of total device capacity. Represents high-demand environment with continuous, heavy workloads." />
             </div>
-            <div className="text-lg font-semibold text-number-blue">
+            <div className="text-core font-semibold text-number-blue">
               {Math.round((calculations.inventoryIPS * 0.80 * 86400) / state.callsPerJob).toLocaleString()}
             </div>
             <div className="text-xs text-muted-foreground">jobs/day</div>
@@ -101,8 +101,8 @@ export function MathSection({ state, calculations }: MathSectionProps) {
       </div>
 
       <div className="mt-4">
-        <div className="text-lg font-semibold text-foreground">SEL Tests</div>
-        <ul className="mt-2 space-y-1 text-sm">
+        <div className="text-core font-semibold text-foreground">SEL Tests</div>
+        <ul className="mt-2 space-y-1 text-label">
           {tests.map(([name, ok], index) => (
             <li key={index} className="flex items-center gap-2">
               <span className={ok ? 'text-muted-foreground' : 'text-muted-foreground'}>

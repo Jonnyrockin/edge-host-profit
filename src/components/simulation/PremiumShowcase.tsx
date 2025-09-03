@@ -48,11 +48,11 @@ export function PremiumShowcase({ state, onStateChange }: PremiumShowcaseProps) 
   };
 
   return (
-    <div className="bg-gradient-to-br from-primary/5 to-secondary/5 border border-primary/20 rounded-xl p-4 mb-4">
+    <div className="bg-gradient-to-br from-primary/5 to-secondary/5 border border-primary/20 rounded-lg p-panel-padding mb-panel">
       <div className="flex items-center justify-between mb-3">
         <div className="flex items-center gap-2">
           <TrendingUp className="w-4 h-4 text-primary" />
-          <h2 className="text-lg font-bold text-foreground">Edge AI Premium Positioning</h2>
+          <h2 className="text-headline font-bold text-foreground">Edge AI Premium Positioning</h2>
         </div>
         
         {/* Provider Chip */}
@@ -70,7 +70,7 @@ export function PremiumShowcase({ state, onStateChange }: PremiumShowcaseProps) 
         
         {/* Baseline Cloud Price */}
         <div className="bg-card border border-border rounded-lg p-3 text-center space-y-2 flex flex-col">
-          <div className="text-sm text-muted-foreground">Baseline Cloud Compute</div>
+          <div className="text-core text-muted-foreground">Baseline Cloud Compute</div>
           <div className="flex items-baseline justify-center gap-1">
             <div className="text-3xl font-bold text-number-blue">
               ${baselinePrice.toFixed(4)}
@@ -109,7 +109,7 @@ export function PremiumShowcase({ state, onStateChange }: PremiumShowcaseProps) 
           
           {/* Manual Override - Moved to bottom */}
           <div className="pt-4 border-t border-border/30 mt-auto">
-            <div className="text-xs text-muted-foreground mb-1">Custom Override</div>
+            <div className="text-label text-muted-foreground mb-1">Custom Override</div>
             <Input
               type="number"
               min="0.0001"
@@ -125,7 +125,7 @@ export function PremiumShowcase({ state, onStateChange }: PremiumShowcaseProps) 
 
         {/* Premium Multiplier */}
         <div className="bg-card border border-border rounded-lg p-3 flex flex-col justify-between">
-          <div className="text-sm font-medium text-foreground mb-3">Premium Multiplier</div>
+          <div className="text-core font-medium text-foreground mb-3">Premium Multiplier</div>
           
           <div className="mb-4">
             <div className="flex items-center justify-between mb-2">
@@ -143,8 +143,8 @@ export function PremiumShowcase({ state, onStateChange }: PremiumShowcaseProps) 
           </div>
           
           <div className="text-center">
-            <div className="text-2xl font-bold text-number-blue">{multiplier.toFixed(1)}x</div>
-            <div className="text-xs text-muted-foreground">Premium Factor</div>
+            <div className="text-core font-bold text-number-blue">{multiplier.toFixed(1)}x</div>
+            <div className="text-label text-muted-foreground">Premium Factor</div>
           </div>
 
           {/* Premium Justification in Multiplier Panel */}
@@ -160,7 +160,7 @@ export function PremiumShowcase({ state, onStateChange }: PremiumShowcaseProps) 
 
         {/* Edge Price Result */}
         <div className="bg-card border border-border rounded-lg p-3 text-center">
-          <div className="text-sm text-muted-foreground mb-1">Edge AI Premium Price</div>
+          <div className="text-core text-muted-foreground mb-1">Edge AI Premium Price</div>
           <div className="text-3xl font-bold text-number-blue">
             ${edgePrice.toFixed(4)}
           </div>
