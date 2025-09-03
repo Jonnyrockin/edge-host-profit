@@ -158,10 +158,10 @@ export function PremiumShowcase({ state, onStateChange }: PremiumShowcaseProps) 
         </div>
 
         {/* Edge Price Result */}
-        <div className="bg-card border border-border rounded-lg p-3 text-center">
+        <div className="bg-card border border-border rounded-lg p-panel-gap text-center">
           <div className="text-core text-muted-foreground mb-1">Edge AI Premium Price</div>
           <div className="text-3xl font-bold text-number-blue">
-            ${edgePrice.toFixed(4)}
+            ${edgePrice.toFixed(6)}
           </div>
           <div className="text-xs text-muted-foreground mb-2">per call</div>
           <div className="bg-muted/30 border border-border/50 rounded-lg p-2 mb-3">
