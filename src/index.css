@@ -65,11 +65,10 @@
     --backdrop-blur: blur(16px);
     --shadow-glass: 0 8px 32px hsl(0 0% 0% / 0.12);
 
-    /* Typography System - Increased by 25% */
-    --font-headline: 1.40625rem; /* 22.5px - Big for headlines (+25%) */
-    --font-core: 1.09375rem;     /* 17.5px - Medium for core information (+25%) */
-    --font-label: 0.9375rem;     /* 15px - Small for labels (+25%) */
-    --font-title: 12.9375rem;    /* 207px - Massive title size (+1050%) */
+    /* Typography System - Three Tiers */
+    --font-headline: 1.125rem; /* 18px - Big for headlines */
+    --font-core: 0.875rem;     /* 14px - Medium for core information */
+    --font-label: 0.75rem;     /* 12px - Small for labels */
 
     /* Spacing System - Standardized Panel Margins */
     --panel-margin: 1rem;      /* 16px - Standard margin between panels */
