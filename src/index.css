@@ -57,6 +57,12 @@
     --kpi-bg: 0 0% 12%;
     --kpi-foreground: 0 0% 90%;
 
+    /* Inverted KPI Colors - Light theme for KPI panel */
+    --kpi-panel-bg: 0 0% 95%;
+    --kpi-panel-foreground: 0 0% 10%;
+    --kpi-card-bg: 0 0% 8%;
+    --kpi-card-foreground: 0 0% 90%;
+
     /* Blue accent for slider and numbers only */
     --slider-blue: 217 91% 60%;
     --number-blue: 217 91% 60%;
@@ -66,9 +72,10 @@
     --shadow-glass: 0 8px 32px hsl(0 0% 0% / 0.12);
 
     /* Typography System - Three Tiers */
-    --font-headline: 1.125rem; /* 18px - Big for headlines */
-    --font-core: 0.875rem;     /* 14px - Medium for core information */
-    --font-label: 0.75rem;     /* 12px - Small for labels */
+    --font-headline: 1.40625rem; /* 22.5px - Big for headlines (25% increase) */
+    --font-massive: 11.8125rem;  /* 189px - Massive title (1050% increase) */
+    --font-core: 0.875rem;       /* 14px - Medium for core information */
+    --font-label: 0.75rem;       /* 12px - Small for labels */
 
     /* Spacing System - Standardized Panel Margins */
     --panel-margin: 1rem;      /* 16px - Standard margin between panels */
