@@ -15,11 +15,12 @@ interface DeviceStackProps {
 }
 
 export function DeviceStack({ devices, state, calculations, onAddDevice, onUpdateDevice, onRemoveDevice }: DeviceStackProps) {
-  // Calculate IPS capacity
+  // Calculate IPS capacity and actual usage
   const totalCapacityIPS = state.devices.reduce((total, device) => total + (device.ips * device.qty), 0);
   const totalCapacityMonthly = totalCapacityIPS * state.secondsInMonth;
-  const usedCapacityMonthly = calculations.monthlyCalls;
-  const utilizationPercentage = totalCapacityMonthly > 0 ? Math.min((usedCapacityMonthly / totalCapacityMonthly) * 100, 100) : 0;
+  const actualUsedIPS = totalCapacityIPS * calculations.util; // IPS being used based on utilization
+  const actualUsedMonthly = actualUsedIPS * state.secondsInMonth;
+  const utilizationPercentage = calculations.util * 100;
 
   return (
     <div className="bg-card border border-border rounded-lg p-panel-padding mt-panel">
@@ -88,40 +89,49 @@ export function DeviceStack({ devices, state, calculations, onAddDevice, onUpdat
         )}
       </div>
 
-      {/* IPS Capacity Visualization */}
+      {/* Compute Power Capacity */}
       <div className="mb-4 pt-3 border-t border-border">
         <div className="flex items-center gap-2 mb-2">
-          <div className="text-help text-core">Total Available IPS per Month</div>
-          <InfoTooltip content="Your hardware's maximum processing capacity. Shows total inferences per second across all devices and monthly capacity limit." />
+          <div className="text-help text-core">Total Compute Power Available</div>
+          <InfoTooltip content="Your hardware's maximum processing capacity. Adding more nodes increases your compute power (IPS = Inferences Per Second)." />
         </div>
-        <div className="flex items-center gap-4 mb-2">
+        
+        {/* Available Capacity */}
+        <div className="flex items-center gap-4 mb-3">
           <div className="text-core text-foreground">
-            <span className="font-semibold text-number-blue">{totalCapacityIPS.toLocaleString()}</span> IPS
+            <span className="font-semibold text-number-blue">{totalCapacityIPS.toLocaleString()}</span> IPS available
           </div>
           <div className="text-core text-muted-foreground">
-            = <span className="font-mono">{(totalCapacityMonthly / 1_000_000).toFixed(1)}M</span> calls/month capacity
+            = <span className="font-mono">{(totalCapacityMonthly / 1_000_000).toFixed(1)}M</span> calls/month max capacity
+          </div>
+        </div>
+
+        {/* Current Usage */}
+        <div className="flex items-center gap-4 mb-3">
+          <div className="text-core text-foreground">
+            <span className="font-semibold text-primary">{actualUsedIPS.toLocaleString()}</span> IPS being used
+          </div>
+          <div className="text-core text-muted-foreground">
+            = <span className="font-mono">{(actualUsedMonthly / 1_000_000).toFixed(1)}M</span> calls/month actual usage
           </div>
         </div>
         
-        {/* Capacity Bar */}
+        {/* Utilization Bar */}
         <div className="relative w-full h-5 bg-muted/30 rounded-md overflow-hidden">
           <div 
             className="h-full bg-gradient-to-r from-primary/60 to-primary transition-all duration-300"
             style={{ width: `${utilizationPercentage}%` }}
           />
-          <div className="absolute inset-0 flex items-center justify-between px-2 text-core font-medium">
+          <div className="absolute inset-0 flex items-center justify-center px-2 text-core font-medium">
             <span className="text-foreground">
-              {(usedCapacityMonthly / 1_000_000).toFixed(1)}M used
-            </span>
-            <span className="text-muted-foreground">
-              {utilizationPercentage.toFixed(1)}% capacity
+              {utilizationPercentage.toFixed(0)}% utilization
             </span>
           </div>
         </div>
         
         <div className="flex justify-between text-core text-muted-foreground mt-1">
-          <span>0</span>
-          <span>{(totalCapacityMonthly / 1_000_000).toFixed(1)}M calls</span>
+          <span>0% (idle)</span>
+          <span>100% (full capacity)</span>
         </div>
       </div>
 
