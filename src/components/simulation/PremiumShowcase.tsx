@@ -71,10 +71,12 @@ export function PremiumShowcase({ state, onStateChange }: PremiumShowcaseProps) 
         {/* Baseline Cloud Price */}
         <div className="bg-card border border-border rounded-lg p-3 text-center space-y-2 flex flex-col">
           <div className="text-sm text-muted-foreground">Baseline Cloud Compute</div>
-          <div className="text-3xl font-bold text-number-blue">
-            ${baselinePrice.toFixed(4)}
+          <div className="flex items-baseline justify-center gap-1">
+            <div className="text-3xl font-bold text-number-blue">
+              ${baselinePrice.toFixed(4)}
+            </div>
+            <div className="text-xs text-number-blue">per call</div>
           </div>
-          <div className="text-xs text-muted-foreground">per call</div>
           
           {/* Provider Selection */}
           <div className="space-y-2 mt-3">
