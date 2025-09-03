@@ -263,28 +263,28 @@ export function CostsSection({ state, calculations, onStateChange }: CostsSectio
       </div>
 
       {/* Totals */}
-      <div className="mt-4 pt-4 border-t border-border flex flex-wrap items-center gap-x-6 gap-y-3">
+      <div className="mt-lg pt-lg border-t border-border flex flex-wrap items-center gap-x-xl gap-y-panel-gap">
         <div>
-          <div className="flex items-center gap-2">
-            <div className="text-help">Platform fee (HyperEdgeX)</div>
+          <div className="flex items-center gap-md">
+            <div className="text-help">Platform Revenue Share</div>
             <InfoTooltip content="Fixed 25% revenue share with the platform provider. This covers infrastructure, support, and business development." />
           </div>
-          <div className="px-2 py-1 inline-block bg-secondary border border-border rounded text-secondary-foreground select-none">
+          <div className="px-md py-xs inline-block bg-secondary border border-border rounded text-secondary-foreground select-none">
             25% (fixed)
           </div>
         </div>
-            <div className="text-core text-muted-foreground">
-              Connectivity Subtotal:
-              <span className="text-foreground font-semibold ml-1">
-                ${Math.round(calculations.fibreCost).toLocaleString()}
-              </span>
-            </div>
-            <div className="text-headline text-muted-foreground">
-              Estimated Monthly OPEX:
-              <span className="text-foreground font-semibold ml-1">
-                ${Math.round(calculations.opex).toLocaleString()}
-              </span>
-            </div>
+        <div className="text-core text-muted-foreground">
+          Fiber Internet:
+          <span className="text-foreground font-semibold ml-1">
+            ${Math.round(calculations.fibreCost).toLocaleString()}/mo
+          </span>
+        </div>
+        <div className="text-headline text-muted-foreground">
+          Total Monthly OPEX:
+          <span className="text-foreground font-semibold ml-1">
+            ${Math.round(calculations.opex).toLocaleString()}
+          </span>
+        </div>
       </div>
     </div>
   );
