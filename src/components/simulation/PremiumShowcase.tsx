@@ -3,7 +3,7 @@ import { Slider } from '../ui/slider';
 import { Input } from '../ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
 import { Button } from '../ui/button';
-import { ArrowRight, TrendingUp, ExternalLink } from 'lucide-react';
+import { ExternalLink } from 'lucide-react';
 import { CLOUD_BASELINES, getCloudProviderById } from '../../data/cloud-baselines';
 
 interface PremiumShowcaseProps {
@@ -48,11 +48,10 @@ export function PremiumShowcase({ state, onStateChange }: PremiumShowcaseProps) 
   };
 
   return (
-    <div className="bg-gradient-to-br from-primary/5 to-secondary/5 border border-primary/20 rounded-lg p-panel-padding mb-panel">
+    <div className="bg-card border border-border rounded-2xl p-4 md:p-6 mb-6">
       <div className="flex items-center justify-between mb-3">
         <div className="flex items-center gap-2">
-          <TrendingUp className="w-4 h-4 text-primary" />
-          <h2 className="text-headline font-bold text-foreground">Edge AI Premium Positioning</h2>
+          <h2 className="text-headline font-semibold text-foreground">Edge AI Premium Positioning</h2>
         </div>
         
         {/* Provider Chip */}
