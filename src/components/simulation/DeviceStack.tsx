@@ -97,33 +97,37 @@ export function DeviceStack({ devices, state, calculations, onAddDevice, onUpdat
         </div>
         
         {/* Available Capacity */}
-        <div className="flex items-center gap-4 mb-3">
-          <div className="text-core text-foreground">
-            <span className="font-semibold text-number-blue">{totalCapacityIPS.toLocaleString()}</span> IPS available
+        <div className="flex items-center justify-between mb-panel-gap">
+          <div>
+            <div className="text-core text-foreground">
+              <span className="font-semibold text-number-blue">{totalCapacityIPS.toLocaleString()}</span> IPS available
+            </div>
+            <div className="text-core text-muted-foreground">
+              = <span className="font-mono">{(totalCapacityMonthly / 1_000_000).toFixed(1)}M</span> calls/month max capacity
+            </div>
           </div>
-          <div className="text-core text-muted-foreground">
-            = <span className="font-mono">{(totalCapacityMonthly / 1_000_000).toFixed(1)}M</span> calls/month max capacity
-          </div>
-        </div>
-
-        {/* Current Usage */}
-        <div className="flex items-center gap-4 mb-3">
-          <div className="text-core text-foreground">
-            <span className="font-semibold text-primary">{actualUsedIPS.toLocaleString()}</span> IPS being used
-          </div>
-          <div className="text-core text-muted-foreground">
-            = <span className="font-mono">{(actualUsedMonthly / 1_000_000).toFixed(1)}M</span> calls/month actual usage
+          
+          <div className="text-right">
+            <div className="text-core text-foreground">
+              <span className="font-semibold text-primary">{actualUsedIPS.toLocaleString()}</span> IPS being used
+            </div>
+            <div className="text-core text-muted-foreground">
+              = <span className="font-mono">{(actualUsedMonthly / 1_000_000).toFixed(1)}M</span> calls/month actual usage
+            </div>
           </div>
         </div>
         
         {/* Utilization Bar */}
-        <div className="relative w-full h-5 bg-muted/30 rounded-md overflow-hidden">
+        <div className="relative w-full h-8 bg-muted/30 rounded-md overflow-hidden">
           <div 
-            className="h-full bg-gradient-to-r from-primary/60 to-primary transition-all duration-300"
+            className="h-full bg-slider-blue transition-all duration-300"
             style={{ width: `${utilizationPercentage}%` }}
           />
-          <div className="absolute inset-0 flex items-center justify-center px-2 text-core font-medium">
-            <span className="text-foreground">
+          <div 
+            className="absolute top-0 right-2 h-full flex items-center"
+            style={{ left: `${Math.min(utilizationPercentage, 85)}%` }}
+          >
+            <span className="text-headline font-semibold text-foreground">
               {utilizationPercentage.toFixed(0)}% utilization
             </span>
           </div>
