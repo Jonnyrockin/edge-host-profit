@@ -59,30 +59,36 @@ export function DeviceStack({ devices, state, calculations, onAddDevice, onUpdat
               </tr>
             ) : (
               [...devices].reverse().map(device => (
-                <tr key={device.id} className="border-t border-border">
-                  <td className="py-1.5 text-foreground text-sm">{device.label}</td>
-                  <td className="py-1.5 text-foreground text-sm">{device.vendor}</td>
-                  <td className="py-1.5 text-right text-foreground text-sm">{device.latencyTier}</td>
-                  <td className="py-1.5 text-right text-foreground text-sm">{device.ips}</td>
-                  <td className="py-1.5 text-center">
-                    <Input
-                      type="number"
-                      min="0"
-                      step="1"
-                      value={device.qty}
-                      onChange={(e) => onUpdateDevice(device.id, { qty: Math.max(0, parseInt(e.target.value) || 0) })}
-                      className="w-14 h-7 font-mono bg-input border-input-border text-center mx-auto text-sm"
-                    />
-                  </td>
-                  <td className="py-1.5 text-right">
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => onRemoveDevice(device.id)}
-                      className="h-7 w-7 p-0 border-destructive/40 text-destructive hover:bg-destructive/10"
-                    >
-                      <Trash2 className="h-3 w-3" />
-                    </Button>
+                <tr key={device.id}>
+                  <td colSpan={6} className="p-0">
+                    <div className="bg-muted/20 border border-muted rounded-lg p-3 mx-1 my-2">
+                      <div className="grid grid-cols-6 gap-4 items-center">
+                        <div className="text-foreground text-lg font-medium">{device.label}</div>
+                        <div className="text-foreground text-sm">{device.vendor}</div>
+                        <div className="text-right text-foreground text-sm">{device.latencyTier}</div>
+                        <div className="text-right text-foreground text-sm">{device.ips}</div>
+                        <div className="text-center">
+                          <Input
+                            type="number"
+                            min="0"
+                            step="1"
+                            value={device.qty}
+                            onChange={(e) => onUpdateDevice(device.id, { qty: Math.max(0, parseInt(e.target.value) || 0) })}
+                            className="w-14 h-7 font-mono bg-input border-input-border text-center mx-auto text-sm"
+                          />
+                        </div>
+                        <div className="text-right">
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => onRemoveDevice(device.id)}
+                            className="h-7 w-7 p-0 border-destructive/40 text-destructive hover:bg-destructive/10"
+                          >
+                            <Trash2 className="h-3 w-3" />
+                          </Button>
+                        </div>
+                      </div>
+                    </div>
                   </td>
                 </tr>
               ))
