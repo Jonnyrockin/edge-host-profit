@@ -42,17 +42,19 @@ export const FIBRE_PROVIDERS: Record<string, Provider[]> = {
 
 export const ENERGY_PROVIDERS: Record<string, Provider[]> = {
   Toronto: [
-    { name: 'Toronto Hydro (regulated)', rate: 0.12, green: false },
-    { name: 'Bullfrog Power (RECs)', rate: 0.14, green: true },
+    { name: 'Toronto Hydro Business', rate: 0.12, green: false },
+    { name: 'Bullfrog Power Business', rate: 0.14, green: true },
     { name: 'Hydro One Business', rate: 0.13, green: false }
   ],
   'New York': [
     { name: 'Con Edison Business', rate: 0.18, green: false },
-    { name: 'Green Mountain Energy Biz', rate: 0.21, green: true }
+    { name: 'Green Mountain Energy Biz', rate: 0.21, green: true },
+    { name: 'PSEG Long Island Biz', rate: 0.19, green: false }
   ],
   London: [
+    { name: 'British Gas Business', rate: 0.22, green: false },
     { name: 'Octopus Energy Business', rate: 0.25, green: true },
-    { name: 'British Gas Business', rate: 0.22, green: false }
+    { name: 'EDF Energy Business', rate: 0.23, green: false }
   ],
   Sydney: [
     { name: 'AGL Business', rate: 0.28, green: false },
@@ -60,16 +62,19 @@ export const ENERGY_PROVIDERS: Record<string, Provider[]> = {
     { name: 'Simply Energy Business', rate: 0.26, green: false }
   ],
   Singapore: [
-    { name: 'SP Group (business)', rate: 0.20, green: false },
-    { name: 'Sembcorp Green Business', rate: 0.23, green: true }
+    { name: 'SP Group Business', rate: 0.20, green: false },
+    { name: 'Sembcorp Green Business', rate: 0.23, green: true },
+    { name: 'Keppel Electric Business', rate: 0.21, green: false }
   ],
   Portland: [
     { name: 'PGE Business', rate: 0.10, green: false },
-    { name: 'Pacific Power Blue Sky Biz', rate: 0.12, green: true }
+    { name: 'Pacific Power Blue Sky Biz', rate: 0.12, green: true },
+    { name: 'NW Natural Business', rate: 0.11, green: false }
   ],
   Atlanta: [
     { name: 'Georgia Power Business', rate: 0.11, green: false },
-    { name: 'Green-e RECs Business', rate: 0.14, green: true }
+    { name: 'Green-e RECs Business', rate: 0.14, green: true },
+    { name: 'Sawnee EMC Business', rate: 0.12, green: false }
   ]
 };
 
