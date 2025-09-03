@@ -79,9 +79,9 @@ export function PremiumShowcase({ state, onStateChange }: PremiumShowcaseProps) 
           </div>
           
           {/* Provider Selection */}
-          <div className="space-y-2 mt-3">
+          <div className="space-y-2 mt-3 flex-1">
             <Select value={state.baselineProvider || 'market-average'} onValueChange={handleProviderChange}>
-              <SelectTrigger className="w-full text-sm h-10">
+              <SelectTrigger className="w-full text-sm h-[4.375rem]">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent className="z-50">
@@ -107,7 +107,7 @@ export function PremiumShowcase({ state, onStateChange }: PremiumShowcaseProps) 
             )}
           </div>
           
-          {/* Manual Override - Moved down to align with bottom elements */}
+          {/* Manual Override - Moved to bottom */}
           <div className="pt-4 border-t border-border/30 mt-auto">
             <div className="text-xs text-muted-foreground mb-1">Custom Override</div>
             <Input
