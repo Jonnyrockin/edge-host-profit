@@ -84,6 +84,7 @@ export default {
 			},
 			fontSize: {
 				'headline': 'var(--font-headline)',
+				'massive-title': 'var(--font-massive-title)',
 				'core': 'var(--font-core)',
 				'label': 'var(--font-label)'
 			},

@@ -66,7 +66,8 @@
     --shadow-glass: 0 8px 32px hsl(0 0% 0% / 0.12);
 
     /* Typography System - Three Tiers */
-    --font-headline: 1.125rem; /* 18px - Big for headlines */
+    --font-headline: 1.40625rem; /* 22.5px - Big for headlines (25% increase) */
+    --font-massive-title: 2.25rem; /* 36px - Massive title (100% increase from original) */
     --font-core: 0.875rem;     /* 14px - Medium for core information */
     --font-label: 0.75rem;     /* 12px - Small for labels */
 

@@ -11,13 +11,10 @@ interface KPIDashboardProps {
 
 export function KPIDashboard({ state, calculations, onStateChange }: KPIDashboardProps) {
   return (
-    <div className="bg-card border border-border rounded-2xl p-4 md:p-6 mb-6 sticky top-0 z-40 backdrop-blur-glass">
+    <div className="bg-foreground border border-border rounded-2xl p-4 md:p-6 mb-6 sticky top-0 z-40 backdrop-blur-glass">
       <div className="flex items-center justify-between">
-        <h1 className="text-headline md:text-headline font-semibold text-foreground">
-          Host Revenue Simulation{' '}
-          <span className="text-help font-normal">
-            (<span>{state.scenario}</span>)
-          </span>
+        <h1 className="text-massive-title font-semibold text-background">
+          Host Revenue Simulation
         </h1>
         <div className="flex items-center gap-2">
           <div className="flex gap-1">
