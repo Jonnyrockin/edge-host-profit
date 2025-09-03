@@ -29,72 +29,63 @@ export function DeviceStack({ devices, state, calculations, onAddDevice, onUpdat
       </div>
       
       {/* Device Table */}
-      <div className="overflow-x-auto mb-4">
-        <table className="w-full text-sm">
-          <thead className="text-help">
-            <tr>
-              <th className="text-left py-1 text-xs">Device</th>
-              <th className="text-left py-1 text-xs">Vendor</th>
-              <th className="text-left py-1 flex items-center gap-1 text-xs">
-                Latency
-                <InfoTooltip content="Response time categories: <25ms (ultra-fast), 25-50ms (fast), 50-100ms (standard). Lower latency commands premium pricing." />
-              </th>
-              <th className="text-right py-1 flex items-center gap-1 justify-end text-xs">
-                IPS / row
-                <InfoTooltip content="Inferences Per Second - maximum AI processing capacity per device. Higher IPS = more concurrent jobs." />
-              </th>
-              <th className="text-center py-1 flex items-center gap-1 justify-center text-xs">
-                Qty
-                <InfoTooltip content="Number of identical devices. More devices = higher total capacity and redundancy." />
-              </th>
-              <th className="text-center py-1 text-sm font-medium">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {devices.length === 0 ? (
-              <tr>
-                <td colSpan={6} className="text-help py-3 text-center text-xs">
-                  No devices yet. Use the catalog below.
-                </td>
-              </tr>
-            ) : (
-              [...devices].reverse().map(device => (
-                <tr key={device.id}>
-                  <td colSpan={6} className="p-0">
-                    <div className="bg-muted/20 border border-muted rounded-lg p-3 mx-1 my-2">
-                      <div className="grid grid-cols-6 gap-4 items-center">
-                        <div className="text-foreground text-lg font-medium">{device.label}</div>
-                        <div className="text-foreground text-sm">{device.vendor}</div>
-                        <div className="text-right text-foreground text-sm">{device.latencyTier}</div>
-                        <div className="text-right text-foreground text-sm">{device.ips}</div>
-                        <div className="text-center">
-                          <Input
-                            type="number"
-                            min="0"
-                            step="1"
-                            value={device.qty}
-                            onChange={(e) => onUpdateDevice(device.id, { qty: Math.max(0, parseInt(e.target.value) || 0) })}
-                            className="w-14 h-7 font-mono bg-input border-input-border text-center mx-auto text-sm"
-                          />
-                        </div>
-                        <div className="text-right">
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={() => onRemoveDevice(device.id)}
-                            className="h-7 w-7 p-0 border-destructive/40 text-destructive hover:bg-destructive/10"
-                          >
-                            <Trash2 className="h-3 w-3" />
-                          </Button>
-                        </div>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-              ))
-            )}
-          </tbody>
-        </table>
+      <div className="mb-4">
+        {/* Header Row */}
+        <div className="grid grid-cols-6 gap-4 items-center py-2 text-help border-b border-border">
+          <div className="text-left text-xs">Device</div>
+          <div className="text-left text-xs">Vendor</div>
+          <div className="text-left text-xs flex items-center gap-1">
+            Latency
+            <InfoTooltip content="Response time categories: <25ms (ultra-fast), 25-50ms (fast), 50-100ms (standard). Lower latency commands premium pricing." />
+          </div>
+          <div className="text-right text-xs flex items-center gap-1 justify-end">
+            IPS / row
+            <InfoTooltip content="Inferences Per Second - maximum AI processing capacity per device. Higher IPS = more concurrent jobs." />
+          </div>
+          <div className="text-center text-xs flex items-center gap-1 justify-center">
+            Qty
+            <InfoTooltip content="Number of identical devices. More devices = higher total capacity and redundancy." />
+          </div>
+          <div className="text-center text-sm font-medium">Actions</div>
+        </div>
+        
+        {/* Device Rows */}
+        {devices.length === 0 ? (
+          <div className="text-help py-4 text-center text-xs">
+            No devices yet. Use the catalog below.
+          </div>
+        ) : (
+          [...devices].reverse().map(device => (
+            <div key={device.id} className="bg-muted/20 border border-muted rounded-lg p-3 my-2">
+              <div className="grid grid-cols-6 gap-4 items-center">
+                <div className="text-foreground text-lg font-medium">{device.label}</div>
+                <div className="text-foreground text-sm">{device.vendor}</div>
+                <div className="text-right text-foreground text-sm">{device.latencyTier}</div>
+                <div className="text-right text-foreground text-sm">{device.ips}</div>
+                <div className="text-center">
+                  <Input
+                    type="number"
+                    min="0"
+                    step="1"
+                    value={device.qty}
+                    onChange={(e) => onUpdateDevice(device.id, { qty: Math.max(0, parseInt(e.target.value) || 0) })}
+                    className="w-14 h-7 font-mono bg-input border-input-border text-center mx-auto text-sm"
+                  />
+                </div>
+                <div className="text-center">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => onRemoveDevice(device.id)}
+                    className="h-7 w-7 p-0 border-destructive/40 text-destructive hover:bg-destructive/10 mx-auto"
+                  >
+                    <Trash2 className="h-3 w-3" />
+                  </Button>
+                </div>
+              </div>
+            </div>
+          ))
+        )}
       </div>
 
       {/* IPS Capacity Visualization */}
