@@ -46,6 +46,8 @@ const Index = () => {
         {/* Device Stack */}
         <DeviceStack
           devices={state.devices}
+          state={state}
+          calculations={calculations}
           onAddDevice={addDevice}
           onUpdateDevice={updateDevice}
           onRemoveDevice={removeDevice}

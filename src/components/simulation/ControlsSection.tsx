@@ -18,11 +18,6 @@ interface ControlsSectionProps {
 }
 
 export function ControlsSection({ state, calculations, onStateChange, onResetToPreset }: ControlsSectionProps) {
-  // Calculate IPS capacity
-  const totalCapacityIPS = state.devices.reduce((total, device) => total + (device.ips * device.qty), 0);
-  const totalCapacityMonthly = totalCapacityIPS * state.secondsInMonth;
-  const usedCapacityMonthly = calculations.monthlyCalls;
-  const utilizationPercentage = totalCapacityMonthly > 0 ? Math.min((usedCapacityMonthly / totalCapacityMonthly) * 100, 100) : 0;
   const handleRuralClick = (km: number) => {
     const ruralFactor = ruralFactorFromKm(km) - 1;
     onStateChange({ rural: ruralFactor });
@@ -130,53 +125,14 @@ export function ControlsSection({ state, calculations, onStateChange, onResetToP
           />
         </div>
       </div>
-
-      {/* IPS Capacity Visualization */}
-      <div className="mt-6 pt-4 border-t border-border">
-        <div className="mb-4">
-          <div className="flex items-center gap-2 mb-2">
-            <div className="text-help text-sm">Total Available IPS per Month</div>
-            <InfoTooltip content="Your hardware's maximum processing capacity. Shows total inferences per second across all devices and monthly capacity limit." />
-          </div>
-          <div className="flex items-center gap-4 mb-2">
-            <div className="text-sm text-foreground">
-              <span className="font-semibold text-number-blue">{totalCapacityIPS.toLocaleString()}</span> IPS
-            </div>
-            <div className="text-sm text-muted-foreground">
-              = <span className="font-mono">{(totalCapacityMonthly / 1_000_000).toFixed(1)}M</span> calls/month capacity
-            </div>
-          </div>
-          
-          {/* Capacity Bar */}
-          <div className="relative w-full h-6 bg-muted/30 rounded-lg overflow-hidden">
-            <div 
-              className="h-full bg-gradient-to-r from-primary/60 to-primary transition-all duration-300"
-              style={{ width: `${utilizationPercentage}%` }}
-            />
-            <div className="absolute inset-0 flex items-center justify-between px-3 text-xs font-medium">
-              <span className="text-foreground">
-                {(usedCapacityMonthly / 1_000_000).toFixed(1)}M used
-              </span>
-              <span className="text-muted-foreground">
-                {utilizationPercentage.toFixed(1)}% capacity
-              </span>
-            </div>
-          </div>
-          
-          <div className="flex justify-between text-xs text-muted-foreground mt-1">
-            <span>0</span>
-            <span>{(totalCapacityMonthly / 1_000_000).toFixed(1)}M calls</span>
-          </div>
-        </div>
-      </div>
       
       {/* Rural Offset and ESG Section */}
       <div className="flex flex-col lg:flex-row justify-between items-start gap-6 mt-6 pt-4 border-t border-border">
-          <div className="flex-1">
-            <div className="flex items-center gap-2">
-              <div className="text-help text-sm mb-2">Rural offset presets</div>
-              <InfoTooltip content="Distance from city center adds pricing premium due to higher infrastructure costs and lower competition." />
-            </div>
+        <div className="flex-1">
+          <div className="flex items-center gap-2">
+            <div className="text-help text-sm mb-2">Rural offset presets</div>
+            <InfoTooltip content="Distance from city center adds pricing premium due to higher infrastructure costs and lower competition." />
+          </div>
           <div className="grid grid-cols-6 gap-1">
             {[0, 50, 100, 200, 300, 500].map(km => (
               <Button
@@ -193,11 +149,11 @@ export function ControlsSection({ state, calculations, onStateChange, onResetToP
           </div>
         </div>
         
-          <div className="lg:ml-auto">
-            <div className="flex items-center gap-2">
-              <div className="text-help text-sm mb-2">ESG Compliance</div>
-              <InfoTooltip content="Environmental, Social, and Governance compliance allows you to charge a 10% premium for sustainable computing practices." />
-            </div>
+        <div className="lg:ml-auto">
+          <div className="flex items-center gap-2">
+            <div className="text-help text-sm mb-2">ESG Compliance</div>
+            <InfoTooltip content="Environmental, Social, and Governance compliance allows you to charge a 10% premium for sustainable computing practices." />
+          </div>
           <div className="flex items-center gap-4">
             <div className="flex items-center space-x-2">
               <Checkbox

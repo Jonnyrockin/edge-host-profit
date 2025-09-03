@@ -1,18 +1,26 @@
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
 import { Trash2 } from 'lucide-react';
-import { Device } from '../../types/simulation';
+import { Device, SimulationState, CalculationResult } from '../../types/simulation';
 import { CATALOG } from '../../data/constants';
 import { InfoTooltip } from '../ui/info-tooltip';
 
 interface DeviceStackProps {
   devices: Device[];
+  state: SimulationState;
+  calculations: CalculationResult;
   onAddDevice: (deviceId: string) => void;
   onUpdateDevice: (deviceId: string, updates: Partial<Device>) => void;
   onRemoveDevice: (deviceId: string) => void;
 }
 
-export function DeviceStack({ devices, onAddDevice, onUpdateDevice, onRemoveDevice }: DeviceStackProps) {
+export function DeviceStack({ devices, state, calculations, onAddDevice, onUpdateDevice, onRemoveDevice }: DeviceStackProps) {
+  // Calculate IPS capacity
+  const totalCapacityIPS = state.devices.reduce((total, device) => total + (device.ips * device.qty), 0);
+  const totalCapacityMonthly = totalCapacityIPS * state.secondsInMonth;
+  const usedCapacityMonthly = calculations.monthlyCalls;
+  const utilizationPercentage = totalCapacityMonthly > 0 ? Math.min((usedCapacityMonthly / totalCapacityMonthly) * 100, 100) : 0;
+
   return (
     <div className="bg-card border border-border rounded-xl p-4 mt-4">
       <div className="text-lg font-semibold text-foreground">Node Stack</div>
@@ -20,23 +28,8 @@ export function DeviceStack({ devices, onAddDevice, onUpdateDevice, onRemoveDevi
         Add device rows from the catalog. Quantity = how many identical nodes you operate.
       </div>
       
-      {/* Device Picker */}
-      <div className="flex flex-wrap gap-2 mb-8">
-        {CATALOG.map(device => (
-          <Button
-            key={device.id}
-            variant="outline"
-            onClick={() => onAddDevice(device.id)}
-            className="border-input-border hover:border-glass-border"
-            title={`${device.vendor} • ${device.label} • ${device.latencyTier} • ~${device.ips} calls/sec per row`}
-          >
-            + {device.label}
-          </Button>
-        ))}
-      </div>
-
       {/* Device Table */}
-      <div className="overflow-x-auto">
+      <div className="overflow-x-auto mb-6">
         <table className="w-full text-sm">
           <thead className="text-help">
             <tr>
@@ -61,7 +54,7 @@ export function DeviceStack({ devices, onAddDevice, onUpdateDevice, onRemoveDevi
             {devices.length === 0 ? (
               <tr>
                 <td colSpan={6} className="text-help py-4 text-center">
-                  No devices yet. Use the catalog above.
+                  No devices yet. Use the catalog below.
                 </td>
               </tr>
             ) : (
@@ -96,6 +89,63 @@ export function DeviceStack({ devices, onAddDevice, onUpdateDevice, onRemoveDevi
             )}
           </tbody>
         </table>
+      </div>
+
+      {/* IPS Capacity Visualization */}
+      <div className="mb-6 pt-4 border-t border-border">
+        <div className="mb-4">
+          <div className="flex items-center gap-2 mb-2">
+            <div className="text-help text-sm">Total Available IPS per Month</div>
+            <InfoTooltip content="Your hardware's maximum processing capacity. Shows total inferences per second across all devices and monthly capacity limit." />
+          </div>
+          <div className="flex items-center gap-4 mb-2">
+            <div className="text-sm text-foreground">
+              <span className="font-semibold text-number-blue">{totalCapacityIPS.toLocaleString()}</span> IPS
+            </div>
+            <div className="text-sm text-muted-foreground">
+              = <span className="font-mono">{(totalCapacityMonthly / 1_000_000).toFixed(1)}M</span> calls/month capacity
+            </div>
+          </div>
+          
+          {/* Capacity Bar */}
+          <div className="relative w-full h-6 bg-muted/30 rounded-lg overflow-hidden">
+            <div 
+              className="h-full bg-gradient-to-r from-primary/60 to-primary transition-all duration-300"
+              style={{ width: `${utilizationPercentage}%` }}
+            />
+            <div className="absolute inset-0 flex items-center justify-between px-3 text-xs font-medium">
+              <span className="text-foreground">
+                {(usedCapacityMonthly / 1_000_000).toFixed(1)}M used
+              </span>
+              <span className="text-muted-foreground">
+                {utilizationPercentage.toFixed(1)}% capacity
+              </span>
+            </div>
+          </div>
+          
+          <div className="flex justify-between text-xs text-muted-foreground mt-1">
+            <span>0</span>
+            <span>{(totalCapacityMonthly / 1_000_000).toFixed(1)}M calls</span>
+          </div>
+        </div>
+      </div>
+
+      {/* Device Picker */}
+      <div className="pt-4 border-t border-border">
+        <div className="text-sm font-medium text-foreground mb-2">Approved Hardware Catalog</div>
+        <div className="flex flex-wrap gap-2">
+          {CATALOG.map(device => (
+            <Button
+              key={device.id}
+              variant="outline"
+              onClick={() => onAddDevice(device.id)}
+              className="border-input-border hover:border-glass-border"
+              title={`${device.vendor} • ${device.label} • ${device.latencyTier} • ~${device.ips} calls/sec per row`}
+            >
+              + {device.label}
+            </Button>
+          ))}
+        </div>
       </div>
     </div>
   );
