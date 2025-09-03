@@ -44,7 +44,7 @@ export function ControlsSection({ state, calculations, onStateChange, onResetToP
   return (
     <div className="bg-card border border-border rounded-2xl p-panel-padding mb-panel">
       <div className="text-headline font-semibold text-foreground">Deployment Scenario</div>
-      <div className="text-help text-core mb-panel-gap">Tune assumptions (persisted in localStorage).</div>
+      <div className="text-help text-core mb-panel-gap">Configure your edge AI deployment parameters and operational assumptions.</div>
       
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-lg items-end">
         <div>
@@ -92,15 +92,17 @@ export function ControlsSection({ state, calculations, onStateChange, onResetToP
             <div className="text-help text-core mb-md">Utilization (%)</div>
             <InfoTooltip content="Percentage of total processing capacity actively used. Higher utilization = more revenue but less headroom for spikes." />
           </div>
-          <Slider
-            value={[Math.round(state.util * 100)]}
-            onValueChange={([value]) => onStateChange({ util: value / 100 })}
-            min={10}
-            max={100}
-            step={1}
-            className="mb-md"
-          />
-          <div className="text-core text-foreground">{Math.round(state.util * 100)}%</div>
+          <div className="flex items-center gap-md">
+            <Slider
+              value={[Math.round(state.util * 100)]}
+              onValueChange={([value]) => onStateChange({ util: value / 100 })}
+              min={10}
+              max={100}
+              step={1}
+              className="flex-1"
+            />
+            <div className="text-core text-foreground font-semibold">{Math.round(state.util * 100)}%</div>
+          </div>
         </div>
         
         <div>
@@ -116,9 +118,6 @@ export function ControlsSection({ state, calculations, onStateChange, onResetToP
             onChange={(e) => onStateChange({ callsPerJob: Math.max(1, parseInt(e.target.value) || 1) })}
             className="w-20 font-mono bg-input border-input-border"
           />
-          <div className="text-xs text-muted-foreground mt-xs">
-            Scenario: {SCENARIOS[state.scenario as keyof typeof SCENARIOS]?.callsPerJob || 'N/A'}
-          </div>
         </div>
         
         <div>
