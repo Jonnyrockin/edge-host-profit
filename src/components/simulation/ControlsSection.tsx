@@ -171,8 +171,8 @@ export function ControlsSection({ state, calculations, onStateChange, onResetToP
       </div>
       
       {/* Rural Offset and ESG Section */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6 pt-4 border-t border-border">
-          <div>
+      <div className="flex flex-col lg:flex-row justify-between items-start gap-6 mt-6 pt-4 border-t border-border">
+          <div className="flex-1">
             <div className="flex items-center gap-2">
               <div className="text-help text-sm mb-2">Rural offset presets</div>
               <InfoTooltip content="Distance from city center adds pricing premium due to higher infrastructure costs and lower competition." />
@@ -193,7 +193,7 @@ export function ControlsSection({ state, calculations, onStateChange, onResetToP
           </div>
         </div>
         
-          <div>
+          <div className="lg:ml-auto">
             <div className="flex items-center gap-2">
               <div className="text-help text-sm mb-2">ESG Compliance</div>
               <InfoTooltip content="Environmental, Social, and Governance compliance allows you to charge a 10% premium for sustainable computing practices." />
