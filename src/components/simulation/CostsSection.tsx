@@ -138,9 +138,9 @@ export function CostsSection({ state, calculations, onStateChange }: CostsSectio
                 </Select>
               </div>
               <div>
-                <div className="flex items-center gap-2">
-                  <div className="text-help text-core mb-2">Green uplift (%)</div>
-                  <InfoTooltip content="Percentage of energy from renewable sources. Higher uplift improves ESG credentials but may increase costs." />
+                <div className="flex items-center gap-md">
+                  <div className="text-help text-core mb-md">Renewable Energy (%)</div>
+                  <InfoTooltip content="Percentage of your energy from renewable sources. Higher percentage improves ESG credentials but may increase operational costs." />
                 </div>
                 <Input
                   type="number"
@@ -149,13 +149,13 @@ export function CostsSection({ state, calculations, onStateChange }: CostsSectio
                   value={state.greenUplift}
                   onChange={(e) => onStateChange({ greenUplift: parseFloat(e.target.value) || 0 })}
                   className="w-24 font-mono bg-input border-input-border"
-                  title="Uplift = usage % from renewables (not a price markup)"
+                  title="Percentage of energy sourced from renewables"
                 />
               </div>
               <div>
-                <div className="flex items-center gap-2">
-                  <div className="text-help text-core mb-2">Green premium (%)</div>
-                  <InfoTooltip content="Price markup for green energy sourcing. Allows you to charge customers extra for sustainable computing." />
+                <div className="flex items-center gap-md">
+                  <div className="text-help text-core mb-md">Green Pricing Premium (%)</div>
+                  <InfoTooltip content="Price markup you charge customers for sustainable computing. This is your revenue premium for being environmentally responsible." />
                 </div>
                 <Input
                   type="number"
@@ -164,7 +164,7 @@ export function CostsSection({ state, calculations, onStateChange }: CostsSectio
                   value={state.greenPremium}
                   onChange={(e) => onStateChange({ greenPremium: parseFloat(e.target.value) || 0 })}
                   className="w-24 font-mono bg-input border-input-border"
-                  title="Premium = price markup due to green sourcing"
+                  title="Premium percentage added to customer pricing for green energy"
                 />
               </div>
             </div>
