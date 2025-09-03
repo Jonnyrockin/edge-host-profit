@@ -78,7 +78,14 @@ export default {
 				'30': '7.5rem'
 			},
 			spacing: {
-				'30': '7.5rem'
+				'30': '7.5rem',
+				'panel': 'var(--panel-margin)',
+				'panel-padding': 'var(--panel-padding)'
+			},
+			fontSize: {
+				'headline': 'var(--font-headline)',
+				'core': 'var(--font-core)',
+				'label': 'var(--font-label)'
 			},
 			backdropBlur: {
 				glass: 'var(--backdrop-blur)'
