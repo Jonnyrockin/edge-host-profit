@@ -33,12 +33,12 @@ export function ControlsSection({ state, calculations, onStateChange, onResetToP
   return (
     <div className="bg-card border border-border rounded-lg p-panel-padding mt-panel">
       <div className="text-headline font-semibold text-foreground">Deployment Scenario</div>
-      <div className="text-help text-label mb-3">Tune assumptions (persisted in localStorage).</div>
+      <div className="text-help text-core mb-3">Tune assumptions (persisted in localStorage).</div>
       
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4 items-end">
         <div>
           <div className="flex items-center gap-2">
-            <div className="text-help text-label mb-2">Scenario</div>
+            <div className="text-help text-core mb-2">Scenario</div>
             <InfoTooltip content="Predefined configurations for different business models. Each scenario has optimized utilization rates and call patterns." />
           </div>
           <Select value={state.scenario} onValueChange={(value) => {
@@ -61,7 +61,7 @@ export function ControlsSection({ state, calculations, onStateChange, onResetToP
         
         <div>
           <div className="flex items-center gap-2">
-            <div className="text-help text-label mb-2">City</div>
+            <div className="text-help text-core mb-2">City</div>
             <InfoTooltip content="Geographic location affects baseline pricing, available connectivity providers, and energy costs." />
           </div>
           <Select value={state.city} onValueChange={(value) => onStateChange({ city: value })}>
@@ -78,7 +78,7 @@ export function ControlsSection({ state, calculations, onStateChange, onResetToP
         
         <div>
           <div className="flex items-center gap-2">
-            <div className="text-help text-label mb-2">Utilization (%)</div>
+            <div className="text-help text-core mb-2">Utilization (%)</div>
             <InfoTooltip content="Percentage of total processing capacity actively used. Higher utilization = more revenue but less headroom for spikes." />
           </div>
           <Slider
@@ -94,7 +94,7 @@ export function ControlsSection({ state, calculations, onStateChange, onResetToP
         
         <div>
           <div className="flex items-center gap-2">
-            <div className="text-help text-label mb-2">Calls per Job</div>
+            <div className="text-help text-core mb-2">Calls per Job</div>
             <InfoTooltip content="How many AI inference calls each customer job requires. Complex tasks need more calls." />
           </div>
           <Input
@@ -112,7 +112,7 @@ export function ControlsSection({ state, calculations, onStateChange, onResetToP
         
         <div>
           <div className="flex items-center gap-2">
-            <div className="text-help text-label mb-2">Base price per call ($)</div>
+            <div className="text-help text-core mb-2">Base price per call ($)</div>
             <InfoTooltip content="Starting price before applying location, rural, and premium multipliers. This sets your baseline pricing strategy." />
           </div>
           <Input
@@ -130,7 +130,7 @@ export function ControlsSection({ state, calculations, onStateChange, onResetToP
       <div className="flex flex-col lg:flex-row justify-between items-start gap-6 mt-6 pt-4 border-t border-border">
         <div className="flex-1">
           <div className="flex items-center gap-2">
-            <div className="text-help text-label mb-2">Rural offset presets</div>
+            <div className="text-help text-core mb-2">Rural offset presets</div>
             <InfoTooltip content="Distance from city center adds pricing premium due to higher infrastructure costs and lower competition." />
           </div>
           <div className="grid grid-cols-6 gap-1">
@@ -140,7 +140,7 @@ export function ControlsSection({ state, calculations, onStateChange, onResetToP
                 variant="outline"
                 size="sm"
                 onClick={() => handleRuralClick(km)}
-                className="px-2 py-1 border-input-border hover:border-glass-border text-label"
+                className="px-2 py-1 border-input-border hover:border-glass-border text-core"
                 title={km === 0 ? 'City core (no rural premium)' : `${km}km from core (adds premium)`}
               >
                 {km === 0 ? 'Core' : `${km}km`}
@@ -151,7 +151,7 @@ export function ControlsSection({ state, calculations, onStateChange, onResetToP
         
         <div className="lg:ml-auto">
           <div className="flex items-center gap-2">
-            <div className="text-help text-label mb-2">ESG Compliance</div>
+            <div className="text-help text-core mb-2">ESG Compliance</div>
             <InfoTooltip content="Environmental, Social, and Governance compliance allows you to charge a 10% premium for sustainable computing practices." />
           </div>
           <div className="flex items-center gap-4">
@@ -181,7 +181,7 @@ export function ControlsSection({ state, calculations, onStateChange, onResetToP
                 Upload ESG Cert
               </Button>
               {state.esgFile && (
-                <span className="text-label text-help">{state.esgFile}</span>
+                <span className="text-core text-help">{state.esgFile}</span>
               )}
             </div>
           </div>

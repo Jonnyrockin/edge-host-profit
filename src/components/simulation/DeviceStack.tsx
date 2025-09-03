@@ -24,7 +24,7 @@ export function DeviceStack({ devices, state, calculations, onAddDevice, onUpdat
   return (
     <div className="bg-card border border-border rounded-lg p-panel-padding mt-panel">
       <div className="text-headline font-semibold text-foreground">Node Stack</div>
-      <div className="text-help text-label mb-3">
+      <div className="text-help text-core mb-3">
         Add device rows from the catalog. Quantity = how many identical nodes you operate.
       </div>
       
@@ -32,17 +32,17 @@ export function DeviceStack({ devices, state, calculations, onAddDevice, onUpdat
       <div className="mb-4">
         {/* Header Row */}
         <div className="grid grid-cols-6 gap-4 items-center py-2 text-help border-b border-border">
-          <div className="text-left text-label">Device</div>
-          <div className="text-left text-label">Vendor</div>
-          <div className="text-left text-label flex items-center gap-1">
+          <div className="text-left text-core">Device</div>
+          <div className="text-left text-core">Vendor</div>
+          <div className="text-left text-core flex items-center gap-1">
             Latency
             <InfoTooltip content="Response time categories: <25ms (ultra-fast), 25-50ms (fast), 50-100ms (standard). Lower latency commands premium pricing." />
           </div>
-          <div className="text-right text-label flex items-center gap-1 justify-end">
+          <div className="text-right text-core flex items-center gap-1 justify-end">
             IPS / row
             <InfoTooltip content="Inferences Per Second - maximum AI processing capacity per device. Higher IPS = more concurrent jobs." />
           </div>
-          <div className="text-center text-label flex items-center gap-1 justify-center">
+          <div className="text-center text-core flex items-center gap-1 justify-center">
             Qty
             <InfoTooltip content="Number of identical devices. More devices = higher total capacity and redundancy." />
           </div>
@@ -51,7 +51,7 @@ export function DeviceStack({ devices, state, calculations, onAddDevice, onUpdat
         
         {/* Device Rows */}
         {devices.length === 0 ? (
-          <div className="text-help py-4 text-center text-label">
+          <div className="text-help py-4 text-center text-core">
             No devices yet. Use the catalog below.
           </div>
         ) : (
@@ -91,14 +91,14 @@ export function DeviceStack({ devices, state, calculations, onAddDevice, onUpdat
       {/* IPS Capacity Visualization */}
       <div className="mb-4 pt-3 border-t border-border">
         <div className="flex items-center gap-2 mb-2">
-          <div className="text-help text-label">Total Available IPS per Month</div>
+          <div className="text-help text-core">Total Available IPS per Month</div>
           <InfoTooltip content="Your hardware's maximum processing capacity. Shows total inferences per second across all devices and monthly capacity limit." />
         </div>
         <div className="flex items-center gap-4 mb-2">
-          <div className="text-label text-foreground">
+          <div className="text-core text-foreground">
             <span className="font-semibold text-number-blue">{totalCapacityIPS.toLocaleString()}</span> IPS
           </div>
-          <div className="text-label text-muted-foreground">
+          <div className="text-core text-muted-foreground">
             = <span className="font-mono">{(totalCapacityMonthly / 1_000_000).toFixed(1)}M</span> calls/month capacity
           </div>
         </div>
@@ -109,7 +109,7 @@ export function DeviceStack({ devices, state, calculations, onAddDevice, onUpdat
             className="h-full bg-gradient-to-r from-primary/60 to-primary transition-all duration-300"
             style={{ width: `${utilizationPercentage}%` }}
           />
-          <div className="absolute inset-0 flex items-center justify-between px-2 text-label font-medium">
+          <div className="absolute inset-0 flex items-center justify-between px-2 text-core font-medium">
             <span className="text-foreground">
               {(usedCapacityMonthly / 1_000_000).toFixed(1)}M used
             </span>
@@ -119,7 +119,7 @@ export function DeviceStack({ devices, state, calculations, onAddDevice, onUpdat
           </div>
         </div>
         
-        <div className="flex justify-between text-label text-muted-foreground mt-1">
+        <div className="flex justify-between text-core text-muted-foreground mt-1">
           <span>0</span>
           <span>{(totalCapacityMonthly / 1_000_000).toFixed(1)}M calls</span>
         </div>
@@ -127,7 +127,7 @@ export function DeviceStack({ devices, state, calculations, onAddDevice, onUpdat
 
       {/* Device Picker */}
       <div className="pt-3 border-t border-border">
-        <div className="text-label font-medium text-foreground mb-2">Approved Hardware Catalog</div>
+        <div className="text-core font-medium text-foreground mb-2">Approved Hardware Catalog</div>
         <div className="flex flex-wrap gap-1.5">
           {CATALOG.map(device => (
             <Button
@@ -135,7 +135,7 @@ export function DeviceStack({ devices, state, calculations, onAddDevice, onUpdat
               variant="outline"
               size="sm"
               onClick={() => onAddDevice(device.id)}
-              className="h-7 px-2 border-input-border hover:border-glass-border text-label"
+              className="h-7 px-2 border-input-border hover:border-glass-border text-core"
               title={`${device.vendor} • ${device.label} • ${device.latencyTier} • ~${device.ips} calls/sec per row`}
             >
               + {device.label}

@@ -23,7 +23,7 @@ export function MathSection({ state, calculations }: MathSectionProps) {
   return (
     <div className="bg-card border border-border rounded-lg p-panel-padding mt-panel">
       <div className="text-headline font-semibold text-foreground">The Math</div>
-      <div className="text-help text-label">
+      <div className="text-help text-core">
         Baselines → multipliers → traffic → gross → fees → OPEX → Cash Net.
       </div>
       <div className="font-mono text-sm mt-2 text-foreground space-y-2">
@@ -63,7 +63,7 @@ export function MathSection({ state, calculations }: MathSectionProps) {
       {/* Jobs Per Day Analysis */}
       <div className="mt-4">
         <div className="text-core font-semibold text-foreground">Jobs Per Day Analysis</div>
-        <div className="text-help text-label mb-2">
+        <div className="text-help text-core mb-2">
           Jobs/day = (IPS × Utilization × 86,400 sec) ÷ Calls per job
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
@@ -102,7 +102,7 @@ export function MathSection({ state, calculations }: MathSectionProps) {
 
       <div className="mt-4">
         <div className="text-core font-semibold text-foreground">SEL Tests</div>
-        <ul className="mt-2 space-y-1 text-label">
+        <ul className="mt-2 space-y-1 text-core">
           {tests.map(([name, ok], index) => (
             <li key={index} className="flex items-center gap-2">
               <span className={ok ? 'text-muted-foreground' : 'text-muted-foreground'}>

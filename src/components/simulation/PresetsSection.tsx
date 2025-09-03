@@ -33,7 +33,7 @@ export function PresetsSection({ state, onApplyPreset }: PresetsSectionProps) {
       <div className="bg-card border border-border rounded-lg p-panel-padding">
         <div className="text-headline font-semibold mb-1 text-foreground">Host profile</div>
         <div className="text-help mb-2 text-core">Auto-filled from your current selections.</div>
-        <div className="space-y-1 text-label">
+        <div className="space-y-1 text-core">
           <div>
             <span className="text-help">Geo:</span> City: {state.city}
           </div>

@@ -109,7 +109,7 @@ export function PremiumShowcase({ state, onStateChange }: PremiumShowcaseProps) 
           
           {/* Manual Override - Moved to bottom */}
           <div className="pt-4 border-t border-border/30 mt-auto">
-            <div className="text-label text-muted-foreground mb-1">Custom Override</div>
+            <div className="text-core text-muted-foreground mb-1">Custom Override</div>
             <Input
               type="number"
               min="0.0001"
@@ -144,7 +144,7 @@ export function PremiumShowcase({ state, onStateChange }: PremiumShowcaseProps) 
           
           <div className="text-center">
             <div className="text-core font-bold text-number-blue">{multiplier.toFixed(1)}x</div>
-            <div className="text-label text-muted-foreground">Premium Factor</div>
+            <div className="text-core text-muted-foreground">Premium Factor</div>
           </div>
 
           {/* Premium Justification in Multiplier Panel */}
