@@ -69,7 +69,7 @@ export function PremiumShowcase({ state, onStateChange }: PremiumShowcaseProps) 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
         
         {/* Baseline Cloud Price */}
-        <div className="bg-card border border-border rounded-lg p-3 text-center space-y-2">
+        <div className="bg-card border border-border rounded-lg p-3 text-center space-y-2 flex flex-col">
           <div className="text-sm text-muted-foreground">Baseline Cloud Compute</div>
           <div className="text-3xl font-bold text-number-blue">
             ${baselinePrice.toFixed(4)}
@@ -77,14 +77,14 @@ export function PremiumShowcase({ state, onStateChange }: PremiumShowcaseProps) 
           <div className="text-xs text-muted-foreground">per call</div>
           
           {/* Provider Selection */}
-          <div className="space-y-1.5">
+          <div className="space-y-2 mt-3">
             <Select value={state.baselineProvider || 'market-average'} onValueChange={handleProviderChange}>
-              <SelectTrigger className="w-full text-sm h-8">
+              <SelectTrigger className="w-full text-sm h-10">
                 <SelectValue />
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent className="z-50">
                 {CLOUD_BASELINES.map(provider => (
-                  <SelectItem key={provider.id} value={provider.id}>
+                  <SelectItem key={provider.id} value={provider.id} className="py-3">
                     <div className="flex flex-col items-start">
                       <div className="font-medium">{provider.name}</div>
                       <div className="text-xs text-muted-foreground">{provider.description}</div>
@@ -96,7 +96,7 @@ export function PremiumShowcase({ state, onStateChange }: PremiumShowcaseProps) 
             
             {/* Source Link */}
             {selectedProvider?.sourceUrl && (
-              <Button variant="ghost" size="sm" asChild className="h-5 text-xs">
+              <Button variant="ghost" size="sm" asChild className="h-6 text-xs">
                 <a href={selectedProvider.sourceUrl} target="_blank" rel="noopener noreferrer">
                   <ExternalLink className="w-3 h-3 mr-1" />
                   View Pricing
@@ -105,8 +105,8 @@ export function PremiumShowcase({ state, onStateChange }: PremiumShowcaseProps) 
             )}
           </div>
           
-          {/* Manual Override */}
-          <div className="pt-2 border-t border-border/30">
+          {/* Manual Override - Moved down to align with bottom elements */}
+          <div className="pt-4 border-t border-border/30 mt-auto">
             <div className="text-xs text-muted-foreground mb-1">Custom Override</div>
             <Input
               type="number"
@@ -115,7 +115,7 @@ export function PremiumShowcase({ state, onStateChange }: PremiumShowcaseProps) 
               step="0.0001"
               value={baselinePrice}
               onChange={(e) => handleBaselineChange(parseFloat(e.target.value) || 0.00076)}
-              className="w-full text-center font-mono text-sm h-7"
+              className="w-full text-center font-mono text-sm h-8"
               placeholder="Custom price"
             />
           </div>
