@@ -72,7 +72,7 @@ export function MathSection({ state, calculations }: MathSectionProps) {
               Conservative (40%)
               <InfoTooltip content="Conservative utilization scenario: 40% of total device capacity. Represents cautious adoption with stable, predictable workloads." />
             </div>
-            <div className="text-core font-semibold text-number-blue">
+            <div className="text-headline font-semibold text-number-blue">
               {Math.round((calculations.inventoryIPS * 0.40 * 86400) / state.callsPerJob).toLocaleString()}
             </div>
             <div className="text-xs text-muted-foreground">jobs/day</div>
@@ -82,7 +82,7 @@ export function MathSection({ state, calculations }: MathSectionProps) {
               Current ({Math.round(state.util * scenario.util * 100)}%)
               <InfoTooltip content="Current utilization based on your scenario selection and base utilization settings. This reflects your expected realistic usage pattern." />
             </div>
-            <div className="text-core font-semibold text-number-blue">
+            <div className="text-headline font-semibold text-number-blue">
               {Math.round((calculations.inventoryIPS * state.util * scenario.util * 86400) / state.callsPerJob).toLocaleString()}
             </div>
             <div className="text-xs text-muted-foreground">jobs/day</div>
@@ -92,7 +92,7 @@ export function MathSection({ state, calculations }: MathSectionProps) {
               Optimistic (80%)
               <InfoTooltip content="Optimistic utilization scenario: 80% of total device capacity. Represents high-demand environment with continuous, heavy workloads." />
             </div>
-            <div className="text-core font-semibold text-number-blue">
+            <div className="text-headline font-semibold text-number-blue">
               {Math.round((calculations.inventoryIPS * 0.80 * 86400) / state.callsPerJob).toLocaleString()}
             </div>
             <div className="text-xs text-muted-foreground">jobs/day</div>

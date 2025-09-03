@@ -143,7 +143,7 @@ export function PremiumShowcase({ state, onStateChange }: PremiumShowcaseProps) 
           </div>
           
           <div className="text-center">
-            <div className="text-core font-bold text-number-blue">{multiplier.toFixed(1)}x</div>
+            <div className="text-headline font-bold text-number-blue">{multiplier.toFixed(1)}x</div>
             <div className="text-core text-muted-foreground">Premium Factor</div>
           </div>
 

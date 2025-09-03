@@ -128,7 +128,7 @@ export function PricingPanel({ state, calculations, onStateChange }: PricingPane
       <div className="space-y-4">
         <div className="bg-secondary/20 rounded-lg p-3">
           <div className="text-help text-core">Single AI Inference Token</div>
-          <div className="text-core font-semibold text-number-blue">
+          <div className="text-headline font-semibold text-number-blue">
             ${finalPrice < 0.000001 ? finalPrice.toExponential(3) : finalPrice.toFixed(6)}
           </div>
           <div className="text-core text-help">
@@ -138,7 +138,7 @@ export function PricingPanel({ state, calculations, onStateChange }: PricingPane
         
         <div className="bg-secondary/20 rounded-lg p-3">
           <div className="text-help text-core">1 Million Calls</div>
-          <div className="text-core font-semibold text-number-blue">
+          <div className="text-headline font-semibold text-number-blue">
             ${Math.round(priceFor1M).toLocaleString()}
           </div>
           <div className="text-core text-help">
