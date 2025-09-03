@@ -46,7 +46,7 @@ export function ControlsSection({ state, calculations, onStateChange, onResetToP
       <div className="text-headline font-semibold text-foreground">Deployment Scenario</div>
       <div className="text-help text-core mb-panel-gap">Configure your edge AI deployment parameters and operational assumptions.</div>
       
-      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-lg items-end">
+      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-lg items-center">
         <div>
           <div className="flex items-center gap-md">
             <div className="text-help text-core mb-md">Scenario</div>
@@ -105,7 +105,7 @@ export function ControlsSection({ state, calculations, onStateChange, onResetToP
           </div>
         </div>
         
-        <div>
+        <div className="ml-5">
           <div className="flex items-center gap-md">
             <div className="text-help text-core mb-md">Calls per Job</div>
             <InfoTooltip content="How many AI inference calls each customer job requires. Complex tasks need more calls." />
