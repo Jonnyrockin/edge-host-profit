@@ -284,12 +284,6 @@ export function CostsSection({ state, calculations, onStateChange }: CostsSectio
             25% (fixed)
           </div>
         </div>
-        <div className="text-core text-muted-foreground">
-          Fiber Internet:
-          <span className="text-foreground font-semibold ml-1">
-            ${Math.round(calculations.fibreCost).toLocaleString()}/mo
-          </span>
-        </div>
       </div>
     </div>
   );
