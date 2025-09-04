@@ -16,11 +16,14 @@ export function edgeTierMultiplier(devices: Device[]): number {
 }
 
 export function ruralFactorFromKm(km: number): number {
-  if (km === 0) return 1;
-  if (km <= 100) return 1.05;
-  if (km <= 200) return 1.10;
-  if (km <= 300) return 1.15;
-  return 1.20;
+  // Rural edge pricing based on scarcity and infrastructure costs
+  // Aligned with agricultural edge compute valuations
+  if (km === 0) return 1.0;        // Urban core - no premium
+  if (km <= 50) return 1.5;        // Suburban edge - 50% premium
+  if (km <= 100) return 2.0;       // Rural edge - 2x premium (scarcity)
+  if (km <= 200) return 2.5;       // Agricultural edge - 2.5x premium
+  if (km <= 300) return 3.0;       // Remote rural - 3x premium
+  return 4.0;                      // Deep rural/agriculture - 4x premium
 }
 
 export function getSelectedFibreRate(state: SimulationState): number {
@@ -44,10 +47,13 @@ export function calculateRevenue(state: SimulationState): CalculationResult {
   // Price factor calculation - use pricePerCallBase directly as it already includes premium
   const esgMultiplier = state.esgEnabled ? 1.1 : 1.0;
   
+  // Calculate rural multiplier correctly (state.rural is already the multiplier, not percentage)
+  const ruralMultiplier = 1 + (state.rural || 0);
+  
   const locationMultiplier = cityPriceFactor(state.city) * 
                            edgeTierMultiplier(state.devices) * 
                            scenario.price * 
-                           (1 + (state.rural || 0) / 100) * 
+                           ruralMultiplier * 
                            (1 + (state.greenUplift || 0) / 100);
   
   const pricePerCall = state.pricePerCallBase * locationMultiplier * esgMultiplier;

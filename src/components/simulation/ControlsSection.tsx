@@ -19,6 +19,7 @@ interface ControlsSectionProps {
 
 export function ControlsSection({ state, calculations, onStateChange, onResetToPreset }: ControlsSectionProps) {
   const handleRuralClick = (km: number) => {
+    // Store the full multiplier minus 1 (so 0 = no premium, 1 = 2x premium, etc)
     const ruralFactor = ruralFactorFromKm(km) - 1;
     onStateChange({ rural: ruralFactor });
   };
@@ -27,10 +28,10 @@ export function ControlsSection({ state, calculations, onStateChange, onResetToP
   const getCurrentRuralKm = () => {
     const currentFactor = state.rural + 1;
     if (currentFactor <= 1.0) return 0;
-    if (currentFactor <= 1.05) return 50;
-    if (currentFactor <= 1.1) return 100;
-    if (currentFactor <= 1.2) return 200;
-    if (currentFactor <= 1.3) return 300;
+    if (currentFactor <= 1.5) return 50;
+    if (currentFactor <= 2.0) return 100;
+    if (currentFactor <= 2.5) return 200;
+    if (currentFactor <= 3.0) return 300;
     return 500;
   };
 
@@ -157,7 +158,12 @@ export function ControlsSection({ state, calculations, onStateChange, onResetToP
                   className={`px-2 py-1 border-input-border hover:border-glass-border text-core ${
                     isActive ? 'bg-slider-blue text-white border-slider-blue' : ''
                   }`}
-                  title={km === 0 ? 'City core (no rural premium)' : `${km}km from core (adds premium)`}
+                  title={km === 0 ? 'City core (no rural premium)' : 
+                        km === 50 ? '50km: Suburban edge (+50% premium)' :
+                        km === 100 ? '100km: Rural edge (2x premium - scarcity)' :
+                        km === 200 ? '200km: Agricultural edge (2.5x premium)' :
+                        km === 300 ? '300km: Remote rural (3x premium)' :
+                        '500km: Deep rural/agriculture (4x premium)'}
                 >
                   {km === 0 ? 'Core' : `${km}km`}
                 </Button>

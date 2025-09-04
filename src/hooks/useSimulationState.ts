@@ -9,10 +9,10 @@ const defaultState: SimulationState = {
   city: 'Toronto',
   rural: 0,
   scenario: 'Median',
-  util: 0.50,
+  util: 0.20,  // Conservative 20% utilization aligned with edge AI knowledge
   callsPerJob: 2,
   secondsInMonth: 30 * 24 * 60 * 60,
-  pricePerCallBase: 0.00608,
+  pricePerCallBase: 0.02,  // Mid-tier pricing per knowledge ($0.005-0.08 range)
   devices: [{ id: 'vz-studio', vendor: 'Vizrt', label: 'Vizrt Node — Studio', ips: 85, latencyTier: '50–100ms', qty: 3 }],
   costs: { energy: 1600, rent: 900, staff: 700, misc: 200, insurance: 150, maintenance: 120, licenses: 250, fibre: 180, legal: 300 },
   connectivityProvider: 'Bell Business Fibre 1G',
