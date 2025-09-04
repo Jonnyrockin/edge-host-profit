@@ -11,7 +11,7 @@ interface KPIDashboardProps {
 
 export function KPIDashboard({ state, calculations, onStateChange }: KPIDashboardProps) {
   return (
-    <div className="bg-kpi-panel-bg border border-border rounded-2xl p-panel-padding mb-panel sticky top-0 z-40 backdrop-blur-glass">
+    <div className="bg-kpi-panel-bg border border-border rounded-2xl p-panel-padding mb-panel sticky top-0 z-40" style={{backdropFilter: 'blur(35px)'}}>
       <div className="flex items-center justify-between">
         <h1 className="text-massive-title font-semibold text-background">
           Host Revenue Simulation
