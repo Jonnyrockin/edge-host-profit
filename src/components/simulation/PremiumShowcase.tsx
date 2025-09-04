@@ -5,6 +5,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '.
 import { Button } from '../ui/button';
 import { ExternalLink } from 'lucide-react';
 import { CLOUD_BASELINES, getCloudProviderById } from '../../data/cloud-baselines';
+import { InfoTooltip } from '../ui/info-tooltip';
 
 interface PremiumShowcaseProps {
   state: SimulationState;
@@ -13,17 +14,19 @@ interface PremiumShowcaseProps {
 
 export function PremiumShowcase({ state, onStateChange }: PremiumShowcaseProps) {
   const selectedProvider = getCloudProviderById(state.baselineProvider || 'market-average');
-  const baselinePrice = selectedProvider?.pricePerCall || 0.00076;
+  const rawBaselinePrice = selectedProvider?.pricePerCall || 0.00076;
+  const baselinePrice = rawBaselinePrice * 0.2; // Apply 80% discount (20% of original)
   const multiplier = state.premiumMultiplier || 8;
   const edgePrice = baselinePrice * multiplier;
 
   const handleProviderChange = (providerId: string) => {
     const provider = getCloudProviderById(providerId);
     if (provider) {
-      const newEdgePrice = provider.pricePerCall * multiplier;
+      const discountedBaselinePrice = provider.pricePerCall * 0.2; // Apply 80% discount
+      const newEdgePrice = discountedBaselinePrice * multiplier;
       onStateChange({
         baselineProvider: providerId,
-        baselineCloudPrice: provider.pricePerCall,
+        baselineCloudPrice: discountedBaselinePrice,
         pricePerCallBase: newEdgePrice
       });
     }
@@ -39,9 +42,10 @@ export function PremiumShowcase({ state, onStateChange }: PremiumShowcaseProps) 
   };
 
   const handleBaselineChange = (value: number) => {
-    const newEdgePrice = value * multiplier;
+    const discountedValue = value * 0.2; // Apply 80% discount to custom input too
+    const newEdgePrice = discountedValue * multiplier;
     onStateChange({ 
-      baselineCloudPrice: value,
+      baselineCloudPrice: discountedValue,
       pricePerCallBase: newEdgePrice,
       baselineProvider: 'custom' // Mark as custom when manually edited
     });
@@ -69,12 +73,20 @@ export function PremiumShowcase({ state, onStateChange }: PremiumShowcaseProps) 
         
         {/* Baseline Cloud Price */}
         <div className="bg-card border border-border rounded-lg p-panel-gap text-center space-y-md flex flex-col">
-          <div className="text-core text-muted-foreground">Baseline Cloud Compute</div>
-          <div className="flex items-baseline justify-center gap-xs">
-            <div className="text-3xl font-bold text-number-blue">
-              ${baselinePrice.toFixed(4)}
+          <div className="text-core text-muted-foreground flex items-center justify-center gap-1">
+            Baseline Cloud Compute
+            <InfoTooltip content="Baseline pricing gathered from major cloud providers (AWS, Azure, GCP, OpenAI). We apply an 80% forward projection discount based on industry analysis showing compute prices drop 80% year-over-year due to hardware advances and competition." />
+          </div>
+          <div className="space-y-1">
+            <div className="flex items-baseline justify-center gap-xs">
+              <div className="text-3xl font-bold text-number-blue">
+                ${baselinePrice.toFixed(4)}
+              </div>
+              <div className="text-xs text-number-blue">per call</div>
             </div>
-            <div className="text-xs text-number-blue">per call</div>
+            <div className="text-xs text-muted-foreground">
+              ${(baselinePrice * 1000000).toFixed(0)} per million tokens
+            </div>
           </div>
           
           {/* Provider Selection */}
@@ -160,10 +172,15 @@ export function PremiumShowcase({ state, onStateChange }: PremiumShowcaseProps) 
         {/* Edge Price Result */}
         <div className="bg-card border border-border rounded-lg p-panel-gap text-center">
           <div className="text-core text-muted-foreground mb-1">Edge AI Premium Price</div>
-          <div className="text-3xl font-bold text-number-blue">
-            ${edgePrice.toFixed(6)}
+          <div className="space-y-1 mb-2">
+            <div className="text-3xl font-bold text-number-blue">
+              ${edgePrice.toFixed(6)}
+            </div>
+            <div className="text-xs text-muted-foreground">per call</div>
+            <div className="text-xs text-muted-foreground">
+              ${(edgePrice * 1000000).toFixed(0)} per million tokens
+            </div>
           </div>
-          <div className="text-xs text-muted-foreground mb-2">per call</div>
           <div className="bg-muted/30 border border-border/50 rounded-lg p-2 mb-3">
             <div className="text-sm font-semibold text-number-blue">
               +{((multiplier - 1) * 100).toFixed(0)}% Premium
