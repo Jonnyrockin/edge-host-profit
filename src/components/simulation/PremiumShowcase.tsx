@@ -171,13 +171,18 @@ export function PremiumShowcase({ state, onStateChange }: PremiumShowcaseProps) 
 
         {/* Edge Price Result */}
         <div className="bg-card border border-border rounded-lg p-panel-gap text-center">
-          <div className="text-core text-muted-foreground mb-1">Edge AI Premium Price</div>
+          <div className="text-core text-muted-foreground mb-1 flex items-center justify-center gap-1">
+            Edge AI Premium Price
+            <InfoTooltip content="Final edge inference price after applying premium multiplier to the discounted baseline. This reflects the value of ultra-low latency, local processing, and premium service quality." />
+          </div>
           <div className="space-y-1 mb-2">
-            <div className="text-3xl font-bold text-number-blue">
-              ${edgePrice.toFixed(6)}
+            <div className="flex items-baseline justify-center gap-xs">
+              <div className="text-3xl font-bold text-number-blue">
+                ${edgePrice.toFixed(6)}
+              </div>
+              <div className="text-xs text-number-blue">per call</div>
             </div>
-            <div className="text-xs text-muted-foreground">per call</div>
-            <div className="text-xs text-muted-foreground">
+            <div className="text-sm text-muted-foreground">
               ${(edgePrice * 1000000).toFixed(0)} per million tokens
             </div>
           </div>

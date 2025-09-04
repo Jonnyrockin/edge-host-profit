@@ -57,7 +57,7 @@ export function DeviceStack({ devices, state, calculations, onAddDevice, onUpdat
           </div>
         ) : (
           [...devices].reverse().map(device => (
-            <div key={device.id} className="bg-muted/20 border border-muted rounded-md p-1 my-0.5">
+            <div key={device.id} className="bg-muted/40 border border-muted rounded-md p-1 my-0.5">
               <div className="grid grid-cols-6 gap-4 items-center min-h-[22px]">
                 <div className="text-foreground text-core font-normal">{device.label}</div>
                 <div className="text-foreground text-core">{device.vendor}</div>
