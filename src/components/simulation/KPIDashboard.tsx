@@ -40,10 +40,10 @@ export function KPIDashboard({ state, calculations, onStateChange }: KPIDashboar
         <div className="bg-kpi-card-bg border border-kpi-card-border rounded-lg p-panel-gap min-h-[86px] flex flex-col">
           <div className="flex items-center gap-xs">
             <div className="text-black text-core">Util (effective)</div>
-            <InfoTooltip content="Actual utilization rate combining base utilization with scenario multipliers. Higher rates = more revenue." />
+            <InfoTooltip content="Adjusted utilization incorporating lightweight VLM impacts: on-device shift (20% conservative) and ecosystem growth (20% annually). This reflects real demand accounting for edge AI evolution." />
           </div>
-          <div className="text-headline font-semibold text-black">{Math.round(calculations.util * 100)}%</div>
-          <div className="text-black text-core">Live</div>
+          <div className="text-headline font-semibold text-black">{Math.round(calculations.adjustedUtil * 100)}%</div>
+          <div className="text-black text-core">VLM-adjusted</div>
         </div>
         
         <div className="bg-kpi-card-bg border border-kpi-card-border rounded-lg p-panel-gap min-h-[86px] flex flex-col">

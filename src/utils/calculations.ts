@@ -40,7 +40,16 @@ export function getSelectedEnergyRate(state: SimulationState): number {
 
 export function calculateRevenue(state: SimulationState): CalculationResult {
   const scenario = SCENARIOS[state.scenario as keyof typeof SCENARIOS] || SCENARIOS.Median;
-  const util = Math.min(1, Math.max(0, state.util * scenario.util));
+  const baseUtil = Math.min(1, Math.max(0, state.util * scenario.util));
+  
+  // Lightweight VLM impact adjustments
+  const onDeviceShift = state.onDeviceShift || 0.2; // Conservative: 20% shift to on-device
+  const ecosystemMult = state.ecosystemMult || 1.2; // Conservative: 20% ecosystem growth
+  
+  // Updated utilization: (base_util * (1 - on_device_shift) * ecosystem_mult)
+  const adjustedUtil = Math.min(0.9, Math.max(0, baseUtil * (1 - onDeviceShift) * ecosystemMult));
+  const util = adjustedUtil; // Use adjusted utilization for calculations
+  
   const inventoryIPS = state.devices.reduce((sum, device) => sum + (device.ips || 0) * (device.qty || 1), 0);
   const devicesRows = state.devices.map(d => `${d.qty}× ${d.label}`).join(', ');
 
@@ -93,6 +102,7 @@ export function calculateRevenue(state: SimulationState): CalculationResult {
     opex,
     cashNet,
     fibreCost,
-    energyCost
+    energyCost,
+    adjustedUtil
   };
 }

@@ -42,6 +42,8 @@ export interface SimulationState {
   baselineCloudPrice?: number;
   premiumMultiplier?: number;
   baselineProvider?: string;
+  onDeviceShift?: number;
+  ecosystemMult?: number;
 }
 
 export interface CalculationResult {
@@ -56,6 +58,7 @@ export interface CalculationResult {
   cashNet: number;
   fibreCost: number;
   energyCost: number;
+  adjustedUtil: number;
 }
 
 export interface Provider {
