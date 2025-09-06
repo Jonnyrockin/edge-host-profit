@@ -44,6 +44,8 @@ export interface SimulationState {
   baselineProvider?: string;
   onDeviceShift?: number;
   ecosystemMult?: number;
+  agenticComplexity?: number;
+  dynamicCallsEnabled?: boolean;
 }
 
 export interface CalculationResult {
@@ -59,6 +61,7 @@ export interface CalculationResult {
   fibreCost: number;
   energyCost: number;
   adjustedUtil: number;
+  dynamicCallsPerJob: number;
 }
 
 export interface Provider {

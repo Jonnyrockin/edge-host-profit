@@ -36,7 +36,7 @@ export function KPIDashboard({ state, calculations, onStateChange }: KPIDashboar
         </div>
       </div>
       
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-panel-gap mt-lg">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-7 gap-panel-gap mt-lg">
         <div className="bg-kpi-card-bg border border-kpi-card-border rounded-lg p-panel-gap min-h-[86px] flex flex-col">
           <div className="flex items-center gap-xs">
             <div className="text-black text-core">Util (effective)</div>
@@ -53,6 +53,15 @@ export function KPIDashboard({ state, calculations, onStateChange }: KPIDashboar
           </div>
           <div className="text-headline font-semibold text-black">{calculations.monthlyCalls.toLocaleString()}</div>
           <div className="text-black text-core">{state.devices.length} device rows</div>
+        </div>
+        
+        <div className="bg-kpi-card-bg border border-kpi-card-border rounded-lg p-panel-gap min-h-[86px] flex flex-col">
+          <div className="flex items-center gap-xs">
+            <div className="text-black text-core">Calls/Job (dynamic)</div>
+            <InfoTooltip content="Dynamic calls per job based on agentic AI evolution. Accounts for multi-step reasoning, tool-calling, and hybrid edge/cloud workflows. Increases with AI complexity over time." />
+          </div>
+          <div className="text-headline font-semibold text-black">{calculations.dynamicCallsPerJob.toFixed(1)}</div>
+          <div className="text-black text-core">Agentic evolution</div>
         </div>
         
         <div className="bg-kpi-card-bg border border-kpi-card-border rounded-lg p-panel-gap min-h-[86px] flex flex-col">

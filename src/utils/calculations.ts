@@ -1,6 +1,24 @@
 import { SimulationState, CalculationResult, Device } from '../types/simulation';
 import { SCENARIOS, FIBRE_PROVIDERS, ENERGY_PROVIDERS } from '../data/constants';
 
+export function calculateDynamicCallsPerJob(
+  currentYear: number = new Date().getFullYear(),
+  baseCalls: number = 1.5,
+  agenticRate: number = 0.8,
+  growthRate: number = 2,
+  complexityMultiplier: number = 5,
+  hybridOverhead: number = 1.5
+): number {
+  /**
+   * Dynamic formula for calls per job, conservative for agentic/hybrid evolution.
+   * Based on AI evolution toward multi-step reasoning, tool-calling, and hybrid edge/cloud workflows.
+   */
+  const yearFactor = Math.max((currentYear - 2025) * growthRate, 0);
+  const adjustedAgenticRate = Math.min(agenticRate + (yearFactor * 0.05), 1.0); // Caps at 1.0
+  const calls = baseCalls + (adjustedAgenticRate * yearFactor) * complexityMultiplier + hybridOverhead;
+  return Math.min(calls, 20); // Conservative cap for realism
+}
+
 export function cityPriceFactor(city: string): number {
   return 1.00; // Base factor for all cities
 }
@@ -66,7 +84,19 @@ export function calculateRevenue(state: SimulationState): CalculationResult {
                            (1 + (state.greenUplift || 0) / 100);
   
   const pricePerCall = state.pricePerCallBase * locationMultiplier * esgMultiplier;
-  const monthlyCalls = Math.round(inventoryIPS * util * state.secondsInMonth * state.callsPerJob);
+  
+  // Calculate dynamic calls per job based on agentic AI evolution
+  const currentYear = new Date().getFullYear();
+  const dynamicCallsPerJob = state.callsPerJob > 0 ? state.callsPerJob : calculateDynamicCallsPerJob(
+    currentYear,
+    1.5, // baseCalls
+    0.8, // agenticRate (80% adoption in 2025)
+    2,   // growthRate (45.8% CAGR approximation)
+    scenario.callsPerJob || 5, // complexityMultiplier from scenario
+    1.5  // hybridOverhead
+  );
+  
+  const monthlyCalls = Math.round(inventoryIPS * util * state.secondsInMonth * dynamicCallsPerJob);
 
   // OPEX calculation
   const fibreCost = state.linkRate ? getSelectedFibreRate(state) : (state.costs.fibre || 0);
@@ -103,6 +133,7 @@ export function calculateRevenue(state: SimulationState): CalculationResult {
     cashNet,
     fibreCost,
     energyCost,
-    adjustedUtil
+    adjustedUtil,
+    dynamicCallsPerJob
   };
 }
