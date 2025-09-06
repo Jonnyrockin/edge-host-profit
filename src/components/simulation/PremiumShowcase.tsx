@@ -51,11 +51,38 @@ export function PremiumShowcase({ state, onStateChange }: PremiumShowcaseProps) 
     });
   };
 
+  const industries = [
+    {
+      name: "Retail AI Analytics",
+      description: "Real-time footfall and shopper pattern analysis",
+      position: "0%",
+      multiplier: 5.5
+    },
+    {
+      name: "Healthcare Diagnostics", 
+      description: "Privacy-preserving, high-accuracy inference for patient imaging",
+      position: "33%",
+      multiplier: 8.5
+    },
+    {
+      name: "Autonomous Fleet",
+      description: "Low-latency coordination for self-driving vehicles",
+      position: "66%", 
+      multiplier: 12
+    },
+    {
+      name: "Financial Trading",
+      description: "Ultra-low latency algorithmic trading and fraud detection",
+      position: "100%",
+      multiplier: 15
+    }
+  ];
+
   return (
     <div className="bg-card border border-border rounded-2xl p-panel-padding mb-panel">
       <div className="flex items-center justify-between mb-panel-gap">
         <div className="flex items-center gap-md">
-          <h2 className="text-headline font-semibold text-foreground">Edge AI Premium Positioning</h2>
+          <h2 className="text-headline font-semibold text-foreground">Edge Premium Multiplier</h2>
         </div>
         
         {/* Provider Chip */}
@@ -68,8 +95,82 @@ export function PremiumShowcase({ state, onStateChange }: PremiumShowcaseProps) 
         )}
       </div>
 
-      {/* Premium Comparison Display */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-lg">
+      {/* Full Width Premium Slider with Industry Markers */}
+      <div className="bg-gradient-to-r from-primary/5 via-primary/10 to-primary/20 border border-primary/20 rounded-xl p-6 mb-6">
+        <div className="relative">
+          {/* Industry Markers - Above Slider */}
+          <div className="relative mb-8">
+            {industries.map((industry, index) => (
+              <div 
+                key={industry.name}
+                className="absolute transform -translate-x-1/2"
+                style={{ left: industry.position }}
+              >
+                <div className="bg-white border-2 border-primary/30 rounded-lg p-3 min-w-[160px] shadow-sm">
+                  <div className="text-sm font-semibold text-foreground text-center mb-1">
+                    {industry.name}
+                  </div>
+                  <div className="text-xs text-muted-foreground text-center mb-2">
+                    {industry.description}
+                  </div>
+                  <div className="text-center">
+                    <div className="inline-flex items-center bg-primary/10 rounded-full px-2 py-1">
+                      <div className="text-xs font-bold text-primary">{industry.multiplier}x</div>
+                    </div>
+                  </div>
+                </div>
+                {/* Connector Line */}
+                <div className="w-0.5 h-4 bg-primary/40 mx-auto mt-1"></div>
+              </div>
+            ))}
+          </div>
+
+          {/* Premium Multiplier Controls */}
+          <div className="bg-white/80 backdrop-blur-sm border border-border/50 rounded-lg p-4">
+            <div className="flex items-center justify-between mb-3">
+              <div className="text-sm font-medium text-foreground">Premium Multiplier</div>
+              <div className="text-2xl font-bold text-primary">{multiplier.toFixed(1)}x</div>
+            </div>
+            
+            <div className="mb-4">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-xs text-muted-foreground">5.0x</span>
+                <span className="text-xs text-muted-foreground">15.0x</span>
+              </div>
+              <Slider
+                value={[multiplier]}
+                onValueChange={handleMultiplierChange}
+                min={5}
+                max={15}
+                step={0.5}
+                className="w-full"
+              />
+            </div>
+
+            <div className="grid grid-cols-4 gap-4 text-center">
+              <div className="text-xs">
+                <div className="font-semibold text-foreground">Performance</div>
+                <div className="text-muted-foreground">4-20x faster</div>
+              </div>
+              <div className="text-xs">
+                <div className="font-semibold text-foreground">Latency</div>
+                <div className="text-muted-foreground">&lt;25ms edge</div>
+              </div>
+              <div className="text-xs">
+                <div className="font-semibold text-foreground">Privacy</div>
+                <div className="text-muted-foreground">Local processing</div>
+              </div>
+              <div className="text-xs">
+                <div className="font-semibold text-foreground">Value</div>
+                <div className="text-muted-foreground">Mission-critical</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Two Column Layout for Baseline and Edge Price */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         
         {/* Baseline Cloud Price */}
         <div className="bg-card border border-border rounded-lg p-panel-gap text-center space-y-md flex flex-col">
@@ -134,43 +235,8 @@ export function PremiumShowcase({ state, onStateChange }: PremiumShowcaseProps) 
           </div>
         </div>
 
-        {/* Premium Multiplier */}
-        <div className="bg-card border border-border rounded-lg p-3 flex flex-col justify-between">
-          <div className="text-core font-medium text-foreground mb-3">Premium Multiplier</div>
-          
-          <div className="mb-4">
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-xs text-muted-foreground">5.0x</span>
-              <span className="text-xs text-muted-foreground">15.0x</span>
-            </div>
-            <Slider
-              value={[multiplier]}
-              onValueChange={handleMultiplierChange}
-              min={5}
-              max={15}
-              step={0.5}
-              className="w-full"
-            />
-          </div>
-          
-          <div className="text-center">
-            <div className="text-headline font-bold text-number-blue">{multiplier.toFixed(1)}x</div>
-            <div className="text-core text-muted-foreground">Premium Factor</div>
-          </div>
-
-          {/* Premium Justification in Multiplier Panel */}
-          <div className="bg-gradient-to-r from-primary/5 to-primary/10 border border-primary/20 rounded-lg p-2 mt-3">
-            <div className="text-xs font-medium text-foreground mb-1">Why Premium Works</div>
-            <div className="text-xs text-muted-foreground space-y-0.5">
-              <div>• Performance: 4-20x faster</div>
-              <div>• Value: Enables new use cases</div>
-              <div>• Market: Mission-critical ready</div>
-            </div>
-          </div>
-        </div>
-
         {/* Edge Price Result */}
-        <div className="bg-card border border-border rounded-lg p-panel-gap text-center">
+        <div className="bg-card border border-border rounded-lg p-panel-gap text-center flex flex-col">
           <div className="text-core text-muted-foreground mb-1 flex items-center justify-center gap-1">
             Edge AI Premium Price
             <InfoTooltip content="Final edge inference price after applying premium multiplier to the discounted baseline. This reflects the value of ultra-low latency, local processing, and premium service quality." />
@@ -196,7 +262,7 @@ export function PremiumShowcase({ state, onStateChange }: PremiumShowcaseProps) 
           </div>
 
           {/* Value Metrics */}
-          <div className="grid grid-cols-1 gap-2 text-center pt-2 border-t border-border">
+          <div className="grid grid-cols-2 gap-2 text-center pt-2 border-t border-border mt-auto">
             <div>
               <div className="text-xs font-semibold text-foreground">&lt;25ms Latency</div>
             </div>
@@ -205,6 +271,9 @@ export function PremiumShowcase({ state, onStateChange }: PremiumShowcaseProps) 
             </div>
             <div>
               <div className="text-xs font-semibold text-foreground">Premium Market</div>
+            </div>
+            <div>
+              <div className="text-xs font-semibold text-foreground">Mission Critical</div>
             </div>
           </div>
         </div>
