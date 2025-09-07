@@ -6,6 +6,7 @@ import { Button } from '../ui/button';
 import { ExternalLink } from 'lucide-react';
 import { CLOUD_BASELINES, getCloudProviderById } from '../../data/cloud-baselines';
 import { InfoTooltip } from '../ui/info-tooltip';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../ui/tooltip';
 
 interface PremiumShowcaseProps {
   state: SimulationState;
@@ -54,79 +55,75 @@ export function PremiumShowcase({ state, onStateChange }: PremiumShowcaseProps) 
   const industries = [
     {
       name: "RETAIL",
-      description: "Real-time footfall and shopper analytics",
+      description: "Retail pays the lowest premium as most analytics can tolerate higher latency (e.g., shopper trends) and often rely on batch insights rather than real-time AI.",
+      subtitle: "Competitive differentiation is driven by cost savings over ultra-fast responsiveness.",
       position: "0%",
-      multiplier: 5.5
+      multiplier: 1.5
     },
     {
       name: "SPORTS", 
-      description: "Live performance tracking and analysis",
+      description: "Sports analytics value real-time insights for coaching or media, activating premium only for live event edge processing and enhanced fan engagement.",
+      subtitle: "Premium rises for direct, live scenarios, but bulk of data can be post-processed.",
       position: "20%",
-      multiplier: 7
+      multiplier: 2.2
     },
     {
       name: "HEALTHCARE",
-      description: "Privacy-preserving patient diagnostics",
+      description: "Healthcare pays higher premiums to ensure privacy, regulatory compliance, and timely diagnostics (e.g., AI imaging and alerts).",
+      subtitle: "Avoiding regulatory fines and supporting life-critical decisions justifies increased spend.",
       position: "40%", 
-      multiplier: 8.5
+      multiplier: 3.1
     },
     {
       name: "ROBOTS",
-      description: "Autonomous coordination and control",
+      description: "Robotics demands low-latency, distributed compute for coordination and obstacle avoidance, especially in real-time industrial settings.",
+      subtitle: "Premium is paid for reliable performance and uptime, with direct safety implications.",
       position: "60%",
-      multiplier: 12
+      multiplier: 3.8
     },
     {
       name: "TRANSIT",
-      description: "Fleet management and routing optimization",
+      description: "Transit (autonomous vehicles, control systems) incurs an even greater premium for sub-second decisioning and 24/7 reliability.",
+      subtitle: "Mistakes or delays result in costly service disruptions or safety risks, making high-speed compute essential.",
       position: "80%",
-      multiplier: 13.5
+      multiplier: 4.5
     },
     {
       name: "FINANCIAL",
-      description: "Ultra-low latency trading and fraud detection",
+      description: "Finance pays the highest premium for compute, with ultra-low latency being mission-critical for algorithmic trading, fraud prevention, and regulatory processing.",
+      subtitle: "Every millisecond in compute translates directly to significant profit or loss.",
       position: "100%",
-      multiplier: 15
+      multiplier: 5.0
     }
   ];
 
   return (
-    <div className="bg-gray-900 border border-gray-700 rounded-2xl p-6 mb-6">
-      {/* Header */}
-      <div className="flex items-center justify-between mb-6">
-        <div className="flex items-center gap-4">
-          <h2 className="text-xl font-semibold text-white">Premium Value Multiplier</h2>
-          <p className="text-sm text-gray-400">Premium pricing for Edge AI due to ultra-low latency, data locality, compliance and SLA</p>
-        </div>
-        
-        {/* Provider Chip */}
-        {selectedProvider && (
-          <div className="bg-gray-800 border border-gray-600 rounded-full px-3 py-1 flex items-center gap-2">
-            <div className="text-xs font-medium text-white">{selectedProvider.name}</div>
-            <div className="w-1 h-1 bg-gray-500 rounded-full"></div>
-            <div className="text-xs text-gray-400">{selectedProvider.lastUpdated}</div>
+    <TooltipProvider>
+      <div className="bg-gray-800 border border-gray-700 rounded-2xl p-6 mb-6">
+        {/* Header */}
+        <div className="flex items-center justify-between mb-4">
+          <div className="flex flex-col gap-2">
+            <h2 className="text-xl font-semibold text-white">Edge Premium Multiplier</h2>
+            <p className="text-sm text-gray-400">Premium pricing for Edge AI due to ultra-low latency, data locality, compliance and SLA</p>
           </div>
-        )}
-      </div>
-
-      {/* Premium Multiplier Display */}
-      <div className="text-center mb-8">
-        <div className="text-6xl font-bold text-blue-400 mb-2">{multiplier.toFixed(2)}x</div>
-      </div>
-
-      {/* Industry Markers and Slider */}
-      <div className="relative mb-8">
-        {/* Industry Labels */}
-        <div className="flex justify-between mb-4">
-          {industries.map((industry) => (
-            <div key={industry.name} className="text-center">
-              <div className="text-sm font-medium text-white mb-1">{industry.name}</div>
+          
+          {/* Provider Chip - 25% larger */}
+          {selectedProvider && (
+            <div className="bg-gray-700 border border-gray-600 rounded-full px-4 py-2 flex items-center gap-3">
+              <div className="text-sm font-medium text-white">{selectedProvider.name}</div>
+              <div className="w-1.5 h-1.5 bg-gray-500 rounded-full"></div>
+              <div className="text-sm text-gray-400">{selectedProvider.lastUpdated}</div>
             </div>
-          ))}
+          )}
         </div>
 
-        {/* Slider Track with Visual Enhancement */}
-        <div className="relative">
+        {/* Premium Multiplier Display - 25% smaller font */}
+        <div className="text-center mb-6">
+          <div className="text-5xl font-bold text-blue-400 mb-2">{multiplier.toFixed(2)}x</div>
+        </div>
+
+        {/* Slider positioned between industries and multiplier */}
+        <div className="relative mb-6">
           <div className="flex items-center justify-between mb-2">
             <span className="text-xs text-gray-400">1.0x</span>
             <span className="text-xs text-gray-400">5.0x</span>
@@ -137,10 +134,28 @@ export function PremiumShowcase({ state, onStateChange }: PremiumShowcaseProps) 
             min={1}
             max={5}
             step={0.05}
-            className="w-full"
+            className="w-full mb-4"
           />
         </div>
-      </div>
+
+        {/* Industry Labels with Tooltips - 50% larger */}
+        <div className="flex justify-between mb-8">
+          {industries.map((industry) => (
+            <Tooltip key={industry.name}>
+              <TooltipTrigger asChild>
+                <div className="text-center cursor-pointer hover:text-blue-400 transition-colors">
+                  <div className="text-lg font-medium text-white mb-1">{industry.name}</div>
+                </div>
+              </TooltipTrigger>
+              <TooltipContent side="top" className="max-w-xs p-3">
+                <div className="text-sm">
+                  <div className="font-medium mb-1">{industry.description}</div>
+                  <div className="text-gray-400">{industry.subtitle}</div>
+                </div>
+              </TooltipContent>
+            </Tooltip>
+          ))}
+        </div>
 
       {/* Two Column Layout for Baseline and Edge Price */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
@@ -256,6 +271,7 @@ export function PremiumShowcase({ state, onStateChange }: PremiumShowcaseProps) 
           </div>
         </div>
       </div>
-    </div>
+      </div>
+    </TooltipProvider>
   );
 }
