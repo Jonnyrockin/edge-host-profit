@@ -13,7 +13,7 @@ const defaultState: SimulationState = {
   callsPerJob: 2,
   secondsInMonth: 30 * 24 * 60 * 60,
   pricePerCallBase: 0.02,  // Mid-tier pricing per knowledge ($0.005-0.08 range)
-  devices: [{ id: 'vz-studio', vendor: 'Vizrt', label: 'Vizrt Node — Studio', ips: 85, latencyTier: '50–100ms', qty: 3 }],
+  devices: [{ id: 'dell-precision-7920', vendor: 'Dell', label: 'Precision 7920 Rack', ips: 166, latencyTier: '50–100ms', qty: 3, tops: 1000, price: 6000, cpuCores: '2× Xeon Scalable (2×28)', maxGpus: 'Up to 3× GPUs (RTX6000)', memory: '1.5 TB DDR4', formFactor: '2U' }],
   costs: { energy: 1600, rent: 900, staff: 700, misc: 200, insurance: 150, maintenance: 120, licenses: 250, fibre: 180, legal: 300 },
   connectivityProvider: 'Bell Business Fibre 1G',
   linkRate: true,

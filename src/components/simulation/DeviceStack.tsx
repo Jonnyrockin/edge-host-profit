@@ -32,12 +32,20 @@ export function DeviceStack({ devices, state, calculations, onAddDevice, onUpdat
       {/* Device Table */}
       <div className="mb-4">
         {/* Header Row */}
-        <div className="grid grid-cols-6 gap-4 items-center py-2 text-help border-b border-border">
+        <div className="grid grid-cols-8 gap-4 items-center py-2 text-help border-b border-border">
           <div className="text-left text-core">Device</div>
           <div className="text-left text-core">Vendor</div>
           <div className="text-left text-core flex items-center gap-1">
             Latency
             <InfoTooltip content="Response time categories: <25ms (ultra-fast), 25-50ms (fast), 50-100ms (standard). Lower latency commands premium pricing." />
+          </div>
+          <div className="text-right text-core flex items-center gap-1 justify-end">
+            TOPS
+            <InfoTooltip content="Tera Operations Per Second - raw compute power for AI workloads. Higher TOPS = better performance for complex models." />
+          </div>
+          <div className="text-right text-core flex items-center gap-1 justify-end">
+            Price
+            <InfoTooltip content="Approximate unit price in USD. Higher-end systems cost more but deliver superior performance and capabilities." />
           </div>
           <div className="text-right text-core flex items-center gap-1 justify-end">
             IPS / row
@@ -56,12 +64,14 @@ export function DeviceStack({ devices, state, calculations, onAddDevice, onUpdat
             No devices yet. Use the catalog below.
           </div>
         ) : (
-          [...devices].reverse().map(device => (
+           [...devices].reverse().map(device => (
             <div key={device.id} className="bg-muted/40 border border-muted rounded-md p-1 my-0.5">
-              <div className="grid grid-cols-6 gap-4 items-center min-h-[22px]">
+              <div className="grid grid-cols-8 gap-4 items-center min-h-[22px]">
                 <div className="text-foreground text-core font-normal">{device.label}</div>
                 <div className="text-foreground text-core">{device.vendor}</div>
                 <div className="text-right text-foreground text-core">{device.latencyTier}</div>
+                <div className="text-right text-foreground text-core">{device.tops?.toLocaleString() || 'N/A'}</div>
+                <div className="text-right text-foreground text-core">${(device.price / 1000).toFixed(0)}K</div>
                 <div className="text-right text-foreground text-core">{device.ips}</div>
                 <div className="text-center">
                   <Input
@@ -142,18 +152,56 @@ export function DeviceStack({ devices, state, calculations, onAddDevice, onUpdat
       {/* Device Picker */}
       <div className="pt-3 border-t border-border">
         <div className="text-core font-medium text-foreground mb-2">Approved Hardware Catalog</div>
-        <div className="flex flex-wrap gap-1.5">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
           {CATALOG.map(device => (
-            <Button
+            <div
               key={device.id}
-              variant="outline"
-              size="sm"
               onClick={() => onAddDevice(device.id)}
-              className="h-7 px-2 border-input-border hover:border-glass-border text-core"
-              title={`${device.vendor} • ${device.label} • ${device.latencyTier} • ~${device.ips} calls/sec per row`}
+              className="bg-muted/30 border border-muted hover:border-primary/50 rounded-lg p-4 cursor-pointer transition-all hover:bg-muted/50 group"
             >
-              + {device.label}
-            </Button>
+              <div className="flex items-start justify-between mb-2">
+                <div>
+                  <div className="text-sm font-semibold text-foreground group-hover:text-primary">
+                    {device.vendor} {device.label}
+                  </div>
+                  <div className="text-xs text-muted-foreground">
+                    {device.formFactor} • {device.latencyTier}
+                  </div>
+                </div>
+                <div className="text-right">
+                  <div className="text-lg font-bold text-primary">
+                    ${(device.price / 1000).toFixed(0)}K
+                  </div>
+                  <div className="text-xs text-muted-foreground">per unit</div>
+                </div>
+              </div>
+              
+              <div className="grid grid-cols-2 gap-2 text-xs">
+                <div className="bg-card/50 rounded px-2 py-1">
+                  <div className="text-muted-foreground">TOPS</div>
+                  <div className="font-semibold text-foreground">
+                    {device.tops.toLocaleString()}
+                  </div>
+                </div>
+                <div className="bg-card/50 rounded px-2 py-1">
+                  <div className="text-muted-foreground">IPS</div>
+                  <div className="font-semibold text-foreground">
+                    {device.ips}
+                  </div>
+                </div>
+              </div>
+              
+              <div className="mt-2 text-xs text-muted-foreground">
+                <div className="truncate">{device.maxGpus}</div>
+                <div className="truncate">{device.memory} • {device.cpuCores}</div>
+              </div>
+              
+              <div className="mt-2 text-center">
+                <div className="text-xs text-primary font-medium group-hover:text-primary">
+                  + Add to Stack
+                </div>
+              </div>
+            </div>
           ))}
         </div>
       </div>

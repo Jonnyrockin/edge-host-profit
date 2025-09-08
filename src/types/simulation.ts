@@ -5,6 +5,12 @@ export interface Device {
   ips: number;
   latencyTier: string;
   qty: number;
+  tops: number;
+  price: number;
+  cpuCores: string;
+  maxGpus: string;
+  memory: string;
+  formFactor: string;
 }
 
 export interface Costs {
