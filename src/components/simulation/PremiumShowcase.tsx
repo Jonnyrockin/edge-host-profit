@@ -99,7 +99,7 @@ export function PremiumShowcase({ state, onStateChange }: PremiumShowcaseProps) 
 
   return (
     <TooltipProvider>
-      <div className="bg-gray-900 border border-gray-700 rounded-2xl p-6 mb-6">
+      <div className="bg-gray-800 border border-gray-700 rounded-2xl p-6 mb-6">
         {/* Header */}
         <div className="flex items-center justify-between mb-4">
           <div className="flex flex-col gap-2">
