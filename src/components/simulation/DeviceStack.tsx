@@ -71,7 +71,9 @@ export function DeviceStack({ devices, state, calculations, onAddDevice, onUpdat
                 <div className="text-foreground text-core">{device.vendor}</div>
                 <div className="text-right text-foreground text-core">{device.latencyTier}</div>
                 <div className="text-right text-foreground text-core">{device.tops?.toLocaleString() || 'N/A'}</div>
-                <div className="text-right text-foreground text-core">${(device.price / 1000).toFixed(0)}K</div>
+                <div className="text-right text-foreground text-core">
+                  {device.price === 0 ? 'Vizrt' : `$${(device.price / 1000).toFixed(0)}K`}
+                </div>
                 <div className="text-right text-foreground text-core">{device.ips}</div>
                 <div className="text-center">
                   <Input
@@ -161,43 +163,44 @@ export function DeviceStack({ devices, state, calculations, onAddDevice, onUpdat
             >
               <div className="flex items-start justify-between mb-2">
                 <div>
-                  <div className="text-sm font-semibold text-foreground group-hover:text-primary">
+                  <div className="text-sm font-semibold text-white group-hover:text-primary">
                     {device.vendor} {device.label}
                   </div>
-                  <div className="text-xs text-muted-foreground">
+                  <div className="text-xs text-gray-400">
                     {device.formFactor} • {device.latencyTier}
                   </div>
                 </div>
                 <div className="text-right">
-                  <div className="text-lg font-bold text-primary">
-                    ${(device.price / 1000).toFixed(0)}K
+                  <div className="text-lg font-bold text-white">
+                    {device.price === 0 ? 'Vizrt' : `$${(device.price / 1000).toFixed(0)}K`}
                   </div>
-                  <div className="text-xs text-muted-foreground">per unit</div>
+                  <div className="text-xs text-gray-400">
+                    {device.price === 0 ? 'owned' : 'per unit'}
+                  </div>
                 </div>
               </div>
               
-              <div className="grid grid-cols-2 gap-2 text-xs">
+              <div className="grid grid-cols-2 gap-2 text-xs mb-2">
                 <div className="bg-card/50 rounded px-2 py-1">
-                  <div className="text-muted-foreground">TOPS</div>
-                  <div className="font-semibold text-foreground">
+                  <div className="text-gray-400">TOPS</div>
+                  <div className="font-semibold text-white">
                     {device.tops.toLocaleString()}
                   </div>
                 </div>
                 <div className="bg-card/50 rounded px-2 py-1">
-                  <div className="text-muted-foreground">IPS</div>
-                  <div className="font-semibold text-foreground">
+                  <div className="text-gray-400">IPS</div>
+                  <div className="font-semibold text-white">
                     {device.ips}
                   </div>
                 </div>
               </div>
               
-              <div className="mt-2 text-xs text-muted-foreground">
-                <div className="truncate">{device.maxGpus}</div>
-                <div className="truncate">{device.memory} • {device.cpuCores}</div>
-              </div>
-              
-              <div className="mt-2 text-center">
-                <div className="text-xs text-primary font-medium group-hover:text-primary">
+              <div className="flex items-center justify-between">
+                <div className="text-xs text-gray-400 flex-1">
+                  <div className="truncate">{device.maxGpus}</div>
+                  <div className="truncate">{device.memory} • {device.cpuCores}</div>
+                </div>
+                <div className="text-xs text-white font-medium group-hover:text-primary ml-2">
                   + Add to Stack
                 </div>
               </div>

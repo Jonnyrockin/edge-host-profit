@@ -171,7 +171,7 @@ export const CATALOG: Device[] = [
     latencyTier: '50–100ms', 
     qty: 1,
     tops: 1000,
-    price: 6000,
+    price: 0, // Sunk cost - already owned
     cpuCores: '2× Xeon Scalable (2×28)',
     maxGpus: 'Up to 3× GPUs (RTX6000)',
     memory: '1.5 TB DDR4',
@@ -185,7 +185,7 @@ export const CATALOG: Device[] = [
     latencyTier: '50–100ms', 
     qty: 1,
     tops: 1450,
-    price: 8000,
+    price: 0, // Sunk cost - already owned
     cpuCores: '2× Xeon Scalable (2×28)',
     maxGpus: '2× GPUs (RTX Ada)',
     memory: '3 TB DDR4',
