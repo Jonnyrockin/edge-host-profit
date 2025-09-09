@@ -97,14 +97,14 @@ export function PremiumShowcase({
           
           {/* Provider Chip - 25% larger */}
           {selectedProvider && <div className="bg-gray-700 border border-gray-600 rounded-full px-4 py-2 flex items-center gap-3">
-              <div className="text-sm font-medium text-white">{selectedProvider.name}</div>
+              <div className="text-sm font-medium text-white mx-[20px]">{selectedProvider.name}</div>
               <div className="w-1.5 h-1.5 bg-gray-500 rounded-full"></div>
               <div className="text-sm text-gray-400">{selectedProvider.lastUpdated}</div>
             </div>}
         </div>
 
         {/* Premium Multiplier Display - 25% smaller font */}
-        <div className="text-center mb-6">
+        <div className="text-center mb-6 mx-[17px] py-0 my-[5px] px-0">
           <div className="text-5xl font-bold text-blue-400 mb-2">{multiplier.toFixed(2)}x</div>
         </div>
 
