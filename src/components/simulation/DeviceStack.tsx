@@ -6,7 +6,6 @@ import { Input } from '../ui/input';
 import { Trash2, Cpu, HardDrive, MemoryStick, DollarSign } from 'lucide-react';
 import { Progress } from '../ui/progress';
 import { InfoTooltip } from '../ui/info-tooltip';
-
 interface DeviceStackProps {
   devices: Device[];
   state: SimulationState;
@@ -15,17 +14,20 @@ interface DeviceStackProps {
   onUpdateDevice: (deviceId: string, updates: Partial<Device>) => void;
   onRemoveDevice: (deviceId: string) => void;
 }
-
-export function DeviceStack({ devices, state, calculations, onAddDevice, onUpdateDevice, onRemoveDevice }: DeviceStackProps) {
+export function DeviceStack({
+  devices,
+  state,
+  calculations,
+  onAddDevice,
+  onUpdateDevice,
+  onRemoveDevice
+}: DeviceStackProps) {
   const totalCapacity = calculations.inventoryIPS;
   const usedCapacity = totalCapacity * calculations.util;
   const utilizationPercentage = Math.round(calculations.util * 100);
-
   const inferenceNodes = CATALOG.filter(device => device.category === 'inference');
   const memoryNodes = CATALOG.filter(device => device.category === 'memory');
-
-  return (
-    <div className="bg-card border border-border rounded-2xl p-panel-padding mb-panel">
+  return <div className="bg-card border border-border rounded-2xl p-panel-padding mb-panel">
       <div className="flex items-center justify-between mb-lg">
         <div className="text-headline font-semibold text-foreground">Node Stack</div>
         <div className="text-help text-core">
@@ -63,46 +65,30 @@ export function DeviceStack({ devices, state, calculations, onAddDevice, onUpdat
         </div>
         
         {/* Device Rows */}
-        {devices.length === 0 ? (
-          <div className="text-help py-4 text-center text-core">
+        {devices.length === 0 ? <div className="text-help py-4 text-center text-core">
             No devices yet. Use the catalog below.
-          </div>
-        ) : (
-           [...devices].reverse().map(device => (
-            <div key={device.id} className="bg-muted/40 border border-muted rounded-md p-1 my-0.5">
-              <div className="grid grid-cols-8 gap-4 items-center min-h-[22px]">
-                <div className="text-foreground text-core font-normal">{device.label}</div>
-                <div className="text-foreground text-core">{device.vendor}</div>
+          </div> : [...devices].reverse().map(device => <div key={device.id} className="border border-muted rounded-md p-1 mx-0 px-px my-[10px] py-px bg-slate-950">
+              <div className="grid grid-cols-8 gap-4 items-center min-h-[22px] py-0 my-[5px] bg-slate-950">
+                <div className="text-foreground text-core font-normal px-[7px]">{device.label}</div>
+                <div className="text-foreground text-core mx-[7px]">{device.vendor}</div>
                 <div className="text-right text-foreground text-core">{device.latencyTier}</div>
                 <div className="text-right text-foreground text-core">{device.tops?.toLocaleString() || 'N/A'}</div>
                 <div className="text-right text-foreground text-core">
                   {device.price === 0 ? 'Vizrt' : `$${(device.price / 1000).toFixed(0)}K`}
                 </div>
                 <div className="text-right text-foreground text-core">{device.ips}</div>
-                <div className="text-center">
-                  <Input
-                    type="number"
-                    min="0"
-                    step="1"
-                    value={device.qty}
-                    onChange={(e) => onUpdateDevice(device.id, { qty: Math.max(0, parseInt(e.target.value) || 0) })}
-                    className="w-14 h-7 font-mono bg-input border-input-border text-center mx-auto text-core"
-                  />
+                <div className="text-center mx-[24px] my-0 px-0 py-[3px]">
+                  <Input type="number" min="0" step="1" value={device.qty} onChange={e => onUpdateDevice(device.id, {
+              qty: Math.max(0, parseInt(e.target.value) || 0)
+            })} className="w-14 h-7 font-mono bg-input border-input-border text-center mx-auto text-core" />
                 </div>
                 <div className="text-center">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => onRemoveDevice(device.id)}
-                    className="h-7 w-7 p-0 border-destructive/40 text-destructive hover:bg-destructive/10 mx-auto"
-                  >
+                  <Button variant="outline" size="sm" onClick={() => onRemoveDevice(device.id)} className="h-7 w-7 p-0 border-destructive/40 text-destructive hover:bg-destructive/10 mx-auto">
                     <Trash2 className="h-3 w-3" />
                   </Button>
                 </div>
               </div>
-            </div>
-          ))
-        )}
+            </div>)}
       </div>
 
       {/* Compute Power Capacity */}
@@ -135,14 +121,13 @@ export function DeviceStack({ devices, state, calculations, onAddDevice, onUpdat
         
         {/* Utilization Bar */}
         <div className="relative w-full h-6 bg-muted/30 rounded-md overflow-hidden">
-          <div 
-            className="h-full bg-slider-blue transition-all duration-300"
-            style={{ width: `${utilizationPercentage}%` }}
-          />
-          <div 
-            className="absolute top-0 h-full flex items-center"
-            style={{ left: `${utilizationPercentage}%`, transform: 'translateX(8px)' }}
-          >
+          <div className="h-full bg-slider-blue transition-all duration-300" style={{
+          width: `${utilizationPercentage}%`
+        }} />
+          <div className="absolute top-0 h-full flex items-center" style={{
+          left: `${utilizationPercentage}%`,
+          transform: 'translateX(8px)'
+        }}>
             <span className="text-headline font-semibold text-foreground whitespace-nowrap">
               {utilizationPercentage.toFixed(0)}% utilization
             </span>
@@ -165,20 +150,13 @@ export function DeviceStack({ devices, state, calculations, onAddDevice, onUpdat
           {/* AI Inference-Optimized Nodes */}
           <div className="space-y-4">
             <div className="flex items-center gap-2 mb-4">
-              <Cpu className="w-5 h-5 text-primary" />
-              <h3 className="text-lg font-semibold text-foreground">AI Inference-Optimized Nodes</h3>
+              
+              <h3 className="font-semibold text-foreground text-xl">AI Inference-Optimized Nodes</h3>
               <InfoTooltip content="Built for raw throughput — maximizing GPU density to process AI tasks at scale. Critical for video, image, and high-volume chat workloads." />
             </div>
             
             <div className="space-y-3">
-              {inferenceNodes.map((device) => (
-                <div
-                  key={device.id}
-                  className="group cursor-pointer bg-gradient-to-br from-card/50 to-muted/20 hover:from-primary/10 hover:to-primary/5 
-                             border border-border hover:border-primary/30 rounded-xl p-3 transition-all duration-200 
-                             hover:shadow-lg hover:shadow-primary/10"
-                  onClick={() => onAddDevice(device.id)}
-                >
+              {inferenceNodes.map(device => <div key={device.id} onClick={() => onAddDevice(device.id)} className="group cursor-pointer bg-gradient-to-br from-card/50 to-muted/20 hover:from-primary/10 hover:to-primary/5 border border-border hover:border-primary/30 p-3 transition-all duration-200 hover:shadow-lg hover:shadow-primary/10 rounded-none">
                   <div className="flex items-start justify-between mb-2">
                     <div className="flex-1">
                       <div className="text-sm font-semibold text-white group-hover:text-primary">
@@ -239,28 +217,20 @@ export function DeviceStack({ devices, state, calculations, onAddDevice, onUpdat
                       + Add to Stack
                     </div>
                   </div>
-                </div>
-              ))}
+                </div>)}
             </div>
           </div>
 
           {/* AI Memory Nodes */}
           <div className="space-y-4">
             <div className="flex items-center gap-2 mb-4">
-              <HardDrive className="w-5 h-5 text-primary" />
-              <h3 className="text-lg font-semibold text-foreground">AI Memory Nodes</h3>
+              
+              <h3 className="text-foreground font-semibold text-xl">AI Memory Nodes</h3>
               <InfoTooltip content="Designed for large context windows and memory-heavy inference. Critical for LLM agents, compliance, and RAG workflows." />
             </div>
             
             <div className="space-y-3">
-              {memoryNodes.map((device) => (
-                <div
-                  key={device.id}
-                  className="group cursor-pointer bg-gradient-to-br from-card/50 to-muted/20 hover:from-primary/10 hover:to-primary/5 
-                             border border-border hover:border-primary/30 rounded-xl p-3 transition-all duration-200 
-                             hover:shadow-lg hover:shadow-primary/10"
-                  onClick={() => onAddDevice(device.id)}
-                >
+              {memoryNodes.map(device => <div key={device.id} onClick={() => onAddDevice(device.id)} className="group cursor-pointer bg-gradient-to-br from-card/50 to-muted/20 hover:from-primary/10 hover:to-primary/5 border border-border hover:border-primary/30 p-3 transition-all duration-200 hover:shadow-lg hover:shadow-primary/10 rounded-none">
                   <div className="flex items-start justify-between mb-2">
                     <div className="flex-1">
                       <div className="text-sm font-semibold text-white group-hover:text-primary">
@@ -321,12 +291,10 @@ export function DeviceStack({ devices, state, calculations, onAddDevice, onUpdat
                       + Add to Stack
                     </div>
                   </div>
-                </div>
-              ))}
+                </div>)}
             </div>
           </div>
         </div>
       </div>
-    </div>
-  );
+    </div>;
 }

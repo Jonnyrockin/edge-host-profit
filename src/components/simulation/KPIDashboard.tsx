@@ -2,33 +2,30 @@ import { CalculationResult, SimulationState } from '../../types/simulation';
 import { Button } from '../ui/button';
 import { SCENARIOS } from '../../data/constants';
 import { InfoTooltip } from '../ui/info-tooltip';
-
 interface KPIDashboardProps {
   state: SimulationState;
   calculations: CalculationResult;
   onStateChange: (updates: Partial<SimulationState>) => void;
 }
-
-export function KPIDashboard({ state, calculations, onStateChange }: KPIDashboardProps) {
-  return (
-    <div className="bg-kpi-panel-bg border border-border rounded-2xl p-panel-padding mb-panel sticky top-0 z-40" style={{backdropFilter: 'blur(35px)'}}>
+export function KPIDashboard({
+  state,
+  calculations,
+  onStateChange
+}: KPIDashboardProps) {
+  return <div style={{
+    backdropFilter: 'blur(35px)'
+  }} className="bg-kpi-panel-bg border border-border p-panel-padding mb-panel sticky top-0 z-40 rounded-none bg-slate-300">
       <div className="flex items-center justify-between">
-        <h1 className="text-massive-title font-semibold text-background">
+        <h1 className="text-background text-massive-title font-bold">
           Host Revenue Simulation
         </h1>
         <div className="flex items-center gap-md">
           <div className="flex gap-xs">
-            {Object.keys(SCENARIOS).map(scenario => (
-              <Button
-                key={scenario}
-                variant={state.scenario === scenario ? "default" : "secondary"}
-                size="sm"
-                onClick={() => onStateChange({ scenario })}
-                className={state.scenario === scenario ? "bg-slider-blue text-white" : ""}
-              >
+            {Object.keys(SCENARIOS).map(scenario => <Button key={scenario} variant={state.scenario === scenario ? "default" : "secondary"} size="sm" onClick={() => onStateChange({
+            scenario
+          })} className={state.scenario === scenario ? "bg-slider-blue text-white" : ""}>
                 {scenario}
-              </Button>
-            ))}
+              </Button>)}
           </div>
           <div className="text-xs bg-secondary text-secondary-foreground px-2 py-1 rounded font-mono">
             V5c
@@ -94,6 +91,5 @@ export function KPIDashboard({ state, calculations, onStateChange }: KPIDashboar
           <div className="text-black text-core">after 25% platform fee + OPEX</div>
         </div>
       </div>
-    </div>
-  );
+    </div>;
 }
