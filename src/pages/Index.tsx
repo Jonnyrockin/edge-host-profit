@@ -1,12 +1,14 @@
+import React from 'react';
+import { useSimulationState } from '../hooks/useSimulationState';
 import { KPIDashboard } from '../components/simulation/KPIDashboard';
-import { PresetsSection } from '../components/simulation/PresetsSection';
 import { ControlsSection } from '../components/simulation/ControlsSection';
 import { DeviceStack } from '../components/simulation/DeviceStack';
 import { CostsSection } from '../components/simulation/CostsSection';
 import { MathSection } from '../components/simulation/MathSection';
 import { PricingPanel } from '../components/simulation/PricingPanel';
+import { PresetsSection } from '../components/simulation/PresetsSection';
 import { PremiumShowcase } from '../components/simulation/PremiumShowcase';
-import { useSimulationState } from '../hooks/useSimulationState';
+import { CallToAction } from '../components/simulation/CallToAction';
 
 const Index = () => {
   const {
@@ -23,6 +25,8 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <div className="max-w-7xl mx-auto p-panel md:p-6">
+        <CallToAction />
+        
         {/* KPI Dashboard - Sticky Header */}
         <KPIDashboard state={state} calculations={calculations} onStateChange={updateState} />
 

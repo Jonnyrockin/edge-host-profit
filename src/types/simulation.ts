@@ -11,6 +11,7 @@ export interface Device {
   maxGpus: string;
   memory: string;
   formFactor: string;
+  category?: 'inference' | 'memory';
 }
 
 export interface Costs {

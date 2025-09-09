@@ -1,8 +1,10 @@
-import { Button } from '../ui/button';
-import { Input } from '../ui/input';
-import { Trash2 } from 'lucide-react';
+import React from 'react';
 import { Device, SimulationState, CalculationResult } from '../../types/simulation';
 import { CATALOG } from '../../data/constants';
+import { Button } from '../ui/button';
+import { Input } from '../ui/input';
+import { Trash2, Cpu, HardDrive, MemoryStick, DollarSign } from 'lucide-react';
+import { Progress } from '../ui/progress';
 import { InfoTooltip } from '../ui/info-tooltip';
 
 interface DeviceStackProps {
@@ -15,20 +17,22 @@ interface DeviceStackProps {
 }
 
 export function DeviceStack({ devices, state, calculations, onAddDevice, onUpdateDevice, onRemoveDevice }: DeviceStackProps) {
-  // Calculate IPS capacity and actual usage
-  const totalCapacityIPS = state.devices.reduce((total, device) => total + (device.ips * device.qty), 0);
-  const totalCapacityMonthly = totalCapacityIPS * state.secondsInMonth;
-  const actualUsedIPS = totalCapacityIPS * calculations.util; // IPS being used based on utilization
-  const actualUsedMonthly = actualUsedIPS * state.secondsInMonth;
-  const utilizationPercentage = calculations.util * 100;
+  const totalCapacity = calculations.inventoryIPS;
+  const usedCapacity = totalCapacity * calculations.util;
+  const utilizationPercentage = Math.round(calculations.util * 100);
+
+  const inferenceNodes = CATALOG.filter(device => device.category === 'inference');
+  const memoryNodes = CATALOG.filter(device => device.category === 'memory');
 
   return (
-    <div className="bg-card/90 border border-border rounded-2xl p-panel-padding mb-panel" style={{backgroundColor: 'hsl(var(--muted) / 0.6)'}}>
-      <div className="text-headline font-semibold text-foreground">Node Stack</div>
-      <div className="text-help text-core mb-panel-gap">
-        Add device rows from the catalog. Quantity = how many identical nodes you operate.
+    <div className="bg-card border border-border rounded-2xl p-panel-padding mb-panel">
+      <div className="flex items-center justify-between mb-lg">
+        <div className="text-headline font-semibold text-foreground">Node Stack</div>
+        <div className="text-help text-core">
+          Add devices from the catalog. Quantity = how many identical nodes you operate.
+        </div>
       </div>
-      
+
       {/* Device Table */}
       <div className="mb-4">
         {/* Header Row */}
@@ -112,19 +116,19 @@ export function DeviceStack({ devices, state, calculations, onAddDevice, onUpdat
         <div className="flex items-center justify-between mb-panel-gap">
           <div>
             <div className="text-core text-foreground">
-              <span className="font-semibold text-number-blue">{totalCapacityIPS.toLocaleString()}</span> IPS available
+              <span className="font-semibold text-number-blue">{totalCapacity.toLocaleString()}</span> IPS available
             </div>
             <div className="text-core text-muted-foreground">
-              = <span className="font-mono">{(totalCapacityMonthly / 1_000_000).toFixed(1)}M</span> calls/month max capacity
+              = <span className="font-mono">{(totalCapacity * state.secondsInMonth / 1_000_000).toFixed(1)}M</span> calls/month max capacity
             </div>
           </div>
           
           <div className="text-right">
             <div className="text-core text-foreground">
-              <span className="font-semibold text-primary">{actualUsedIPS.toLocaleString()}</span> IPS being used
+              <span className="font-semibold text-primary">{usedCapacity.toLocaleString()}</span> IPS being used
             </div>
             <div className="text-core text-muted-foreground">
-              = <span className="font-mono">{(actualUsedMonthly / 1_000_000).toFixed(1)}M</span> calls/month actual usage
+              = <span className="font-mono">{(usedCapacity * state.secondsInMonth / 1_000_000).toFixed(1)}M</span> calls/month actual usage
             </div>
           </div>
         </div>
@@ -151,61 +155,176 @@ export function DeviceStack({ devices, state, calculations, onAddDevice, onUpdat
         </div>
       </div>
 
-      {/* Device Picker */}
-      <div className="pt-3 border-t border-border">
-        <div className="text-core font-medium text-foreground mb-2">Approved Hardware Catalog</div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-          {CATALOG.map(device => (
-            <div
-              key={device.id}
-              onClick={() => onAddDevice(device.id)}
-              className="bg-muted/30 border border-muted hover:border-primary/50 rounded-lg p-4 cursor-pointer transition-all hover:bg-muted/50 group"
-            >
-              <div className="flex items-start justify-between mb-2">
-                <div>
-                  <div className="text-sm font-semibold text-white group-hover:text-primary">
-                    {device.vendor} {device.label}
-                  </div>
-                  <div className="text-xs text-gray-400">
-                    {device.formFactor} • {device.latencyTier}
-                  </div>
-                </div>
-                <div className="text-right">
-                  <div className="text-lg font-bold text-white">
-                    {device.price === 0 ? 'Vizrt' : `$${(device.price / 1000).toFixed(0)}K`}
-                  </div>
-                  <div className="text-xs text-gray-400">
-                    {device.price === 0 ? 'owned' : 'per unit'}
-                  </div>
-                </div>
-              </div>
-              
-              <div className="grid grid-cols-2 gap-2 text-xs mb-2">
-                <div className="bg-card/50 rounded px-2 py-1">
-                  <div className="text-gray-400">TOPS</div>
-                  <div className="font-semibold text-white">
-                    {device.tops.toLocaleString()}
-                  </div>
-                </div>
-                <div className="bg-card/50 rounded px-2 py-1">
-                  <div className="text-gray-400">IPS</div>
-                  <div className="font-semibold text-white">
-                    {device.ips}
-                  </div>
-                </div>
-              </div>
-              
-              <div className="flex items-center justify-between">
-                <div className="text-xs text-gray-400 flex-1">
-                  <div className="truncate">{device.maxGpus}</div>
-                  <div className="truncate">{device.memory} • {device.cpuCores}</div>
-                </div>
-                <div className="text-xs text-white font-medium group-hover:text-primary ml-2">
-                  + Add to Stack
-                </div>
-              </div>
+      {/* Hardware Catalog */}
+      <div className="mt-8">
+        <div className="text-xl font-semibold text-center mb-6 text-primary tracking-wide">
+          CERTIFIED HARDWARE CATALOGUE
+        </div>
+        
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          {/* AI Inference-Optimized Nodes */}
+          <div className="space-y-4">
+            <div className="flex items-center gap-2 mb-4">
+              <Cpu className="w-5 h-5 text-primary" />
+              <h3 className="text-lg font-semibold text-foreground">AI Inference-Optimized Nodes</h3>
+              <InfoTooltip content="Built for raw throughput — maximizing GPU density to process AI tasks at scale. Critical for video, image, and high-volume chat workloads." />
             </div>
-          ))}
+            
+            <div className="space-y-3">
+              {inferenceNodes.map((device) => (
+                <div
+                  key={device.id}
+                  className="group cursor-pointer bg-gradient-to-br from-card/50 to-muted/20 hover:from-primary/10 hover:to-primary/5 
+                             border border-border hover:border-primary/30 rounded-xl p-3 transition-all duration-200 
+                             hover:shadow-lg hover:shadow-primary/10"
+                  onClick={() => onAddDevice(device.id)}
+                >
+                  <div className="flex items-start justify-between mb-2">
+                    <div className="flex-1">
+                      <div className="text-sm font-semibold text-white group-hover:text-primary">
+                        {device.vendor} {device.label}
+                      </div>
+                      <div className="text-xs text-gray-400">
+                        {device.formFactor} • {device.latencyTier}
+                      </div>
+                    </div>
+                    <div className="text-right ml-3">
+                      <div className="text-sm font-bold text-white">
+                        {device.price === 0 ? 'Vizrt' : `$${(device.price / 1000).toFixed(0)}K`}
+                      </div>
+                      <div className="text-xs text-gray-400">
+                        {device.price === 0 ? 'owned' : 'per unit'}
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="grid grid-cols-4 gap-2 text-xs mb-2">
+                    <div className="bg-card/50 rounded px-2 py-1 text-center">
+                      <div className="text-gray-400 flex items-center justify-center gap-1">
+                        <Cpu className="w-3 h-3" />
+                        TOPS
+                      </div>
+                      <div className="font-semibold text-white text-xs">
+                        {device.tops.toLocaleString()}
+                      </div>
+                    </div>
+                    <div className="bg-card/50 rounded px-2 py-1 text-center">
+                      <div className="text-gray-400">IPS</div>
+                      <div className="font-semibold text-white text-xs">
+                        {device.ips}
+                      </div>
+                    </div>
+                    <div className="bg-card/50 rounded px-2 py-1 text-center">
+                      <div className="text-gray-400 flex items-center justify-center gap-1">
+                        <MemoryStick className="w-3 h-3" />
+                        MEM
+                      </div>
+                      <div className="font-semibold text-white text-xs">
+                        {device.memory.split(' ')[0]}
+                      </div>
+                    </div>
+                    <div className="bg-card/50 rounded px-2 py-1 text-center">
+                      <div className="text-gray-400">LAT</div>
+                      <div className="font-semibold text-white text-xs">
+                        {device.latencyTier}
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-center justify-between">
+                    <div className="text-xs text-gray-400 flex-1">
+                      <div className="truncate">{device.maxGpus}</div>
+                    </div>
+                    <div className="text-xs text-white font-medium group-hover:text-primary ml-2">
+                      + Add to Stack
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* AI Memory Nodes */}
+          <div className="space-y-4">
+            <div className="flex items-center gap-2 mb-4">
+              <HardDrive className="w-5 h-5 text-primary" />
+              <h3 className="text-lg font-semibold text-foreground">AI Memory Nodes</h3>
+              <InfoTooltip content="Designed for large context windows and memory-heavy inference. Critical for LLM agents, compliance, and RAG workflows." />
+            </div>
+            
+            <div className="space-y-3">
+              {memoryNodes.map((device) => (
+                <div
+                  key={device.id}
+                  className="group cursor-pointer bg-gradient-to-br from-card/50 to-muted/20 hover:from-primary/10 hover:to-primary/5 
+                             border border-border hover:border-primary/30 rounded-xl p-3 transition-all duration-200 
+                             hover:shadow-lg hover:shadow-primary/10"
+                  onClick={() => onAddDevice(device.id)}
+                >
+                  <div className="flex items-start justify-between mb-2">
+                    <div className="flex-1">
+                      <div className="text-sm font-semibold text-white group-hover:text-primary">
+                        {device.vendor} {device.label}
+                      </div>
+                      <div className="text-xs text-gray-400">
+                        {device.formFactor} • {device.latencyTier}
+                      </div>
+                    </div>
+                    <div className="text-right ml-3">
+                      <div className="text-sm font-bold text-white">
+                        {device.price === 0 ? 'Vizrt' : `$${(device.price / 1000).toFixed(0)}K`}
+                      </div>
+                      <div className="text-xs text-gray-400">
+                        {device.price === 0 ? 'owned' : 'per unit'}
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="grid grid-cols-4 gap-2 text-xs mb-2">
+                    <div className="bg-card/50 rounded px-2 py-1 text-center">
+                      <div className="text-gray-400 flex items-center justify-center gap-1">
+                        <Cpu className="w-3 h-3" />
+                        TOPS
+                      </div>
+                      <div className="font-semibold text-white text-xs">
+                        {device.tops.toLocaleString()}
+                      </div>
+                    </div>
+                    <div className="bg-card/50 rounded px-2 py-1 text-center">
+                      <div className="text-gray-400">IPS</div>
+                      <div className="font-semibold text-white text-xs">
+                        {device.ips}
+                      </div>
+                    </div>
+                    <div className="bg-card/50 rounded px-2 py-1 text-center">
+                      <div className="text-gray-400 flex items-center justify-center gap-1">
+                        <MemoryStick className="w-3 h-3" />
+                        MEM
+                      </div>
+                      <div className="font-semibold text-white text-xs">
+                        {device.memory.split(' ')[0]}
+                      </div>
+                    </div>
+                    <div className="bg-card/50 rounded px-2 py-1 text-center">
+                      <div className="text-gray-400">LAT</div>
+                      <div className="font-semibold text-white text-xs">
+                        {device.latencyTier}
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-center justify-between">
+                    <div className="text-xs text-gray-400 flex-1">
+                      <div className="truncate">{device.maxGpus}</div>
+                    </div>
+                    <div className="text-xs text-white font-medium group-hover:text-primary ml-2">
+                      + Add to Stack
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </div>
