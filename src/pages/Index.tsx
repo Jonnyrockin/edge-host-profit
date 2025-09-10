@@ -30,22 +30,25 @@ const Index = () => {
         {/* KPI Dashboard - Sticky Header */}
         <KPIDashboard state={state} calculations={calculations} onStateChange={updateState} />
 
-        {/* Deployment Scenario */}
-        <ControlsSection
-          state={state}
-          calculations={calculations}
-          onStateChange={updateState}
-          onResetToPreset={resetToPreset}
-        />
+        {/* Main Layout Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+          {/* Deployment Scenario */}
+          <ControlsSection
+            state={state}
+            calculations={calculations}
+            onStateChange={updateState}
+            onResetToPreset={resetToPreset}
+          />
+
+          {/* Host Profile */}
+          <PresetsSection 
+            state={state}
+            onApplyPreset={applyPreset}
+          />
+        </div>
 
         {/* Premium Positioning Showcase */}
         <PremiumShowcase state={state} onStateChange={updateState} />
-
-        {/* Presets / Host Profile */}
-        <PresetsSection 
-          state={state}
-          onApplyPreset={applyPreset}
-        />
 
         {/* Device Stack */}
         <DeviceStack

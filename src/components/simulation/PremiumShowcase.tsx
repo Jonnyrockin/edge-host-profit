@@ -87,159 +87,124 @@ export function PremiumShowcase({
     multiplier: 5.0
   }];
   return <TooltipProvider>
-      <div className="bg-zinc-900 border border-gray-700 rounded-lg p-6 mb-6">
+      <div className="bg-card border border-border rounded-lg p-6 mb-6">
         {/* Header */}
         <div className="flex items-center justify-between mb-6">
           <div>
-            <h2 className="text-xl font-semibold text-white mb-2">Edge AI Premium Positioning</h2>
-            <p className="text-sm text-gray-400">Edge AI commands premium pricing due to ultra-low latency, data locality, and compliance benefits.</p>
+            <h2 className="text-xl font-semibold text-foreground mb-2">Edge Premium Multiplier</h2>
+            <p className="text-sm text-muted-foreground">Premium pricing for Edge AI due to ultra-low latency, data locality, compliance and SLA.</p>
           </div>
           
           {/* Provider Info */}
-          {selectedProvider && <div className="bg-gray-800 border border-gray-600 rounded-lg px-4 py-2 flex items-center gap-3">
-              <div className="text-sm font-medium text-white">{selectedProvider.name}</div>
-              <div className="w-1 h-1 bg-gray-500 rounded-full"></div>
-              <div className="text-xs text-gray-400">{selectedProvider.lastUpdated}</div>
+          {selectedProvider && <div className="bg-muted border border-border rounded-lg px-4 py-2 flex items-center gap-3">
+              <div className="text-sm font-medium text-foreground">Market Average</div>
+              <div className="w-1 h-1 bg-muted-foreground rounded-full"></div>
+              <div className="text-xs text-muted-foreground">{selectedProvider.lastUpdated}</div>
             </div>}
         </div>
 
-        {/* Three Column Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
-        
-        {/* Baseline Cloud Compute */}
-        <div className="bg-zinc-800 border border-gray-600 rounded-lg p-6">
-          <div className="text-sm text-gray-400 mb-6 text-center">
-            Baseline Cloud Compute
-            <InfoTooltip content="Baseline pricing gathered from major cloud providers (AWS, Azure, GCP, OpenAI). We apply an 80% forward projection discount based on industry analysis showing compute prices drop 80% year-over-year due to hardware advances and competition." />
-          </div>
+        {/* Large Premium Multiplier Display */}
+        <div className="text-center mb-8">
+          <div className="text-8xl font-bold text-primary mb-4">{multiplier.toFixed(2)}x</div>
           
-          <div className="text-center mb-6">
-            <div className="text-4xl font-bold text-blue-400 mb-2">
-              ${baselinePrice.toFixed(4)}
-            </div>
-            <div className="text-sm text-gray-400">per call</div>
-            <div className="text-xs text-gray-500 mt-1">
-              ${(baselinePrice * 1000000).toFixed(0)} per million tokens
-            </div>
-          </div>
-          
-          {/* Provider Selection */}
-          <div className="space-y-3">
-            <Select value={state.baselineProvider || 'market-average'} onValueChange={handleProviderChange}>
-              <SelectTrigger className="w-full bg-gray-700 border-gray-600 text-white">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent className="bg-gray-800 border-gray-600 z-50">
-                {CLOUD_BASELINES.map(provider => <SelectItem key={provider.id} value={provider.id} className="text-white hover:bg-gray-700">
-                    <div className="flex flex-col items-start">
-                      <div className="font-medium">{provider.name}</div>
-                      <div className="text-xs text-gray-400">{provider.description}</div>
-                    </div>
-                  </SelectItem>)}
-              </SelectContent>
-            </Select>
-            
-            <div className="pt-3 border-t border-gray-600">
-              <div className="text-xs text-gray-400 mb-2">Custom Override</div>
-              <Input 
-                type="number" 
-                min="0.0001" 
-                max="0.01" 
-                step="0.0001" 
-                value={baselinePrice.toFixed(6)} 
-                onChange={e => handleBaselineChange(parseFloat(e.target.value) || 0.00076)} 
-                className="w-full text-center font-mono bg-gray-700 border-gray-600 text-white" 
-                placeholder="0.000152" 
-              />
-            </div>
-          </div>
-        </div>
-
-        {/* Premium Multiplier */}
-        <div className="bg-zinc-800 border border-gray-600 rounded-lg p-6">
-          <div className="text-sm text-gray-400 mb-6 text-center">Premium Multiplier</div>
-          
-          <div className="text-center mb-6">
-            <div className="text-5xl font-bold text-blue-400 mb-2">{multiplier.toFixed(1)}x</div>
-            <div className="text-sm text-gray-400">Premium Factor</div>
-          </div>
-
           <div className="mb-6">
             <div className="flex items-center justify-between mb-3">
-              <span className="text-xs text-gray-500">1.0x</span>
-              <span className="text-xs text-gray-500">15.0x</span>
+              <span className="text-xs text-muted-foreground">1.0x</span>
+              <span className="text-xs text-muted-foreground">5.0x</span>
             </div>
             <Slider 
               value={[multiplier]} 
               onValueChange={handleMultiplierChange} 
               min={1} 
-              max={15} 
+              max={5} 
               step={0.1} 
               className="w-full" 
             />
           </div>
 
           {/* Industry Labels */}
-          <div className="flex justify-between text-xs">
-            {industries.map(industry => <Tooltip key={industry.name}>
+          <div className="flex justify-between text-xs mb-8">
+            {industries.slice(0, 6).map(industry => (
+              <Tooltip key={industry.name}>
                 <TooltipTrigger asChild>
-                  <div className="text-center cursor-pointer hover:text-blue-400 transition-colors">
-                    <div className="font-medium text-white">{industry.name}</div>
+                  <div className="text-center cursor-pointer hover:text-primary transition-colors">
+                    <div className="font-medium text-foreground">{industry.name}</div>
                   </div>
                 </TooltipTrigger>
-                <TooltipContent side="top" className="max-w-xs p-3 bg-gray-800 border-gray-600">
+                <TooltipContent side="top" className="max-w-xs p-3">
                   <div className="text-sm">
-                    <div className="font-medium mb-1 text-white">{industry.description}</div>
-                    <div className="text-gray-400">{industry.subtitle}</div>
+                    <div className="font-medium mb-1">{industry.description}</div>
+                    <div className="text-muted-foreground">{industry.subtitle}</div>
                   </div>
                 </TooltipContent>
-              </Tooltip>)}
+              </Tooltip>
+            ))}
           </div>
         </div>
 
-        {/* Edge AI Premium Price */}
-        <div className="bg-zinc-800 border border-gray-600 rounded-lg p-6">
-          <div className="text-sm text-gray-400 mb-6 text-center">
-            Edge AI Premium Price
-            <InfoTooltip content="Final edge inference price after applying premium multiplier to the discounted baseline. This reflects the value of ultra-low latency, local processing, and premium service quality." />
-          </div>
-          
-          <div className="text-center mb-6">
-            <div className="text-4xl font-bold text-blue-400 mb-2">
-              ${edgePrice.toFixed(4)}
+        {/* Two Column Layout - Baseline vs Edge Premium */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          {/* Baseline Cloud Compute */}
+          <div className="bg-background border border-border rounded-lg p-6">
+            <div className="text-sm text-muted-foreground mb-4 text-center">
+              Baseline Cloud Compute ??
+              <InfoTooltip content="Baseline pricing gathered from major cloud providers (AWS, Azure, GCP, OpenAI). We apply an 80% forward projection discount based on industry analysis showing compute prices drop 80% year-over-year due to hardware advances and competition." />
             </div>
-            <div className="text-sm text-gray-400">per call</div>
-            <div className="text-xs text-gray-500 mt-1">
-              ${(edgePrice * 1000000).toFixed(0)} per million tokens
+            
+            <div className="text-center mb-4">
+              <div className="text-4xl font-bold text-primary mb-2">
+                ${baselinePrice.toFixed(4)}
+              </div>
+              <div className="text-sm text-muted-foreground">per call</div>
+              <div className="text-xs text-muted-foreground mt-1">
+                ${(baselinePrice * 1000000).toFixed(0)} per million tokens
+              </div>
+            </div>
+            
+            {/* Provider Selection */}
+            <div className="space-y-3">
+              <Select value={state.baselineProvider || 'market-average'} onValueChange={handleProviderChange}>
+                <SelectTrigger className="w-full">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent className="z-50">
+                  {CLOUD_BASELINES.map(provider => (
+                    <SelectItem key={provider.id} value={provider.id}>
+                      <div className="flex flex-col items-start">
+                        <div className="font-medium">{provider.name}</div>
+                        <div className="text-xs text-muted-foreground">{provider.description}</div>
+                      </div>
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
           </div>
 
-          <div className="bg-blue-500/20 border border-blue-500/30 rounded-lg p-4 text-center">
-            <div className="text-lg font-bold text-blue-400">
-              +{((multiplier - 1) * 100).toFixed(0)}% Premium
+          {/* Edge AI Premium Price */}
+          <div className="bg-background border border-border rounded-lg p-6">
+            <div className="text-sm text-muted-foreground mb-4 text-center">
+              Edge AI Premium Price ??
+              <InfoTooltip content="Final edge inference price after applying premium multiplier to the discounted baseline. This reflects the value of ultra-low latency, local processing, and premium service quality." />
             </div>
-            <div className="text-sm text-gray-400">
-              vs. baseline cloud
+            
+            <div className="text-center mb-4">
+              <div className="text-4xl font-bold text-primary mb-2">
+                ${edgePrice.toFixed(6)}
+              </div>
+              <div className="text-sm text-muted-foreground">per call</div>
+              <div className="text-xs text-muted-foreground mt-1">
+                ${(edgePrice * 1000000).toFixed(0)} per million tokens
+              </div>
             </div>
-          </div>
-        </div>
-      </div>
 
-        {/* Why Premium Pricing Works */}
-        <div className="bg-gray-800 border border-gray-600 rounded-lg p-6 mt-6">
-          <h3 className="text-lg font-semibold text-white mb-4 text-center">Why Premium Pricing Works</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 text-sm">
-            <div className="text-gray-300">
-              <span className="text-blue-400">• Performance Gap:</span> Edge AI delivers 4-20x faster response times than cloud solutions
-            </div>
-            <div className="text-gray-300">
-              <span className="text-blue-400">• Market Positioning:</span> Mission-critical workloads justify premium pricing for guaranteed performance
-            </div>
-            <div className="text-gray-300">
-              <span className="text-blue-400">• Value Creation:</span> Reduced latency enables new use cases impossible with cloud infrastructure
-            </div>
-            <div className="text-gray-300">
-              <span className="text-blue-400">• Cost Comparison:</span> While higher per-call, total solution cost is often lower due to efficiency gains
+            <div className="bg-primary/20 border border-primary/30 rounded-lg p-4 text-center">
+              <div className="text-lg font-bold text-primary">
+                +{((multiplier - 1) * 100).toFixed(0)}% Premium
+              </div>
+              <div className="text-sm text-muted-foreground">
+                vs. baseline cloud
+              </div>
             </div>
           </div>
         </div>
