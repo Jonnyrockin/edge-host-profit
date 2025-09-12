@@ -20,10 +20,10 @@ export function ESGPanel({
       });
     }
   };
-  return <div className="bg-green-50 border border-green-200 rounded-none p-panel-padding mb-panel">
+  return <div className="border border-green-200 rounded-none p-panel-padding mb-panel bg-teal-100">
       <div className="flex items-center justify-between mb-md bg-teal-100 py-[9px] mx-0">
         <div className="flex items-center gap-md">
-          <div className="text-headline font-semibold text-foreground">ESG Compliance</div>
+          <div className="text-headline font-semibold text-foreground bg-emerald-800">ESG Compliance</div>
           <InfoTooltip content="Environmental, Social, and Governance compliance allows you to charge a 10% premium for sustainable computing practices." />
         </div>
         <div className="flex items-center gap-lg">
@@ -31,11 +31,11 @@ export function ESGPanel({
             <Checkbox id="esg-enabled" checked={state.esgEnabled} onCheckedChange={checked => onStateChange({
             esgEnabled: !!checked
           })} />
-            <Label htmlFor="esg-enabled" className="text-core">Enable ESG (+10% premium)</Label>
+            <Label htmlFor="esg-enabled" className="text-core bg-emerald-800">Enable ESG (+10% premium)</Label>
           </div>
           <div className="flex items-center gap-md">
             <input type="file" id="esg-file" accept=".pdf,.doc,.docx" onChange={handleFileUpload} className="hidden bg-inherit" />
-            <Button variant="outline" size="sm" onClick={() => document.getElementById('esg-file')?.click()} className="flex items-center gap-1 border-green-300 hover:border-green-400 text-foreground bg-background hover:bg-muted">
+            <Button variant="outline" size="sm" onClick={() => document.getElementById('esg-file')?.click()} className="flex items-center gap-1 border-green-300 hover:border-green-400 text-foreground bg-emerald-800 hover:bg-emerald-700">
               <Upload className="h-3 w-3" />
               Upload ESG Cert
             </Button>
