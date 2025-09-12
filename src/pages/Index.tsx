@@ -9,6 +9,8 @@ import { PricingPanel } from '../components/simulation/PricingPanel';
 import { PresetsSection } from '../components/simulation/PresetsSection';
 import { PremiumShowcase } from '../components/simulation/PremiumShowcase';
 import { CallToAction } from '../components/simulation/CallToAction';
+import { PlatformRevenuePanel } from '../components/simulation/PlatformRevenuePanel';
+import { JobsPerDayPanel } from '../components/simulation/JobsPerDayPanel';
 import { ESGPanel } from '../components/simulation/ESGPanel';
 
 const Index = () => {
@@ -54,6 +56,12 @@ const Index = () => {
 
         {/* ESG Panel */}
         <ESGPanel state={state} onStateChange={updateState} />
+
+        {/* Platform Revenue Panel */}
+        <PlatformRevenuePanel />
+
+        {/* Jobs Per Day Panel */}
+        <JobsPerDayPanel state={state} onStateChange={updateState} />
 
         {/* Premium Positioning Showcase */}
         <PremiumShowcase state={state} onStateChange={updateState} />

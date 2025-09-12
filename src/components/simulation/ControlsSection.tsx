@@ -51,7 +51,7 @@ export function ControlsSection({
       <div className="text-headline font-semibold text-foreground">Deployment Scenario</div>
       <div className="text-help text-core mb-panel-gap">Configure your edge AI deployment parameters and operational assumptions.</div>
       
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-lg items-center">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-lg items-center">
         <div>
           <div className="flex items-center gap-md">
             <div className="text-help text-core mb-md">City</div>
@@ -92,6 +92,16 @@ export function ControlsSection({
           <Input type="number" min="1" step="1" value={state.callsPerJob} onChange={e => onStateChange({
           callsPerJob: Math.max(1, parseInt(e.target.value) || 1)
         })} className="w-20 font-mono bg-input border-input-border" />
+        </div>
+        
+        <div>
+          <div className="flex items-center gap-md">
+            <div className="text-help text-core mb-md">Calls per Day</div>
+            <InfoTooltip content="Total AI inference calls processed per day across all jobs and customers." />
+          </div>
+          <Input type="number" min="1" step="1000" value={state.callsPerDay || 50000} onChange={e => onStateChange({
+          callsPerDay: Math.max(1, parseInt(e.target.value) || 50000)
+        })} className="w-24 font-mono bg-input border-input-border" />
         </div>
         
         <div>

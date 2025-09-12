@@ -86,13 +86,13 @@ export function PremiumShowcase({
     position: "100%",
     multiplier: 5.0
   }];
-  return <TooltipProvider>
+    return <TooltipProvider>
       <div className="bg-card border border-border p-4 mb-6 rounded-none">
         {/* Header */}
         <div className="flex items-center justify-between mb-4">
           <div>
-            <h2 className="text-xl font-semibold text-foreground mb-2">Edge Premium Multiplier</h2>
-            <p className="text-sm text-muted-foreground">Premium pricing for Edge AI due to ultra-low latency, data<br />locality, compliance and SLA.</p>
+            <h2 className="text-headline font-semibold text-foreground mb-2">Edge Premium Multiplier</h2>
+            <p className="text-help text-core">Premium pricing for Edge AI due to ultra-low latency, data<br />locality, compliance and SLA.</p>
           </div>
           
           {/* Large Premium Multiplier Display - moved up */}
@@ -101,12 +101,6 @@ export function PremiumShowcase({
           </div>
         </div>
 
-        {/* Provider Info - moved up */}
-        {selectedProvider && <div className="bg-muted border border-border rounded-lg px-4 py-2 flex items-center gap-3 mb-4 mx-[16px]">
-            <div className="text-sm font-medium text-foreground">Market Average</div>
-            <div className="w-1 h-1 bg-muted-foreground rounded-full"></div>
-            <div className="text-xs text-muted-foreground">{selectedProvider.lastUpdated}</div>
-          </div>}
 
         {/* Slider controls - moved up */}
         <div className="text-center mb-4">
@@ -138,7 +132,7 @@ export function PremiumShowcase({
         {/* Two Column Layout - Baseline vs Edge Premium */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Baseline Cloud Compute */}
-          <div className="bg-background border border-border rounded-lg p-6">
+          <div className="bg-background border border-border rounded-none p-6">
             <div className="text-sm text-muted-foreground mb-4 text-center">
               Baseline Cloud Compute ??
               <InfoTooltip content="Baseline pricing gathered from major cloud providers (AWS, Azure, GCP, OpenAI). We apply an 80% forward projection discount based on industry analysis showing compute prices drop 80% year-over-year due to hardware advances and competition." />
@@ -173,7 +167,7 @@ export function PremiumShowcase({
           </div>
 
           {/* Edge AI Premium Price */}
-          <div className="bg-background border border-border rounded-lg p-6">
+          <div className="bg-background border border-border rounded-none p-6">
             <div className="text-sm text-muted-foreground mb-4 text-center">
               Edge AI Premium Price ??
               <InfoTooltip content="Final edge inference price after applying premium multiplier to the discounted baseline. This reflects the value of ultra-low latency, local processing, and premium service quality." />
@@ -189,7 +183,7 @@ export function PremiumShowcase({
               </div>
             </div>
 
-            <div className="bg-primary/20 border border-primary/30 rounded-lg p-4 text-center">
+            <div className="bg-primary/20 border border-primary/30 rounded-none p-4 text-center">
               <div className="text-lg font-bold text-white">
                 +{((multiplier - 1) * 100).toFixed(0)}% Premium
               </div>

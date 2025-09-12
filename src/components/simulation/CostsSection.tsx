@@ -194,17 +194,5 @@ export function CostsSection({
         </div>
       </div>
 
-      {/* Totals */}
-      <div className="mt-lg pt-lg border-t border-border flex flex-wrap items-center gap-x-xl gap-y-panel-gap">
-        <div>
-          <div className="flex items-center gap-md">
-            <div className="text-help">Platform Revenue Share</div>
-            <InfoTooltip content="Fixed 25% revenue share with the platform provider. This covers infrastructure, support, and business development." />
-          </div>
-          <div className="px-md py-xs inline-block bg-secondary border border-border rounded text-secondary-foreground select-none">
-            25% (fixed)
-          </div>
-        </div>
-      </div>
     </div>;
 }

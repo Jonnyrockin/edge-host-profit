@@ -32,6 +32,8 @@ export interface SimulationState {
   scenario: string;
   util: number;
   callsPerJob: number;
+  callsPerDay: number;
+  jobsPerDay: number;
   secondsInMonth: number;
   pricePerCallBase: number;
   devices: Device[];
