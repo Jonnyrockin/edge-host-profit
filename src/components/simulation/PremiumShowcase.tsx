@@ -87,27 +87,30 @@ export function PremiumShowcase({
     multiplier: 5.0
   }];
   return <TooltipProvider>
-      <div className="bg-card border border-border rounded-lg p-6 mb-6">
+      <div className="bg-card border border-border rounded-lg p-4 mb-6">
         {/* Header */}
-        <div className="flex items-center justify-between mb-6">
+        <div className="flex items-center justify-between mb-4">
           <div>
             <h2 className="text-xl font-semibold text-foreground mb-2">Edge Premium Multiplier</h2>
-            <p className="text-sm text-muted-foreground">Premium pricing for Edge AI due to ultra-low latency, data locality, compliance and SLA.</p>
+            <p className="text-sm text-muted-foreground">Premium pricing for Edge AI due to ultra-low latency, data<br />locality, compliance and SLA.</p>
           </div>
           
-          {/* Provider Info */}
-          {selectedProvider && <div className="bg-muted border border-border rounded-lg px-4 py-2 flex items-center gap-3">
-              <div className="text-sm font-medium text-foreground">Market Average</div>
-              <div className="w-1 h-1 bg-muted-foreground rounded-full"></div>
-              <div className="text-xs text-muted-foreground">{selectedProvider.lastUpdated}</div>
-            </div>}
+          {/* Large Premium Multiplier Display - moved up */}
+          <div className="text-right">
+            <div className="text-6xl font-bold text-white">{multiplier.toFixed(2)}x</div>
+          </div>
         </div>
 
-        {/* Large Premium Multiplier Display */}
-        <div className="text-center mb-8">
-          <div className="text-8xl font-bold text-primary mb-4">{multiplier.toFixed(2)}x</div>
-          
-          <div className="mb-6">
+        {/* Provider Info - moved up */}
+        {selectedProvider && <div className="bg-muted border border-border rounded-lg px-4 py-2 flex items-center gap-3 mb-4">
+            <div className="text-sm font-medium text-foreground">Market Average</div>
+            <div className="w-1 h-1 bg-muted-foreground rounded-full"></div>
+            <div className="text-xs text-muted-foreground">{selectedProvider.lastUpdated}</div>
+          </div>}
+
+        {/* Slider controls - moved up */}
+        <div className="text-center mb-4">
+          <div className="mb-4">
             <div className="flex items-center justify-between mb-3">
               <span className="text-xs text-muted-foreground">1.0x</span>
               <span className="text-xs text-muted-foreground">5.0x</span>
@@ -121,9 +124,8 @@ export function PremiumShowcase({
               className="w-full" 
             />
           </div>
-
           {/* Industry Labels */}
-          <div className="flex justify-between text-xs mb-8">
+          <div className="flex justify-between text-xs mb-4">
             {industries.slice(0, 6).map(industry => (
               <Tooltip key={industry.name}>
                 <TooltipTrigger asChild>
@@ -152,7 +154,7 @@ export function PremiumShowcase({
             </div>
             
             <div className="text-center mb-4">
-              <div className="text-4xl font-bold text-primary mb-2">
+              <div className="text-4xl font-bold text-white mb-2">
                 ${baselinePrice.toFixed(4)}
               </div>
               <div className="text-sm text-muted-foreground">per call</div>
@@ -189,7 +191,7 @@ export function PremiumShowcase({
             </div>
             
             <div className="text-center mb-4">
-              <div className="text-4xl font-bold text-primary mb-2">
+              <div className="text-4xl font-bold text-white mb-2">
                 ${edgePrice.toFixed(6)}
               </div>
               <div className="text-sm text-muted-foreground">per call</div>
@@ -199,7 +201,7 @@ export function PremiumShowcase({
             </div>
 
             <div className="bg-primary/20 border border-primary/30 rounded-lg p-4 text-center">
-              <div className="text-lg font-bold text-primary">
+              <div className="text-lg font-bold text-white">
                 +{((multiplier - 1) * 100).toFixed(0)}% Premium
               </div>
               <div className="text-sm text-muted-foreground">

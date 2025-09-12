@@ -43,7 +43,7 @@ const Index = () => {
             />
           </div>
 
-          {/* Host Profile - 1/4 width */}
+          {/* Host Profile - 1/4 width at the end */}
           <div className="lg:col-span-1">
             <PresetsSection 
               state={state}
