@@ -41,7 +41,7 @@ export function DeviceStack({
         <div className="grid grid-cols-8 gap-4 items-center py-2 text-help border-b border-border">
           <div className="text-left text-core">Device</div>
           <div className="text-left text-core">Vendor</div>
-          <div className="text-left text-core flex items-center gap-1">
+          <div className="text-left text-core flex items-center gap-1 mx-[59px]">
             Latency
             <InfoTooltip content="Response time categories: <25ms (ultra-fast), 25-50ms (fast), 50-100ms (standard). Lower latency commands premium pricing." />
           </div>
@@ -68,10 +68,10 @@ export function DeviceStack({
         {devices.length === 0 ? <div className="text-help py-4 text-center text-core">
             No devices yet. Use the catalog below.
           </div> : [...devices].reverse().map(device => <div key={device.id} className="border border-muted rounded-md p-1 mx-0 px-px my-[10px] py-px bg-slate-950">
-              <div className="grid grid-cols-8 gap-4 items-center min-h-[22px] py-0 my-[5px] bg-slate-950">
+              <div className="grid grid-cols-8 gap-4 items-center min-h-[22px] py-0 my-[5px] bg-blue-500">
                 <div className="text-foreground text-core font-normal px-[7px]">{device.label}</div>
                 <div className="text-foreground text-core mx-[7px]">{device.vendor}</div>
-                <div className="text-right text-foreground text-core">{device.latencyTier}</div>
+                <div className="text-right text-foreground text-core py-0 mx-[30px]">{device.latencyTier}</div>
                 <div className="text-right text-foreground text-core">{device.tops?.toLocaleString() || 'N/A'}</div>
                 <div className="text-right text-foreground text-core">
                   {device.price === 0 ? 'Vizrt' : `$${(device.price / 1000).toFixed(0)}K`}
@@ -80,10 +80,10 @@ export function DeviceStack({
                 <div className="text-center mx-[24px] my-0 px-0 py-[3px]">
                   <Input type="number" min="0" step="1" value={device.qty} onChange={e => onUpdateDevice(device.id, {
               qty: Math.max(0, parseInt(e.target.value) || 0)
-            })} className="w-14 h-7 font-mono bg-input border-input-border text-center mx-auto text-core" />
+            })} className="w-14 h-7 font-mono border-input-border text-center text-core bg-blue-400 mx-[20px]" />
                 </div>
                 <div className="text-center">
-                  <Button variant="outline" size="sm" onClick={() => onRemoveDevice(device.id)} className="h-7 w-7 p-0 border-destructive/40 text-destructive hover:bg-destructive/10 mx-auto">
+                  <Button variant="outline" size="sm" onClick={() => onRemoveDevice(device.id)} className="h-7 w-7 p-0 border-destructive/40 mx-auto text-yellow-500 text-base bg-orange-800 hover:bg-orange-700">
                     <Trash2 className="h-3 w-3" />
                   </Button>
                 </div>
@@ -120,7 +120,7 @@ export function DeviceStack({
         </div>
         
         {/* Utilization Bar */}
-        <div className="relative w-full h-6 bg-muted/30 rounded-md overflow-hidden">
+        <div className="relative w-full h-6 rounded-md overflow-hidden bg-zinc-700">
           <div className="h-full bg-slider-blue transition-all duration-300" style={{
           width: `${utilizationPercentage}%`
         }} />

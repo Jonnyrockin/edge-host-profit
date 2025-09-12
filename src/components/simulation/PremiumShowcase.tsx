@@ -102,7 +102,7 @@ export function PremiumShowcase({
         </div>
 
         {/* Provider Info - moved up */}
-        {selectedProvider && <div className="bg-muted border border-border rounded-lg px-4 py-2 flex items-center gap-3 mb-4">
+        {selectedProvider && <div className="bg-muted border border-border rounded-lg px-4 py-2 flex items-center gap-3 mb-4 mx-[16px]">
             <div className="text-sm font-medium text-foreground">Market Average</div>
             <div className="w-1 h-1 bg-muted-foreground rounded-full"></div>
             <div className="text-xs text-muted-foreground">{selectedProvider.lastUpdated}</div>
@@ -115,19 +115,11 @@ export function PremiumShowcase({
               <span className="text-xs text-muted-foreground">1.0x</span>
               <span className="text-xs text-muted-foreground">5.0x</span>
             </div>
-            <Slider 
-              value={[multiplier]} 
-              onValueChange={handleMultiplierChange} 
-              min={1} 
-              max={5} 
-              step={0.1} 
-              className="w-full" 
-            />
+            <Slider value={[multiplier]} onValueChange={handleMultiplierChange} min={1} max={5} step={0.1} className="w-full" />
           </div>
           {/* Industry Labels */}
           <div className="flex justify-between text-xs mb-4">
-            {industries.slice(0, 6).map(industry => (
-              <Tooltip key={industry.name}>
+            {industries.slice(0, 6).map(industry => <Tooltip key={industry.name}>
                 <TooltipTrigger asChild>
                   <div className="text-center cursor-pointer hover:text-primary transition-colors">
                     <div className="font-medium text-foreground">{industry.name}</div>
@@ -139,8 +131,7 @@ export function PremiumShowcase({
                     <div className="text-muted-foreground">{industry.subtitle}</div>
                   </div>
                 </TooltipContent>
-              </Tooltip>
-            ))}
+              </Tooltip>)}
           </div>
         </div>
 
@@ -170,14 +161,12 @@ export function PremiumShowcase({
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent className="z-50">
-                  {CLOUD_BASELINES.map(provider => (
-                    <SelectItem key={provider.id} value={provider.id}>
+                  {CLOUD_BASELINES.map(provider => <SelectItem key={provider.id} value={provider.id}>
                       <div className="flex flex-col items-start">
                         <div className="font-medium">{provider.name}</div>
                         <div className="text-xs text-muted-foreground">{provider.description}</div>
                       </div>
-                    </SelectItem>
-                  ))}
+                    </SelectItem>)}
                 </SelectContent>
               </Select>
             </div>
