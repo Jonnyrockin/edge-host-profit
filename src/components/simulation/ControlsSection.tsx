@@ -47,30 +47,7 @@ export function ControlsSection({ state, calculations, onStateChange, onResetToP
       <div className="text-headline font-semibold text-foreground">Deployment Scenario</div>
       <div className="text-help text-core mb-panel-gap">Configure your edge AI deployment parameters and operational assumptions.</div>
       
-      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-lg items-center">
-        <div>
-          <div className="flex items-center gap-md">
-            <div className="text-help text-core mb-md">Scenario</div>
-            <InfoTooltip content="Predefined configurations for different business models. Each scenario has optimized utilization rates and call patterns." />
-          </div>
-          <Select value={state.scenario} onValueChange={(value) => {
-            const scenario = SCENARIOS[value as keyof typeof SCENARIOS];
-            onStateChange({ 
-              scenario: value,
-              callsPerJob: scenario?.callsPerJob || state.callsPerJob
-            });
-          }}>
-            <SelectTrigger className="bg-input border-input-border">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              {Object.keys(SCENARIOS).map(scenario => (
-                <SelectItem key={scenario} value={scenario}>{scenario}</SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
-        
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-lg items-center">
         <div>
           <div className="flex items-center gap-md">
             <div className="text-help text-core mb-md">City</div>
@@ -139,75 +116,35 @@ export function ControlsSection({ state, calculations, onStateChange, onResetToP
         </div>
       </div>
       
-      {/* Rural Offset and ESG Section */}
-      <div className="flex flex-col lg:flex-row justify-between items-start gap-xl mt-xl pt-lg border-t border-border">
-        <div className="flex-1">
-          <div className="flex items-center gap-md">
-            <div className="text-help text-core mb-md">Rural offset presets</div>
-            <InfoTooltip content="Distance from city center adds pricing premium due to higher infrastructure costs and lower competition." />
-          </div>
-          <div className="grid grid-cols-6 gap-xs">
-            {[0, 50, 100, 200, 300, 500].map(km => {
-              const isActive = getCurrentRuralKm() === km;
-              return (
-                <Button
-                  key={km}
-                  variant="outline"
-                  size="sm"
-                  onClick={() => handleRuralClick(km)}
-                  className={`px-2 py-1 border-input-border hover:border-glass-border text-core ${
-                    isActive ? 'bg-slider-blue text-white border-slider-blue' : ''
-                  }`}
-                  title={km === 0 ? 'City core (no rural premium)' : 
-                        km === 50 ? '50km: Suburban edge (+50% premium)' :
-                        km === 100 ? '100km: Rural edge (2x premium - scarcity)' :
-                        km === 200 ? '200km: Agricultural edge (2.5x premium)' :
-                        km === 300 ? '300km: Remote rural (3x premium)' :
-                        '500km: Deep rural/agriculture (4x premium)'}
-                >
-                  {km === 0 ? 'Core' : `${km}km`}
-                </Button>
-              );
-            })}
-          </div>
+      {/* Rural Offset Section */}
+      <div className="mt-xl pt-lg border-t border-border">
+        <div className="flex items-center gap-md">
+          <div className="text-help text-core mb-md">Rural offset presets</div>
+          <InfoTooltip content="Distance from city center adds pricing premium due to higher infrastructure costs and lower competition." />
         </div>
-        
-        <div className="lg:ml-auto">
-          <div className="flex items-center gap-md">
-            <div className="text-help text-core mb-md">ESG Compliance</div>
-            <InfoTooltip content="Environmental, Social, and Governance compliance allows you to charge a 10% premium for sustainable computing practices." />
-          </div>
-          <div className="flex items-center gap-lg">
-            <div className="flex items-center space-x-md">
-              <Checkbox
-                id="esg-enabled"
-                checked={state.esgEnabled}
-                onCheckedChange={(checked) => onStateChange({ esgEnabled: !!checked })}
-              />
-              <Label htmlFor="esg-enabled" className="text-core">Enable ESG (+10% premium)</Label>
-            </div>
-            <div className="flex items-center gap-md">
-              <input
-                type="file"
-                id="esg-file"
-                className="hidden"
-                accept=".pdf,.doc,.docx"
-                onChange={handleFileUpload}
-              />
+        <div className="grid grid-cols-6 gap-xs">
+          {[0, 50, 100, 200, 300, 500].map(km => {
+            const isActive = getCurrentRuralKm() === km;
+            return (
               <Button
+                key={km}
                 variant="outline"
                 size="sm"
-                onClick={() => document.getElementById('esg-file')?.click()}
-                className="flex items-center gap-1 border-input-border hover:border-glass-border"
+                onClick={() => handleRuralClick(km)}
+                className={`px-2 py-1 border-input-border hover:border-glass-border text-core ${
+                  isActive ? 'bg-slider-blue text-white border-slider-blue' : ''
+                }`}
+                title={km === 0 ? 'City core (no rural premium)' : 
+                      km === 50 ? '50km: Suburban edge (+50% premium)' :
+                      km === 100 ? '100km: Rural edge (2x premium - scarcity)' :
+                      km === 200 ? '200km: Agricultural edge (2.5x premium)' :
+                      km === 300 ? '300km: Remote rural (3x premium)' :
+                      '500km: Deep rural/agriculture (4x premium)'}
               >
-                <Upload className="h-3 w-3" />
-                Upload ESG Cert
+                {km === 0 ? 'Core' : `${km}km`}
               </Button>
-              {state.esgFile && (
-                <span className="text-core text-help">{state.esgFile}</span>
-              )}
-            </div>
-          </div>
+            );
+          })}
         </div>
       </div>
     </div>

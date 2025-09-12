@@ -9,6 +9,7 @@ import { PricingPanel } from '../components/simulation/PricingPanel';
 import { PresetsSection } from '../components/simulation/PresetsSection';
 import { PremiumShowcase } from '../components/simulation/PremiumShowcase';
 import { CallToAction } from '../components/simulation/CallToAction';
+import { ESGPanel } from '../components/simulation/ESGPanel';
 
 const Index = () => {
   const {
@@ -31,21 +32,28 @@ const Index = () => {
         <KPIDashboard state={state} calculations={calculations} onStateChange={updateState} />
 
         {/* Main Layout Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-          {/* Deployment Scenario */}
-          <ControlsSection
-            state={state}
-            calculations={calculations}
-            onStateChange={updateState}
-            onResetToPreset={resetToPreset}
-          />
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 mb-6">
+          {/* Deployment Scenario - 3/4 width */}
+          <div className="lg:col-span-3">
+            <ControlsSection
+              state={state}
+              calculations={calculations}
+              onStateChange={updateState}
+              onResetToPreset={resetToPreset}
+            />
+          </div>
 
-          {/* Host Profile */}
-          <PresetsSection 
-            state={state}
-            onApplyPreset={applyPreset}
-          />
+          {/* Host Profile - 1/4 width */}
+          <div className="lg:col-span-1">
+            <PresetsSection 
+              state={state}
+              onApplyPreset={applyPreset}
+            />
+          </div>
         </div>
+
+        {/* ESG Panel */}
+        <ESGPanel state={state} onStateChange={updateState} />
 
         {/* Premium Positioning Showcase */}
         <PremiumShowcase state={state} onStateChange={updateState} />
