@@ -27,7 +27,7 @@ export function DeviceStack({
   const utilizationPercentage = Math.round(calculations.util * 100);
   const inferenceNodes = CATALOG.filter(device => device.category === 'inference');
   const memoryNodes = CATALOG.filter(device => device.category === 'memory');
-  return <div className="bg-card border border-border rounded-2xl p-panel-padding mb-panel">
+  return <div className="bg-card border border-border p-panel-padding mb-panel rounded-none">
       <div className="flex items-center justify-between mb-lg">
         <div className="text-headline font-semibold text-foreground">Node Stack</div>
         <div className="text-help text-core">
@@ -67,7 +67,7 @@ export function DeviceStack({
         {/* Device Rows */}
         {devices.length === 0 ? <div className="text-help py-4 text-center text-core">
             No devices yet. Use the catalog below.
-          </div> : [...devices].reverse().map(device => <div key={device.id} className="border border-muted rounded-md p-1 mx-0 px-px my-[10px] py-px bg-slate-950">
+          </div> : [...devices].reverse().map(device => <div key={device.id} className="border border-muted rounded-md p-1 mx-0 px-px my-[10px] py-px bg-blue-500">
               <div className="grid grid-cols-8 gap-4 items-center min-h-[22px] py-0 my-[5px] bg-blue-500">
                 <div className="text-foreground text-core font-normal px-[7px]">{device.label}</div>
                 <div className="text-foreground text-core mx-[7px]">{device.vendor}</div>

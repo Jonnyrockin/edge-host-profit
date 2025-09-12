@@ -87,7 +87,7 @@ export function PremiumShowcase({
     multiplier: 5.0
   }];
   return <TooltipProvider>
-      <div className="bg-card border border-border rounded-lg p-4 mb-6">
+      <div className="bg-card border border-border p-4 mb-6 rounded-none">
         {/* Header */}
         <div className="flex items-center justify-between mb-4">
           <div>

@@ -4,17 +4,18 @@ import { Button } from '../ui/button';
 import { ExternalLink } from 'lucide-react';
 import { INFERENCE_PROVIDERS, getProviderById, getModelById } from '../../data/inference-providers';
 import { InfoTooltip } from '../ui/info-tooltip';
-
 interface PricingPanelProps {
   state: SimulationState;
   calculations: CalculationResult;
   onStateChange: (updates: Partial<SimulationState>) => void;
 }
-
-export function PricingPanel({ state, calculations, onStateChange }: PricingPanelProps) {
+export function PricingPanel({
+  state,
+  calculations,
+  onStateChange
+}: PricingPanelProps) {
   const selectedProvider = getProviderById(state.inferenceProvider || 'openai');
   const selectedModel = selectedProvider ? getModelById(state.inferenceProvider || 'openai', state.inferenceModel || selectedProvider.models[0]?.id) : null;
-
   const handleProviderChange = (providerId: string) => {
     const provider = getProviderById(providerId);
     if (provider) {
@@ -25,7 +26,6 @@ export function PricingPanel({ state, calculations, onStateChange }: PricingPane
       });
     }
   };
-
   const handleModelChange = (modelId: string) => {
     const model = selectedProvider ? getModelById(selectedProvider.id, modelId) : null;
     if (model) {
@@ -39,22 +39,18 @@ export function PricingPanel({ state, calculations, onStateChange }: PricingPane
   // Calculate pricing with ESG premium if enabled
   const basePrice = calculations.pricePerCall;
   const finalPrice = basePrice;
-  
+
   // Pricing for 1 million calls
   const priceFor1M = finalPrice * 1000000;
-  
-  return (
-    <div className="bg-card border border-border rounded-2xl p-panel-padding mb-panel">
+  return <div className="bg-card border border-border p-panel-padding mb-panel rounded-none">
       <div className="flex items-center justify-between mb-lg">
         <div className="text-headline font-semibold text-foreground">Pricing Overview</div>
-        {selectedProvider && (
-          <Button variant="ghost" size="sm" asChild>
+        {selectedProvider && <Button variant="ghost" size="sm" asChild>
             <a href={selectedProvider.sourceUrl} target="_blank" rel="noopener noreferrer">
               <ExternalLink className="w-4 h-4 mr-2" />
               View Pricing
             </a>
-          </Button>
-        )}
+          </Button>}
       </div>
       
       <div className="text-help text-core mb-4">
@@ -73,39 +69,30 @@ export function PricingPanel({ state, calculations, onStateChange }: PricingPane
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
-              {INFERENCE_PROVIDERS.map(provider => (
-                <SelectItem key={provider.id} value={provider.id}>
+              {INFERENCE_PROVIDERS.map(provider => <SelectItem key={provider.id} value={provider.id}>
                   {provider.name}
-                </SelectItem>
-              ))}
+                </SelectItem>)}
             </SelectContent>
           </Select>
         </div>
 
         <div>
           <label className="block text-core font-medium mb-2">Model</label>
-          <Select 
-            value={state.inferenceModel || selectedProvider?.models[0]?.id} 
-            onValueChange={handleModelChange}
-            disabled={!selectedProvider}
-          >
+          <Select value={state.inferenceModel || selectedProvider?.models[0]?.id} onValueChange={handleModelChange} disabled={!selectedProvider}>
             <SelectTrigger className="h-10">
               <SelectValue />
             </SelectTrigger>
             <SelectContent className="z-50">
-              {selectedProvider?.models.map(model => (
-                <SelectItem key={model.id} value={model.id} className="py-2">
+              {selectedProvider?.models.map(model => <SelectItem key={model.id} value={model.id} className="py-2">
                   {model.name}
-                </SelectItem>
-              ))}
+                </SelectItem>)}
             </SelectContent>
           </Select>
         </div>
       </div>
 
       {/* Base Inference Pricing */}
-      {selectedModel && (
-        <div className="bg-muted/50 rounded-lg p-3 mb-4">
+      {selectedModel && <div className="bg-muted/50 rounded-lg p-3 mb-4">
           <div className="text-core font-medium mb-2">Base Inference Pricing</div>
           <div className="grid grid-cols-3 gap-4 text-core">
             <div>
@@ -121,8 +108,7 @@ export function PricingPanel({ state, calculations, onStateChange }: PricingPane
               <div className="font-mono text-blue-400">${selectedModel.averagePricePer1M}/1M</div>
             </div>
           </div>
-        </div>
-      )}
+        </div>}
       
       {/* Final Pricing with Premiums */}
       <div className="space-y-4">
@@ -146,12 +132,9 @@ export function PricingPanel({ state, calculations, onStateChange }: PricingPane
           </div>
         </div>
         
-        {state.esgEnabled && (
-          <div className="text-core text-success bg-success/10 rounded p-2">
+        {state.esgEnabled && <div className="text-core text-success bg-success/10 rounded p-2">
             ✓ ESG Compliance enabled - customers pay 10% premium for green computing
-          </div>
-        )}
+          </div>}
       </div>
-    </div>
-  );
+    </div>;
 }

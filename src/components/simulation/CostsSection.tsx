@@ -4,17 +4,18 @@ import { Checkbox } from '../ui/checkbox';
 import { SimulationState, CalculationResult } from '../../types/simulation';
 import { FIBRE_PROVIDERS, ENERGY_PROVIDERS } from '../../data/constants';
 import { InfoTooltip } from '../ui/info-tooltip';
-
 interface CostsSectionProps {
   state: SimulationState;
   calculations: CalculationResult;
   onStateChange: (updates: Partial<SimulationState>) => void;
 }
-
-export function CostsSection({ state, calculations, onStateChange }: CostsSectionProps) {
+export function CostsSection({
+  state,
+  calculations,
+  onStateChange
+}: CostsSectionProps) {
   const fibreProviders = FIBRE_PROVIDERS[state.city] || [];
   const energyProviders = ENERGY_PROVIDERS[state.city] || [];
-
   const handleCostChange = (key: keyof SimulationState['costs'], value: number) => {
     onStateChange({
       costs: {
@@ -23,9 +24,7 @@ export function CostsSection({ state, calculations, onStateChange }: CostsSectio
       }
     });
   };
-
-  return (
-    <div className="bg-card border border-border rounded-2xl p-panel-padding mb-panel lg:col-span-2 relative">
+  return <div className="bg-card border border-border p-panel-padding mb-panel lg:col-span-2 relative rounded-none">
       <div className="flex items-center justify-between">
         <div>
           <div className="text-headline font-semibold text-foreground">Costs/Expenditures</div>
@@ -65,19 +64,16 @@ export function CostsSection({ state, calculations, onStateChange }: CostsSectio
                   <div className="text-help text-core mb-2">Business Fibre Provider</div>
                   <InfoTooltip content="Different fibre providers offer varying speeds, reliability, and pricing. Provider choice impacts monthly connectivity costs." />
                 </div>
-                <Select 
-                  value={state.connectivityProvider} 
-                  onValueChange={(value) => onStateChange({ connectivityProvider: value })}
-                >
+                <Select value={state.connectivityProvider} onValueChange={value => onStateChange({
+                connectivityProvider: value
+              })}>
                   <SelectTrigger className="bg-input border-input-border">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    {fibreProviders.map(provider => (
-                      <SelectItem key={provider.name} value={provider.name}>
+                    {fibreProviders.map(provider => <SelectItem key={provider.name} value={provider.name}>
                         {provider.name} — ${provider.rate}
-                      </SelectItem>
-                    ))}
+                      </SelectItem>)}
                   </SelectContent>
                 </Select>
               </div>
@@ -86,22 +82,13 @@ export function CostsSection({ state, calculations, onStateChange }: CostsSectio
                   <div className="text-help text-core mb-2">Fibre (per/mo)</div>
                   <InfoTooltip content="Monthly fibre internet cost. Higher speeds cost more but enable better service quality and more concurrent users." />
                 </div>
-                <Input
-                  type="number"
-                  min="0"
-                  step="10"
-                  value={state.costs.fibre}
-                  onChange={(e) => handleCostChange('fibre', parseFloat(e.target.value) || 0)}
-                  className="w-30 font-mono bg-input border-input-border"
-                />
+                <Input type="number" min="0" step="10" value={state.costs.fibre} onChange={e => handleCostChange('fibre', parseFloat(e.target.value) || 0)} className="w-30 font-mono bg-input border-input-border" />
               </div>
             </div>
             <div className="flex items-center gap-2 mt-3">
-              <Checkbox
-                id="link-rate"
-                checked={state.linkRate}
-                onCheckedChange={(checked) => onStateChange({ linkRate: !!checked })}
-              />
+              <Checkbox id="link-rate" checked={state.linkRate} onCheckedChange={checked => onStateChange({
+              linkRate: !!checked
+            })} />
               <label htmlFor="link-rate" className="text-help text-core">
                 Link cost to provider rate
               </label>
@@ -121,24 +108,21 @@ export function CostsSection({ state, calculations, onStateChange }: CostsSectio
                   <div className="text-help text-core mb-2">Energy Provider</div>
                   <InfoTooltip content="Different energy providers offer various rates and green energy options. Choice affects monthly power costs and ESG positioning." />
                 </div>
-                <Select 
-                  value={state.energyProvider} 
-                  onValueChange={(value) => onStateChange({ energyProvider: value })}
-                >
+                <Select value={state.energyProvider} onValueChange={value => onStateChange({
+                energyProvider: value
+              })}>
                   <SelectTrigger className="bg-input border-input-border">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent className="z-50">
-                    {energyProviders.map(provider => (
-                      <SelectItem key={provider.name} value={provider.name}>
+                    {energyProviders.map(provider => <SelectItem key={provider.name} value={provider.name}>
                         <div className="flex flex-col items-start">
                           <div className="font-medium">{provider.name}</div>
                           <div className="text-xs text-muted-foreground">
                             ${provider.rate?.toFixed(3)}/kWh {provider.green ? '🌱' : ''}
                           </div>
                         </div>
-                      </SelectItem>
-                    ))}
+                      </SelectItem>)}
                   </SelectContent>
                 </Select>
               </div>
@@ -147,30 +131,18 @@ export function CostsSection({ state, calculations, onStateChange }: CostsSectio
                   <div className="text-help text-core mb-md">Renewable Energy (%)</div>
                   <InfoTooltip content="Percentage of your energy from renewable sources. Higher percentage improves ESG credentials but may increase operational costs." />
                 </div>
-                <Input
-                  type="number"
-                  min="0"
-                  step="1"
-                  value={state.greenUplift}
-                  onChange={(e) => onStateChange({ greenUplift: parseFloat(e.target.value) || 0 })}
-                  className="w-24 font-mono bg-input border-input-border"
-                  title="Percentage of energy sourced from renewables"
-                />
+                <Input type="number" min="0" step="1" value={state.greenUplift} onChange={e => onStateChange({
+                greenUplift: parseFloat(e.target.value) || 0
+              })} className="w-24 font-mono bg-input border-input-border" title="Percentage of energy sourced from renewables" />
               </div>
               <div>
                 <div className="flex items-center gap-md">
                   <div className="text-help text-core mb-md">Green Pricing Premium (%)</div>
                   <InfoTooltip content="Price markup you charge customers for sustainable computing. This is your revenue premium for being environmentally responsible." />
                 </div>
-                <Input
-                  type="number"
-                  min="0"
-                  step="1"
-                  value={state.greenPremium}
-                  onChange={(e) => onStateChange({ greenPremium: parseFloat(e.target.value) || 0 })}
-                  className="w-24 font-mono bg-input border-input-border"
-                  title="Premium percentage added to customer pricing for green energy"
-                />
+                <Input type="number" min="0" step="1" value={state.greenPremium} onChange={e => onStateChange({
+                greenPremium: parseFloat(e.target.value) || 0
+              })} className="w-24 font-mono bg-input border-input-border" title="Premium percentage added to customer pricing for green energy" />
               </div>
             </div>
           </div>
@@ -184,97 +156,41 @@ export function CostsSection({ state, calculations, onStateChange }: CostsSectio
             <div className="text-help text-core mb-2">Energy (per/mo)</div>
             <InfoTooltip content="Monthly electricity costs for powering servers and cooling systems. Scales with device count and utilization." />
           </div>
-          <Input
-            type="number"
-            min="0"
-            step="50"
-            value={state.costs.energy}
-            onChange={(e) => handleCostChange('energy', parseFloat(e.target.value) || 0)}
-            className="w-30 font-mono bg-input border-input-border"
-          />
+          <Input type="number" min="0" step="50" value={state.costs.energy} onChange={e => handleCostChange('energy', parseFloat(e.target.value) || 0)} className="w-30 font-mono bg-input border-input-border px-[10px] mx-0" />
         </div>
         <div>
           <div className="flex items-center gap-2">
             <div className="text-help text-core mb-2">Rent (per/mo)</div>
             <InfoTooltip content="Facility rental costs including data center space, cooling, and physical security. Fixed monthly expense." />
           </div>
-          <Input
-            type="number"
-            min="0"
-            step="50"
-            value={state.costs.rent}
-            onChange={(e) => handleCostChange('rent', parseFloat(e.target.value) || 0)}
-            className="w-30 font-mono bg-input border-input-border"
-          />
+          <Input type="number" min="0" step="50" value={state.costs.rent} onChange={e => handleCostChange('rent', parseFloat(e.target.value) || 0)} className="w-30 font-mono bg-input border-input-border" />
         </div>
         <div>
           <div className="text-help text-core mb-2">Staff (per/mo)</div>
-          <Input
-            type="number"
-            min="0"
-            step="50"
-            value={state.costs.staff}
-            onChange={(e) => handleCostChange('staff', parseFloat(e.target.value) || 0)}
-            className="w-30 font-mono bg-input border-input-border"
-          />
+          <Input type="number" min="0" step="50" value={state.costs.staff} onChange={e => handleCostChange('staff', parseFloat(e.target.value) || 0)} className="w-30 font-mono bg-input border-input-border" />
         </div>
         <div>
           <div className="text-help text-core mb-2">Misc (per/mo)</div>
-          <Input
-            type="number"
-            min="0"
-            step="25"
-            value={state.costs.misc}
-            onChange={(e) => handleCostChange('misc', parseFloat(e.target.value) || 0)}
-            className="w-30 font-mono bg-input border-input-border"
-          />
+          <Input type="number" min="0" step="25" value={state.costs.misc} onChange={e => handleCostChange('misc', parseFloat(e.target.value) || 0)} className="w-30 font-mono bg-input border-input-border" />
         </div>
         <div>
           <div className="text-help text-core mb-2">Insurance (per/mo)</div>
-          <Input
-            type="number"
-            min="0"
-            step="25"
-            value={state.costs.insurance}
-            onChange={(e) => handleCostChange('insurance', parseFloat(e.target.value) || 0)}
-            className="w-30 font-mono bg-input border-input-border"
-          />
+          <Input type="number" min="0" step="25" value={state.costs.insurance} onChange={e => handleCostChange('insurance', parseFloat(e.target.value) || 0)} className="w-30 font-mono bg-input border-input-border" />
         </div>
         <div>
           <div className="text-help text-core mb-2">Maintenance (per/mo)</div>
-          <Input
-            type="number"
-            min="0"
-            step="25"
-            value={state.costs.maintenance}
-            onChange={(e) => handleCostChange('maintenance', parseFloat(e.target.value) || 0)}
-            className="w-30 font-mono bg-input border-input-border"
-          />
+          <Input type="number" min="0" step="25" value={state.costs.maintenance} onChange={e => handleCostChange('maintenance', parseFloat(e.target.value) || 0)} className="w-30 font-mono bg-input border-input-border" />
         </div>
         <div>
           <div className="text-help text-core mb-2">Licenses / SaaS (per/mo)</div>
-          <Input
-            type="number"
-            min="0"
-            step="25"
-            value={state.costs.licenses}
-            onChange={(e) => handleCostChange('licenses', parseFloat(e.target.value) || 0)}
-            className="w-30 font-mono bg-input border-input-border"
-          />
+          <Input type="number" min="0" step="25" value={state.costs.licenses} onChange={e => handleCostChange('licenses', parseFloat(e.target.value) || 0)} className="w-30 font-mono bg-input border-input-border" />
         </div>
         <div>
           <div className="flex items-center gap-2">
             <div className="text-help text-core mb-2">Legal Fees (per/mo)</div>
             <InfoTooltip content="Legal and compliance costs including contracts, regulatory compliance, and intellectual property protection." />
           </div>
-          <Input
-            type="number"
-            min="0"
-            step="25"
-            value={state.costs.legal}
-            onChange={(e) => handleCostChange('legal', parseFloat(e.target.value) || 0)}
-            className="w-30 font-mono bg-input border-input-border"
-          />
+          <Input type="number" min="0" step="25" value={state.costs.legal} onChange={e => handleCostChange('legal', parseFloat(e.target.value) || 0)} className="w-30 font-mono bg-input border-input-border" />
         </div>
       </div>
 
@@ -290,6 +206,5 @@ export function CostsSection({ state, calculations, onStateChange }: CostsSectio
           </div>
         </div>
       </div>
-    </div>
-  );
+    </div>;
 }

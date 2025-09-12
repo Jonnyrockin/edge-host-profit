@@ -2,26 +2,19 @@ import { SimulationState, CalculationResult } from '../../types/simulation';
 import { SCENARIOS } from '../../data/constants';
 import { edgeTierMultiplier } from '../../utils/calculations';
 import { InfoTooltip } from '../ui/info-tooltip';
-
 interface MathSectionProps {
   state: SimulationState;
   calculations: CalculationResult;
 }
-
-export function MathSection({ state, calculations }: MathSectionProps) {
+export function MathSection({
+  state,
+  calculations
+}: MathSectionProps) {
   const scenario = SCENARIOS[state.scenario as keyof typeof SCENARIOS] || SCENARIOS.Median;
   const mult = (edgeTierMultiplier(state.devices) * scenario.price * (1 + state.rural) * (1 + state.greenUplift / 100)).toFixed(2);
-
-  const tests = [
-    ['scenario defined', !!state.scenario],
-    ['pricePerCall positive', calculations.pricePerCall > 0],
-    ['calc monthlyCalls finite', Number.isFinite(calculations.monthlyCalls) && calculations.monthlyCalls >= 0],
-    ['fee ≈ 25% of gross', Math.abs((calculations.platformFee / calculations.gross) - 0.25) < 1e-6 || calculations.gross === 0],
-    ['providers present for city', true] // Simplified for now
+  const tests = [['scenario defined', !!state.scenario], ['pricePerCall positive', calculations.pricePerCall > 0], ['calc monthlyCalls finite', Number.isFinite(calculations.monthlyCalls) && calculations.monthlyCalls >= 0], ['fee ≈ 25% of gross', Math.abs(calculations.platformFee / calculations.gross - 0.25) < 1e-6 || calculations.gross === 0], ['providers present for city', true] // Simplified for now
   ];
-
-  return (
-    <div className="bg-card border border-border rounded-2xl p-panel-padding mb-panel">
+  return <div className="bg-card border border-border p-panel-padding mb-panel rounded-none">
       <div className="text-headline font-semibold text-foreground">The Math</div>
       <div className="text-help text-core">
         Baselines → multipliers → traffic → gross → fees → OPEX → Cash Net.
@@ -73,7 +66,7 @@ export function MathSection({ state, calculations }: MathSectionProps) {
               <InfoTooltip content="Conservative utilization scenario: 40% of total device capacity. Represents cautious adoption with stable, predictable workloads." />
             </div>
             <div className="text-headline font-semibold text-number-blue">
-              {Math.round((calculations.inventoryIPS * 0.40 * 86400) / state.callsPerJob).toLocaleString()}
+              {Math.round(calculations.inventoryIPS * 0.40 * 86400 / state.callsPerJob).toLocaleString()}
             </div>
             <div className="text-xs text-muted-foreground">jobs/day</div>
           </div>
@@ -83,7 +76,7 @@ export function MathSection({ state, calculations }: MathSectionProps) {
               <InfoTooltip content="Current utilization based on your scenario selection and base utilization settings. This reflects your expected realistic usage pattern." />
             </div>
             <div className="text-headline font-semibold text-number-blue">
-              {Math.round((calculations.inventoryIPS * state.util * scenario.util * 86400) / state.callsPerJob).toLocaleString()}
+              {Math.round(calculations.inventoryIPS * state.util * scenario.util * 86400 / state.callsPerJob).toLocaleString()}
             </div>
             <div className="text-xs text-muted-foreground">jobs/day</div>
           </div>
@@ -93,7 +86,7 @@ export function MathSection({ state, calculations }: MathSectionProps) {
               <InfoTooltip content="Optimistic utilization scenario: 80% of total device capacity. Represents high-demand environment with continuous, heavy workloads." />
             </div>
             <div className="text-headline font-semibold text-number-blue">
-              {Math.round((calculations.inventoryIPS * 0.80 * 86400) / state.callsPerJob).toLocaleString()}
+              {Math.round(calculations.inventoryIPS * 0.80 * 86400 / state.callsPerJob).toLocaleString()}
             </div>
             <div className="text-xs text-muted-foreground">jobs/day</div>
           </div>
@@ -104,17 +97,14 @@ export function MathSection({ state, calculations }: MathSectionProps) {
         <div className="text-core font-semibold text-foreground">SEL Tests</div>
         <div className="mt-md space-y-xs text-core">
           <ul>
-            {tests.map(([name, ok], index) => (
-              <li key={index} className="flex items-center gap-md">
+            {tests.map(([name, ok], index) => <li key={index} className="flex items-center gap-md">
                 <span className={ok ? 'text-muted-foreground' : 'text-muted-foreground'}>
                   {ok ? '✅' : '❌'}
                 </span>
                 <span className="text-foreground">{name}</span>
-              </li>
-            ))}
+              </li>)}
           </ul>
         </div>
       </div>
-    </div>
-  );
+    </div>;
 }
