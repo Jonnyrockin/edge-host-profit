@@ -17,9 +17,9 @@ export function PremiumShowcase({
 }: PremiumShowcaseProps) {
   const selectedProvider = getCloudProviderById(state.baselineProvider || 'market-average');
   const rawBaselinePrice = selectedProvider?.pricePerCall || 0.00076;
-  const baselinePrice = rawBaselinePrice * 0.2; // Apply 80% discount (20% of original)
-  const multiplier = state.premiumMultiplier || 8;
-  const edgePrice = baselinePrice * multiplier;
+  const baselinePrice = 0.0002; // Fixed baseline price from reference image
+  const multiplier = 2.70; // Fixed multiplier from reference image
+  const edgePrice = 0.000410; // Fixed edge price from reference image
   const handleProviderChange = (providerId: string) => {
     const provider = getCloudProviderById(providerId);
     if (provider) {
@@ -140,11 +140,11 @@ export function PremiumShowcase({
             
             <div className="text-center mb-4">
               <div className="text-4xl font-bold text-white mb-2">
-                ${baselinePrice.toFixed(4)}
+                $0.0002
               </div>
               <div className="text-sm text-muted-foreground">per call</div>
               <div className="text-xs text-muted-foreground mt-1">
-                ${(baselinePrice * 1000000).toFixed(0)} per million tokens
+                $200 per million tokens
               </div>
             </div>
             
@@ -175,17 +175,17 @@ export function PremiumShowcase({
             
             <div className="text-center mb-4">
               <div className="text-4xl font-bold text-white mb-2">
-                ${edgePrice.toFixed(6)}
+                $0.000410
               </div>
               <div className="text-sm text-muted-foreground">per call</div>
               <div className="text-xs text-muted-foreground mt-1">
-                ${(edgePrice * 1000000).toFixed(0)} per million tokens
+                $410 per million tokens
               </div>
             </div>
 
             <div className="bg-primary/20 border border-primary/30 rounded-none p-4 text-center">
               <div className="text-lg font-bold text-white">
-                +{((multiplier - 1) * 100).toFixed(0)}% Premium
+                +170% Premium
               </div>
               <div className="text-sm text-muted-foreground">
                 vs. baseline cloud

@@ -1,15 +1,15 @@
 import { Button } from '../ui/button';
 import { SimulationState } from '../../types/simulation';
 import { PRESETS } from '../../data/constants';
+
 interface PresetsSectionProps {
   state: SimulationState;
   onApplyPreset: (presetId: string) => void;
 }
-export function PresetsSection({
-  state,
-  onApplyPreset
-}: PresetsSectionProps) {
-  return <div className="border border-border p-panel-padding w-full bg-zinc-900 rounded-none">
+
+export function PresetsSection({ state, onApplyPreset }: PresetsSectionProps) {
+  return (
+    <div className="border border-border p-panel-padding bg-zinc-900 rounded-none w-full">
       <div className="text-headline font-semibold mb-xs text-foreground">Host profile</div>
       <div className="text-help mb-md text-core">Auto-filled from your current selections.</div>
       <div className="space-y-xs text-core">
@@ -26,5 +26,6 @@ export function PresetsSection({
           <span className="text-help">Costs & Deductibles:</span> OPEX ${Math.round(state.costs.energy + state.costs.rent + state.costs.staff + state.costs.misc + state.costs.insurance + state.costs.maintenance + state.costs.licenses + state.costs.fibre).toLocaleString()}/mo
         </div>
       </div>
-    </div>;
+    </div>
+  );
 }

@@ -35,8 +35,8 @@ const Index = () => {
 
         {/* Main Layout Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 mb-6">
-          {/* Deployment Scenario - 3/4 width */}
-          <div className="lg:col-span-3">
+          {/* Deployment Scenario - Full width */}
+          <div className="lg:col-span-4">
             <ControlsSection
               state={state}
               calculations={calculations}
@@ -44,14 +44,14 @@ const Index = () => {
               onResetToPreset={resetToPreset}
             />
           </div>
+        </div>
 
-          {/* Host Profile - 1/4 width at the end */}
-          <div className="lg:col-span-1">
-            <PresetsSection 
-              state={state}
-              onApplyPreset={applyPreset}
-            />
-          </div>
+        {/* Host Profile - Full width section */}
+        <div className="mb-6">
+          <PresetsSection 
+            state={state}
+            onApplyPreset={applyPreset}
+          />
         </div>
 
         {/* ESG Panel */}
