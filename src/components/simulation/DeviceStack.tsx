@@ -67,8 +67,8 @@ export function DeviceStack({
         {/* Device Rows */}
         {devices.length === 0 ? <div className="text-help py-4 text-center text-core">
             No devices yet. Use the catalog below.
-          </div> : [...devices].reverse().map(device => <div key={device.id} className="border border-muted rounded-md p-1 mx-0 px-px my-[10px] py-px bg-blue-500">
-              <div className="grid grid-cols-8 gap-4 items-center min-h-[22px] py-0 my-[5px] bg-blue-500">
+          </div> : [...devices].reverse().map(device => <div key={device.id} className="border border-muted rounded-md p-1 mx-0 px-px my-[10px] py-px bg-gray-800">
+              <div className="grid grid-cols-8 gap-4 items-center min-h-[22px] bg-blue-500 py-px my-0">
                 <div className="text-foreground text-core font-normal px-[7px]">{device.label}</div>
                 <div className="text-foreground text-core mx-[7px]">{device.vendor}</div>
                 <div className="text-right text-foreground text-core py-0 mx-[30px]">{device.latencyTier}</div>
@@ -120,7 +120,7 @@ export function DeviceStack({
         </div>
         
         {/* Utilization Bar */}
-        <div className="relative w-full h-6 rounded-md overflow-hidden bg-zinc-700">
+        <div className="relative w-full h-6 rounded-md overflow-hidden bg-zinc-700 py-0 my-[12px] px-0">
           <div className="h-full bg-slider-blue transition-all duration-300" style={{
           width: `${utilizationPercentage}%`
         }} />
@@ -142,7 +142,7 @@ export function DeviceStack({
 
       {/* Hardware Catalog */}
       <div className="mt-8">
-        <div className="text-xl font-semibold text-center mb-6 text-primary tracking-wide">
+        <div className="text-xl font-semibold text-center mb-6 text-primary tracking-wide bg-gray-300">
           CERTIFIED HARDWARE CATALOGUE
         </div>
         
