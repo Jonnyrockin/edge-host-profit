@@ -10,7 +10,7 @@ import { PresetsSection } from '../components/simulation/PresetsSection';
 import { PremiumShowcase } from '../components/simulation/PremiumShowcase';
 import { CallToAction } from '../components/simulation/CallToAction';
 import { PlatformRevenuePanel } from '../components/simulation/PlatformRevenuePanel';
-import { JobsPerDayPanel } from '../components/simulation/JobsPerDayPanel';
+
 import { ESGPanel } from '../components/simulation/ESGPanel';
 
 const Index = () => {
@@ -46,22 +46,17 @@ const Index = () => {
           </div>
         </div>
 
-        {/* Host Profile - Full width section */}
-        <div className="mb-6">
+        {/* Host Profile and ESG Panel - Side by side */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
           <PresetsSection 
             state={state}
             onApplyPreset={applyPreset}
           />
+          <ESGPanel state={state} onStateChange={updateState} />
         </div>
-
-        {/* ESG Panel */}
-        <ESGPanel state={state} onStateChange={updateState} />
 
         {/* Platform Revenue Panel */}
         <PlatformRevenuePanel />
-
-        {/* Jobs Per Day Panel */}
-        <JobsPerDayPanel state={state} onStateChange={updateState} />
 
         {/* Premium Positioning Showcase */}
         <PremiumShowcase state={state} onStateChange={updateState} />

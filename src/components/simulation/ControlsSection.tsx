@@ -96,11 +96,11 @@ export function ControlsSection({
         
         <div>
           <div className="flex items-center gap-md">
-            <div className="text-help text-core mb-md">Calls per Day</div>
-            <InfoTooltip content="Total AI inference calls processed per day across all jobs and customers." />
+            <div className="text-help text-core mb-md">Jobs per Day</div>
+            <InfoTooltip content="Number of customer jobs processed daily. Each job may require multiple AI inference calls." />
           </div>
-          <Input type="number" min="1" step="1000" value={state.callsPerDay || 50000} onChange={e => onStateChange({
-          callsPerDay: Math.max(1, parseInt(e.target.value) || 50000)
+          <Input type="number" min="1" step="100" value={state.jobsPerDay || 1000} onChange={e => onStateChange({
+          jobsPerDay: Math.max(1, parseInt(e.target.value) || 1000)
         })} className="w-24 font-mono bg-input border-input-border" />
         </div>
         
