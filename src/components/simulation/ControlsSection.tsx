@@ -77,7 +77,6 @@ export function ControlsSection({
         <div>
           <div className="flex items-center gap-md">
             <div className="text-help text-core mb-md">City</div>
-            <InfoTooltip content="Geographic location affects baseline pricing, available connectivity providers, and energy costs." />
           </div>
           <Select value={state.city} onValueChange={value => onStateChange({
           city: value
@@ -91,10 +90,16 @@ export function ControlsSection({
           </Select>
         </div>
         
-        <div className="col-span-2">
+        <div className="col-span-2 ml-7">
           <div className="flex items-center gap-md">
-            <div className="text-help text-core mb-md">Utilization (%)</div>
-            <InfoTooltip content="Base utilization percentage gets multiplied by scenario factor. Conservative=0.9×, Median=1.0×, Optimistic=1.1×" />
+            <div className="text-help text-core mb-md group relative cursor-help hover:text-blue-500 transition-colors">
+              Utilization (%)
+              <div className="absolute bottom-full left-0 mb-2 w-96 p-4 bg-popover border border-border rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                <div className="text-lg text-popover-foreground">
+                  Base utilization percentage gets multiplied by scenario factor. Conservative=0.9×, Median=1.0×, Optimistic=1.1×
+                </div>
+              </div>
+            </div>
           </div>
           <div className="flex items-center gap-md">
             <Slider value={[Math.round(state.util * 100)]} onValueChange={([value]) => onStateChange({
@@ -106,10 +111,16 @@ export function ControlsSection({
           </div>
         </div>
         
-        <div>
+        <div className="ml-15">
           <div className="flex items-center gap-md">
-            <div className="text-help text-core mb-md">Calls per Job</div>
-            <InfoTooltip content="How many AI inference calls each customer job requires. Complex tasks need more calls." />
+            <div className="text-help text-core mb-md group relative cursor-help hover:text-blue-500 transition-colors">
+              Calls per Job
+              <div className="absolute bottom-full left-0 mb-2 w-96 p-4 bg-popover border border-border rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                <div className="text-lg text-popover-foreground">
+                  How many AI inference calls each customer job requires. Complex tasks need more calls.
+                </div>
+              </div>
+            </div>
           </div>
           <Input type="number" min="1" step="1" value={state.callsPerJob} onChange={e => onStateChange({
           callsPerJob: Math.max(1, parseInt(e.target.value) || 1)
@@ -118,8 +129,14 @@ export function ControlsSection({
         
         <div>
           <div className="flex items-center gap-md">
-            <div className="text-help text-core mb-md">Jobs per Day</div>
-            <InfoTooltip content="Number of customer jobs processed daily. Realistic scenarios: E-commerce (500-2000), Video Analytics (100-800), Healthcare (50-300), AgTech (200-1500)." />
+            <div className="text-help text-core mb-md group relative cursor-help hover:text-blue-500 transition-colors">
+              Jobs per Day
+              <div className="absolute bottom-full left-0 mb-2 w-96 p-4 bg-popover border border-border rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                <div className="text-lg text-popover-foreground">
+                  Number of customer jobs processed daily. Realistic scenarios: E-commerce (500-2000), Video Analytics (100-800), Healthcare (50-300), AgTech (200-1500).
+                </div>
+              </div>
+            </div>
           </div>
           <div className="flex items-center gap-xs">
             <Input type="number" min="1" step="100" value={state.jobsPerDay || 1000} onChange={e => onStateChange({
@@ -144,10 +161,16 @@ export function ControlsSection({
           </div>
         </div>
         
-        <div>
+        <div className="ml-5">
           <div className="flex items-center gap-md">
-            <div className="text-help text-core mb-md">Base price per call ($)</div>
-            <InfoTooltip content="Starting price before applying location, rural, and premium multipliers. This sets your baseline pricing strategy." />
+            <div className="text-help text-core mb-md group relative cursor-help hover:text-blue-500 transition-colors">
+              Base price per call ($)
+              <div className="absolute bottom-full left-0 mb-2 w-96 p-4 bg-popover border border-border rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                <div className="text-lg text-popover-foreground">
+                  Starting price before applying location, rural, and premium multipliers. This sets your baseline pricing strategy.
+                </div>
+              </div>
+            </div>
           </div>
           <Input type="number" min="0" step="0.0001" value={state.pricePerCallBase} onChange={e => onStateChange({
           pricePerCallBase: Math.max(0, parseFloat(e.target.value) || 0)
@@ -158,8 +181,14 @@ export function ControlsSection({
       {/* Rural Offset Section */}
       <div className="mt-xl pt-lg border-t border-border">
         <div className="flex items-center gap-md">
-          <div className="text-help text-core mb-md">Rural offset presets</div>
-          <InfoTooltip content="Distance from city center adds pricing premium due to higher infrastructure costs and lower competition." />
+          <div className="text-help text-core mb-md group relative cursor-help hover:text-blue-500 transition-colors">
+            Rural offset presets
+            <div className="absolute bottom-full left-0 mb-2 w-96 p-4 bg-popover border border-border rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+              <div className="text-lg text-popover-foreground">
+                Distance from city center adds pricing premium due to higher infrastructure costs and lower competition.
+              </div>
+            </div>
+          </div>
         </div>
         <div className="grid grid-cols-6 gap-xs">
           {[0, 50, 100, 200, 300, 500].map(km => {
