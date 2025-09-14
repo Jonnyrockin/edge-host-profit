@@ -73,7 +73,7 @@ export function ControlsSection({
       <div className="text-headline font-semibold text-foreground">Deployment Scenario</div>
       <div className="text-help text-core mb-panel-gap">Configure your edge AI deployment parameters and operational assumptions.</div>
       
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-lg items-center">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-lg items-center">
         <div>
           <div className="flex items-center gap-md">
             <div className="text-help text-core mb-md">City</div>
@@ -91,7 +91,7 @@ export function ControlsSection({
           </Select>
         </div>
         
-        <div>
+        <div className="col-span-2">
           <div className="flex items-center gap-md">
             <div className="text-help text-core mb-md">Utilization (%)</div>
             <InfoTooltip content="Base utilization percentage gets multiplied by scenario factor. Conservative=0.9×, Median=1.0×, Optimistic=1.1×" />
@@ -100,13 +100,13 @@ export function ControlsSection({
             <Slider value={[Math.round(state.util * 100)]} onValueChange={([value]) => onStateChange({
             util: value / 100
           })} min={10} max={100} step={1} className="flex-1" />
-            <div className="text-core text-foreground font-semibold">
+            <div className="text-core text-foreground font-semibold whitespace-nowrap">
               {Math.round(state.util * 100)}% → {Math.round(calculations.util * 100)}%
             </div>
           </div>
         </div>
         
-        <div className="ml-5">
+        <div>
           <div className="flex items-center gap-md">
             <div className="text-help text-core mb-md">Calls per Job</div>
             <InfoTooltip content="How many AI inference calls each customer job requires. Complex tasks need more calls." />
