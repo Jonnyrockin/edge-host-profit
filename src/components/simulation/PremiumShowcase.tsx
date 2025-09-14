@@ -17,9 +17,9 @@ export function PremiumShowcase({
 }: PremiumShowcaseProps) {
   const selectedProvider = getCloudProviderById(state.baselineProvider || 'market-average');
   const rawBaselinePrice = selectedProvider?.pricePerCall || 0.00076;
-  const baselinePrice = 0.0002; // Fixed baseline price from reference image
-  const multiplier = 2.70; // Fixed multiplier from reference image
-  const edgePrice = 0.000410; // Fixed edge price from reference image
+  const baselinePrice = state.baselineCloudPrice || 0.0002;
+  const multiplier = state.premiumMultiplier || 2.70;
+  const edgePrice = baselinePrice * multiplier;
   const handleProviderChange = (providerId: string) => {
     const provider = getCloudProviderById(providerId);
     if (provider) {
@@ -109,23 +109,32 @@ export function PremiumShowcase({
               <span className="text-xs text-muted-foreground">1.0x</span>
               <span className="text-xs text-muted-foreground">5.0x</span>
             </div>
-            <Slider value={[multiplier]} onValueChange={handleMultiplierChange} min={1} max={5} step={0.1} className="w-full" />
+            <Slider 
+              value={[multiplier]} 
+              onValueChange={handleMultiplierChange} 
+              min={1} 
+              max={5} 
+              step={0.1} 
+              className="w-full" 
+            />
           </div>
           {/* Industry Labels */}
-          <div className="flex justify-between text-xs mb-4">
-            {industries.slice(0, 6).map(industry => <Tooltip key={industry.name}>
+          <div className="flex justify-between text-sm mb-4">
+            {industries.slice(0, 6).map(industry => (
+              <Tooltip key={industry.name}>
                 <TooltipTrigger asChild>
                   <div className="text-center cursor-pointer hover:text-primary transition-colors">
                     <div className="font-medium text-foreground">{industry.name}</div>
                   </div>
                 </TooltipTrigger>
-                <TooltipContent side="top" className="max-w-xs p-3">
+                <TooltipContent side="top" className="max-w-xs p-3 bg-popover border border-border">
                   <div className="text-sm">
                     <div className="font-medium mb-1">{industry.description}</div>
                     <div className="text-muted-foreground">{industry.subtitle}</div>
                   </div>
                 </TooltipContent>
-              </Tooltip>)}
+              </Tooltip>
+            ))}
           </div>
         </div>
 
@@ -140,7 +149,7 @@ export function PremiumShowcase({
             
             <div className="text-center mb-4">
               <div className="text-4xl font-bold text-white mb-2">
-                $0.0002
+                ${baselinePrice.toFixed(6)}
               </div>
               <div className="text-sm text-muted-foreground">per call</div>
               <div className="text-xs text-muted-foreground mt-1">
@@ -151,16 +160,18 @@ export function PremiumShowcase({
             {/* Provider Selection */}
             <div className="space-y-3">
               <Select value={state.baselineProvider || 'market-average'} onValueChange={handleProviderChange}>
-                <SelectTrigger className="w-full">
+                <SelectTrigger className="w-full h-12">
                   <SelectValue />
                 </SelectTrigger>
-                <SelectContent className="z-50">
-                  {CLOUD_BASELINES.map(provider => <SelectItem key={provider.id} value={provider.id}>
+                <SelectContent className="z-50 bg-popover border border-border">
+                  {CLOUD_BASELINES.map(provider => (
+                    <SelectItem key={provider.id} value={provider.id}>
                       <div className="flex flex-col items-start">
                         <div className="font-medium">{provider.name}</div>
                         <div className="text-xs text-muted-foreground">{provider.description}</div>
                       </div>
-                    </SelectItem>)}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
             </div>
@@ -175,7 +186,7 @@ export function PremiumShowcase({
             
             <div className="text-center mb-4">
               <div className="text-4xl font-bold text-white mb-2">
-                $0.000410
+                ${edgePrice.toFixed(6)}
               </div>
               <div className="text-sm text-muted-foreground">per call</div>
               <div className="text-xs text-muted-foreground mt-1">
@@ -185,7 +196,7 @@ export function PremiumShowcase({
 
             <div className="bg-primary/20 border border-primary/30 rounded-none p-4 text-center">
               <div className="text-lg font-bold text-white">
-                +170% Premium
+                +{Math.round(((edgePrice - baselinePrice) / baselinePrice) * 100)}% Premium
               </div>
               <div className="text-sm text-muted-foreground">
                 vs. baseline cloud
