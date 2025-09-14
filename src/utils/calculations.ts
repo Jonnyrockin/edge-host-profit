@@ -96,7 +96,15 @@ export function calculateRevenue(state: SimulationState): CalculationResult {
     1.5  // hybridOverhead
   );
   
-  const monthlyCalls = Math.round(inventoryIPS * util * state.secondsInMonth * dynamicCallsPerJob);
+  // Calculate monthly calls incorporating jobs per day
+  const dailyInferenceCalls = (state.jobsPerDay || 1000) * dynamicCallsPerJob;
+  const monthlyCallsFromJobs = dailyInferenceCalls * 30; // 30 days in month
+  
+  // Traditional calculation for comparison/fallback
+  const monthlyCallsFromUtil = Math.round(inventoryIPS * util * state.secondsInMonth * dynamicCallsPerJob);
+  
+  // Use the more realistic jobs-based calculation
+  const monthlyCalls = Math.min(monthlyCallsFromJobs, monthlyCallsFromUtil);
 
   // OPEX calculation
   const fibreCost = state.linkRate ? getSelectedFibreRate(state) : (state.costs.fibre || 0);
