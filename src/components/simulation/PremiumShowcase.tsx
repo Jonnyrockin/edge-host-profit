@@ -3,10 +3,13 @@ import { Slider } from '../ui/slider';
 import { Input } from '../ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
 import { Button } from '../ui/button';
-import { ExternalLink } from 'lucide-react';
+import { ExternalLink, RefreshCw } from 'lucide-react';
 import { CLOUD_BASELINES, getCloudProviderById } from '../../data/cloud-baselines';
 import { InfoTooltip } from '../ui/info-tooltip';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../ui/tooltip';
+import { PricingRefreshService } from '../../services/pricing-refresh';
+import { useState } from 'react';
+import { useToast } from '../ui/use-toast';
 interface PremiumShowcaseProps {
   state: SimulationState;
   onStateChange: (updates: Partial<SimulationState>) => void;
@@ -15,6 +18,9 @@ export function PremiumShowcase({
   state,
   onStateChange
 }: PremiumShowcaseProps) {
+  const [isRefreshing, setIsRefreshing] = useState(false);
+  const { toast } = useToast();
+  
   const selectedProvider = getCloudProviderById(state.baselineProvider || 'market-average');
   const rawBaselinePrice = selectedProvider?.pricePerCall || 0.00076;
   const baselinePrice = state.baselineCloudPrice || 0.0002;
@@ -48,6 +54,45 @@ export function PremiumShowcase({
       pricePerCallBase: newEdgePrice,
       baselineProvider: 'custom' // Mark as custom when manually edited
     });
+  };
+
+  const handleRefreshPricing = async () => {
+    setIsRefreshing(true);
+    try {
+      const updates = await PricingRefreshService.refreshCloudPricing();
+      const successCount = updates.filter(u => u.success).length;
+      
+      if (successCount > 0) {
+        // Update the current provider's price if it was refreshed
+        const currentUpdate = updates.find(u => u.providerId === state.baselineProvider && u.success);
+        if (currentUpdate) {
+          const newEdgePrice = currentUpdate.newPrice * multiplier;
+          onStateChange({
+            baselineCloudPrice: currentUpdate.newPrice,
+            pricePerCallBase: newEdgePrice
+          });
+        }
+        
+        toast({
+          title: "Pricing Updated",
+          description: `Successfully refreshed ${successCount} provider${successCount > 1 ? 's' : ''}`,
+        });
+      } else {
+        toast({
+          title: "Refresh Failed",
+          description: "Unable to update pricing from web sources",
+          variant: "destructive",
+        });
+      }
+    } catch (error) {
+      toast({
+        title: "Refresh Error",
+        description: "Failed to connect to pricing sources",
+        variant: "destructive",
+      });
+    } finally {
+      setIsRefreshing(false);
+    }
   };
   const industries = [{
     name: "RETAIL",
@@ -142,9 +187,20 @@ export function PremiumShowcase({
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Baseline Cloud Compute */}
           <div className="bg-background border border-border rounded-none p-6">
-            <div className="text-sm text-muted-foreground mb-4 text-center">
-              Baseline Cloud Compute ??
-              <InfoTooltip content="Baseline pricing gathered from major cloud providers (AWS, Azure, GCP, OpenAI). We apply an 80% forward projection discount based on industry analysis showing compute prices drop 80% year-over-year due to hardware advances and competition." />
+            <div className="flex items-center justify-between mb-4">
+              <div className="text-sm text-muted-foreground text-center flex-1">
+                Baseline Cloud Compute ??
+                <InfoTooltip content="Baseline pricing gathered from major cloud providers (AWS, Azure, GCP, OpenAI). We apply an 80% forward projection discount based on industry analysis showing compute prices drop 80% year-over-year due to hardware advances and competition." />
+              </div>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={handleRefreshPricing}
+                disabled={isRefreshing}
+                className="ml-2"
+              >
+                <RefreshCw className={`h-4 w-4 ${isRefreshing ? 'animate-spin' : ''}`} />
+              </Button>
             </div>
             
             <div className="text-center mb-4">
