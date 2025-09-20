@@ -9,27 +9,9 @@ import { SimulationState, CalculationResult } from '../../types/simulation';
 import { CITY_OPTIONS, SCENARIOS } from '../../data/constants';
 import { ruralFactorFromKm } from '../../utils/calculations';
 
-// Job scenario mapping for realistic use cases
-const JOB_SCENARIOS = {
-  healthcare: 200,    // Medical imaging, diagnostics
-  agtech: 800,        // Crop monitoring, precision agriculture
-  ecommerce: 1500,    // Product recommendations, fraud detection
-  video: 600,         // Real-time video analytics, security
-  finance: 1200,      // Risk assessment, algorithmic trading
-  manufacturing: 400, // Quality control, predictive maintenance
-};
-
-function getJobScenario(jobsPerDay: number): string {
-  const scenarios = Object.entries(JOB_SCENARIOS);
-  const closest = scenarios.reduce((prev, curr) => 
-    Math.abs(curr[1] - jobsPerDay) < Math.abs(prev[1] - jobsPerDay) ? curr : prev
-  );
-  return Math.abs(closest[1] - jobsPerDay) <= 50 ? closest[0] : 'custom';
-}
-
-function getJobsForScenario(scenario: string): number {
-  return JOB_SCENARIOS[scenario as keyof typeof JOB_SCENARIOS] || 1000;
-}
+// Jobs per day and calls per job are now calculated using:
+// Jobs Per Day = Total Inference Calls per Day / Average Calls per Job
+// Average Calls Per Job = Total Inference Calls / Total Jobs
 import { InfoTooltip } from '../ui/info-tooltip';
 interface ControlsSectionProps {
   state: SimulationState;
@@ -73,7 +55,7 @@ export function ControlsSection({
       <div className="text-headline font-semibold text-foreground">Deployment Scenario</div>
       <div className="text-help text-core mb-panel-gap">Configure your edge AI deployment parameters and operational assumptions.</div>
       
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-lg items-center">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-lg items-center">
         <div>
           <div className="flex items-center gap-md">
             <div className="text-help text-core mb-md">City</div>
@@ -130,35 +112,17 @@ export function ControlsSection({
         <div>
           <div className="flex items-center gap-md">
             <div className="text-help text-core mb-md group relative cursor-help hover:text-blue-500 transition-colors">
-              Jobs per Day
+              Total Daily Calls
               <div className="absolute bottom-full left-0 mb-2 w-96 p-4 bg-popover border border-border rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
                 <div className="text-lg text-popover-foreground">
-                  Number of customer jobs processed daily. Realistic scenarios: E-commerce (500-2000), Video Analytics (100-800), Healthcare (50-300), AgTech (200-1500).
+                  Total inference calls processed per day. Jobs per Day = Total Daily Calls / Calls per Job. Range: thousands (SMB) to millions (enterprise).
                 </div>
               </div>
             </div>
           </div>
-          <div className="flex items-center gap-xs">
-            <Input type="number" min="1" step="100" value={state.jobsPerDay || 1000} onChange={e => onStateChange({
-            jobsPerDay: Math.max(1, parseInt(e.target.value) || 1000)
-          })} className="w-20 font-mono bg-input border-input-border" />
-            <Select value={getJobScenario(state.jobsPerDay || 1000)} onValueChange={value => onStateChange({
-            jobsPerDay: getJobsForScenario(value)
-          })}>
-              <SelectTrigger className="w-32 bg-input border-input-border text-xs">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="healthcare">Healthcare (200)</SelectItem>
-                <SelectItem value="agtech">AgTech (800)</SelectItem>
-                <SelectItem value="ecommerce">E-commerce (1500)</SelectItem>
-                <SelectItem value="video">Video Analytics (600)</SelectItem>
-                <SelectItem value="finance">Finance (1200)</SelectItem>
-                <SelectItem value="manufacturing">Manufacturing (400)</SelectItem>
-                <SelectItem value="custom">Custom</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
+          <Input type="number" min="1" step="1000" value={state.callsPerDay} onChange={e => onStateChange({
+          callsPerDay: Math.max(1, parseInt(e.target.value) || 10000)
+        })} className="w-28 font-mono bg-input border-input-border" />
         </div>
         
         <div className="ml-5">

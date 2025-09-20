@@ -147,9 +147,9 @@ export function calculateRevenue(state: SimulationState): CalculationResult {
     1.5  // hybridOverhead
   );
   
-  // Calculate monthly calls incorporating jobs per day
-  const dailyInferenceCalls = (state.jobsPerDay || 1000) * dynamicCallsPerJob;
-  const monthlyCallsFromJobs = dailyInferenceCalls * 30; // 30 days in month
+  // Calculate monthly calls using new formula: Jobs Per Day = Total Daily Calls / Calls Per Job
+  const jobsPerDay = Math.round(state.callsPerDay / dynamicCallsPerJob);
+  const monthlyCallsFromJobs = state.callsPerDay * 30; // 30 days in month
   
   // Traditional calculation for comparison/fallback
   const monthlyCallsFromUtil = Math.round(inventoryIPS * util * state.secondsInMonth * dynamicCallsPerJob);
@@ -210,6 +210,7 @@ export function calculateRevenue(state: SimulationState): CalculationResult {
     fibreCost,
     energyCost,
     adjustedUtil,
-    dynamicCallsPerJob
+    dynamicCallsPerJob,
+    jobsPerDay
   };
 }
