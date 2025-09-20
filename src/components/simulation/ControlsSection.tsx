@@ -109,7 +109,7 @@ export function ControlsSection({
         })} className="w-20 font-mono bg-input border-input-border" />
         </div>
         
-        <div>
+        <div className="-ml-5">
           <div className="flex items-center gap-md">
             <div className="text-help text-core mb-md group relative cursor-help hover:text-blue-500 transition-colors">
               Total Daily Calls
@@ -124,8 +124,10 @@ export function ControlsSection({
           callsPerDay: Math.max(1, parseInt(e.target.value) || 10000)
         })} className="w-28 font-mono bg-input border-input-border" />
         </div>
-        
-        <div>
+      </div>
+      
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-lg items-center mt-lg">
+        <div className="-ml-4">
           <div className="flex items-center gap-md">
             <div className="text-help text-core mb-md group relative cursor-help hover:text-blue-500 transition-colors">
               Current Jobs/Day
@@ -144,7 +146,7 @@ export function ControlsSection({
           </div>
         </div>
         
-        <div className="ml-5">
+        <div>
           <div className="flex items-center gap-md">
             <div className="text-help text-core mb-md group relative cursor-help hover:text-blue-500 transition-colors">
               Base price per call ($)
