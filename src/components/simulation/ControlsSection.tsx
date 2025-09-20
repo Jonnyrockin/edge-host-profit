@@ -55,7 +55,7 @@ export function ControlsSection({
       <div className="text-headline font-semibold text-foreground">Deployment Scenario</div>
       <div className="text-help text-core mb-panel-gap">Configure your edge AI deployment parameters and operational assumptions.</div>
       
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-lg items-center">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-lg items-center">
         <div>
           <div className="flex items-center gap-md">
             <div className="text-help text-core mb-md">City</div>
@@ -123,6 +123,25 @@ export function ControlsSection({
           <Input type="number" min="1" step="1000" value={state.callsPerDay} onChange={e => onStateChange({
           callsPerDay: Math.max(1, parseInt(e.target.value) || 10000)
         })} className="w-28 font-mono bg-input border-input-border" />
+        </div>
+        
+        <div>
+          <div className="flex items-center gap-md">
+            <div className="text-help text-core mb-md group relative cursor-help hover:text-blue-500 transition-colors">
+              Current Jobs/Day
+              <div className="absolute bottom-full left-0 mb-2 w-96 p-4 bg-popover border border-border rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                <div className="text-lg text-popover-foreground">
+                  Jobs per day calculated using: IPS × Utilization × 86,400 sec ÷ Calls per Job. This matches the 'Current' value in the Math panel.
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="text-headline font-semibold text-number-blue bg-muted/30 rounded px-2 py-1 w-28 text-center">
+            {(() => {
+              const scenario = SCENARIOS[state.scenario as keyof typeof SCENARIOS] || SCENARIOS.Median;
+              return Math.round(calculations.inventoryIPS * state.util * scenario.util * 86400 / state.callsPerJob).toLocaleString();
+            })()}
+          </div>
         </div>
         
         <div className="ml-5">
