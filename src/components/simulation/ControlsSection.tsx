@@ -8,10 +8,6 @@ import { Upload } from 'lucide-react';
 import { SimulationState, CalculationResult } from '../../types/simulation';
 import { CITY_OPTIONS, SCENARIOS } from '../../data/constants';
 import { ruralFactorFromKm } from '../../utils/calculations';
-
-// Jobs per day and calls per job are now calculated using:
-// Jobs Per Day = Total Inference Calls per Day / Average Calls per Job
-// Average Calls Per Job = Total Inference Calls / Total Jobs
 import { InfoTooltip } from '../ui/info-tooltip';
 interface ControlsSectionProps {
   state: SimulationState;
@@ -55,10 +51,11 @@ export function ControlsSection({
       <div className="text-headline font-semibold text-foreground">Deployment Scenario</div>
       <div className="text-help text-core mb-panel-gap">Configure your edge AI deployment parameters and operational assumptions.</div>
       
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-lg items-center">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-lg items-center">
         <div>
           <div className="flex items-center gap-md">
             <div className="text-help text-core mb-md">City</div>
+            <InfoTooltip content="Geographic location affects baseline pricing, available connectivity providers, and energy costs." />
           </div>
           <Select value={state.city} onValueChange={value => onStateChange({
           city: value
@@ -72,90 +69,45 @@ export function ControlsSection({
           </Select>
         </div>
         
-        <div className="col-span-2 ml-7">
+        <div>
           <div className="flex items-center gap-md">
-            <div className="text-help text-core mb-md group relative cursor-help hover:text-blue-500 transition-colors">
-              Utilization (%)
-              <div className="absolute bottom-full left-0 mb-2 w-96 p-4 bg-popover border border-border rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
-                <div className="text-lg text-popover-foreground">
-                  Base utilization percentage gets multiplied by scenario factor. Conservative=0.9×, Median=1.0×, Optimistic=1.1×
-                </div>
-              </div>
-            </div>
+            <div className="text-help text-core mb-md">Utilization (%)</div>
+            <InfoTooltip content="Base utilization percentage gets multiplied by scenario factor. Conservative=0.9×, Median=1.0×, Optimistic=1.1×" />
           </div>
           <div className="flex items-center gap-md">
             <Slider value={[Math.round(state.util * 100)]} onValueChange={([value]) => onStateChange({
             util: value / 100
           })} min={10} max={100} step={1} className="flex-1" />
-            <div className="text-core text-foreground font-semibold whitespace-nowrap">
+            <div className="text-core text-foreground font-semibold">
               {Math.round(state.util * 100)}% → {Math.round(calculations.util * 100)}%
             </div>
           </div>
         </div>
         
-        <div className="ml-15">
+        <div className="ml-5">
           <div className="flex items-center gap-md">
-            <div className="text-help text-core mb-md group relative cursor-help hover:text-blue-500 transition-colors">
-              Calls per Job
-              <div className="absolute bottom-full left-0 mb-2 w-96 p-4 bg-popover border border-border rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
-                <div className="text-lg text-popover-foreground">
-                  How many AI inference calls each customer job requires. Complex tasks need more calls.
-                </div>
-              </div>
-            </div>
+            <div className="text-help text-core mb-md">Calls per Job</div>
+            <InfoTooltip content="How many AI inference calls each customer job requires. Complex tasks need more calls." />
           </div>
           <Input type="number" min="1" step="1" value={state.callsPerJob} onChange={e => onStateChange({
           callsPerJob: Math.max(1, parseInt(e.target.value) || 1)
         })} className="w-20 font-mono bg-input border-input-border" />
         </div>
         
-        <div className="-ml-5">
+        <div>
           <div className="flex items-center gap-md">
-            <div className="text-help text-core mb-md group relative cursor-help hover:text-blue-500 transition-colors">
-              Total Daily Calls
-              <div className="absolute bottom-full left-0 mb-2 w-96 p-4 bg-popover border border-border rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
-                <div className="text-lg text-popover-foreground">
-                  Total inference calls processed per day. Jobs per Day = Total Daily Calls / Calls per Job. Range: thousands (SMB) to millions (enterprise).
-                </div>
-              </div>
-            </div>
+            <div className="text-help text-core mb-md">Calls per Day</div>
+            <InfoTooltip content="Total AI inference calls processed per day across all jobs and customers." />
           </div>
-          <Input type="number" min="1" step="1000" value={state.callsPerDay} onChange={e => onStateChange({
-          callsPerDay: Math.max(1, parseInt(e.target.value) || 10000)
-        })} className="w-28 font-mono bg-input border-input-border" />
-        </div>
-      </div>
-      
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-lg items-center mt-lg">
-        <div className="-ml-4">
-          <div className="flex items-center gap-md">
-            <div className="text-help text-core mb-md group relative cursor-help hover:text-blue-500 transition-colors">
-              Current Jobs/Day
-              <div className="absolute bottom-full left-0 mb-2 w-96 p-4 bg-popover border border-border rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
-                <div className="text-lg text-popover-foreground">
-                  Jobs per day calculated using: IPS × Utilization × 86,400 sec ÷ Calls per Job. This matches the 'Current' value in the Math panel.
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="text-headline font-semibold text-number-blue bg-muted/30 rounded px-2 py-1 w-28 text-center">
-            {(() => {
-              const scenario = SCENARIOS[state.scenario as keyof typeof SCENARIOS] || SCENARIOS.Median;
-              return Math.round(calculations.inventoryIPS * state.util * scenario.util * 86400 / state.callsPerJob).toLocaleString();
-            })()}
-          </div>
+          <Input type="number" min="1" step="1000" value={state.callsPerDay || 50000} onChange={e => onStateChange({
+          callsPerDay: Math.max(1, parseInt(e.target.value) || 50000)
+        })} className="w-24 font-mono bg-input border-input-border" />
         </div>
         
         <div>
           <div className="flex items-center gap-md">
-            <div className="text-help text-core mb-md group relative cursor-help hover:text-blue-500 transition-colors">
-              Base price per call ($)
-              <div className="absolute bottom-full left-0 mb-2 w-96 p-4 bg-popover border border-border rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
-                <div className="text-lg text-popover-foreground">
-                  Starting price before applying location, rural, and premium multipliers. This sets your baseline pricing strategy.
-                </div>
-              </div>
-            </div>
+            <div className="text-help text-core mb-md">Base price per call ($)</div>
+            <InfoTooltip content="Starting price before applying location, rural, and premium multipliers. This sets your baseline pricing strategy." />
           </div>
           <Input type="number" min="0" step="0.0001" value={state.pricePerCallBase} onChange={e => onStateChange({
           pricePerCallBase: Math.max(0, parseFloat(e.target.value) || 0)
@@ -166,14 +118,8 @@ export function ControlsSection({
       {/* Rural Offset Section */}
       <div className="mt-xl pt-lg border-t border-border">
         <div className="flex items-center gap-md">
-          <div className="text-help text-core mb-md group relative cursor-help hover:text-blue-500 transition-colors">
-            Rural offset presets
-            <div className="absolute bottom-full left-0 mb-2 w-96 p-4 bg-popover border border-border rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
-              <div className="text-lg text-popover-foreground">
-                Distance from city center adds pricing premium due to higher infrastructure costs and lower competition.
-              </div>
-            </div>
-          </div>
+          <div className="text-help text-core mb-md">Rural offset presets</div>
+          <InfoTooltip content="Distance from city center adds pricing premium due to higher infrastructure costs and lower competition." />
         </div>
         <div className="grid grid-cols-6 gap-xs">
           {[0, 50, 100, 200, 300, 500].map(km => {

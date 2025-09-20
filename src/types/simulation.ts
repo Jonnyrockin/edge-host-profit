@@ -33,6 +33,7 @@ export interface SimulationState {
   util: number;
   callsPerJob: number;
   callsPerDay: number;
+  jobsPerDay: number;
   secondsInMonth: number;
   pricePerCallBase: number;
   devices: Device[];
@@ -70,7 +71,6 @@ export interface CalculationResult {
   energyCost: number;
   adjustedUtil: number;
   dynamicCallsPerJob: number;
-  jobsPerDay: number;
 }
 
 export interface Provider {

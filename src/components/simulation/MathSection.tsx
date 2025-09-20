@@ -35,17 +35,8 @@ export function MathSection({
         </div>
         
         <div className="mt-lg">Monthly Calls</div>
-        <div className="ml-4 text-xs text-muted-foreground mb-2">
-          Jobs/Day = Total Daily Calls ÷ Calls/Job = <span className="text-number-blue">{state.callsPerDay.toLocaleString()}</span> ÷ <span className="text-number-blue">{calculations.dynamicCallsPerJob.toFixed(1)}</span> = <span className="text-number-blue">{calculations.jobsPerDay}</span>
-        </div>
         <div className="ml-4">
-          Jobs/day(<span className="text-number-blue">{calculations.jobsPerDay}</span>) × Calls/job(<span className="text-number-blue">{calculations.dynamicCallsPerJob.toFixed(1)}</span>) × Days(30) = <span className="text-number-blue">{(calculations.jobsPerDay * calculations.dynamicCallsPerJob * 30).toLocaleString()}</span>
-        </div>
-        <div className="ml-4 text-xs text-muted-foreground mt-1">
-          Alternative: IPS(<span className="text-number-blue">{calculations.inventoryIPS}</span>) × Util(<span className="text-number-blue">{calculations.util.toFixed(3)}</span>) × Seconds(<span className="text-number-blue">{state.secondsInMonth}</span>) × Calls/job(<span className="text-number-blue">{calculations.dynamicCallsPerJob.toFixed(1)}</span>) = <span className="text-number-blue">{Math.round(calculations.inventoryIPS * calculations.util * state.secondsInMonth * calculations.dynamicCallsPerJob).toLocaleString()}</span>
-        </div>
-        <div className="ml-4 text-xs text-muted-foreground">
-          <strong>Final (min of both):</strong> <span className="text-number-blue">{calculations.monthlyCalls.toLocaleString()}</span>
+          IPS(<span className="text-number-blue">{calculations.inventoryIPS}</span>) × Calls/job(<span className="text-number-blue">{state.callsPerJob}</span>) × Util(<span className="text-number-blue">{(state.util * scenario.util).toFixed(2)}</span>) × Seconds(<span className="text-number-blue">{state.secondsInMonth}</span>) = <span className="text-number-blue">{calculations.monthlyCalls.toLocaleString()}</span>
         </div>
         
         <div className="mt-lg">Gross Revenue (Monthly)</div>

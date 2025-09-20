@@ -10,7 +10,7 @@ import { PresetsSection } from '../components/simulation/PresetsSection';
 import { PremiumShowcase } from '../components/simulation/PremiumShowcase';
 import { CallToAction } from '../components/simulation/CallToAction';
 import { PlatformRevenuePanel } from '../components/simulation/PlatformRevenuePanel';
-
+import { JobsPerDayPanel } from '../components/simulation/JobsPerDayPanel';
 import { ESGPanel } from '../components/simulation/ESGPanel';
 
 const Index = () => {
@@ -35,8 +35,8 @@ const Index = () => {
 
         {/* Main Layout Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 mb-6">
-          {/* Deployment Scenario - Full width */}
-          <div className="lg:col-span-4">
+          {/* Deployment Scenario - 3/4 width */}
+          <div className="lg:col-span-3">
             <ControlsSection
               state={state}
               calculations={calculations}
@@ -44,19 +44,24 @@ const Index = () => {
               onResetToPreset={resetToPreset}
             />
           </div>
+
+          {/* Host Profile - 1/4 width at the end */}
+          <div className="lg:col-span-1">
+            <PresetsSection 
+              state={state}
+              onApplyPreset={applyPreset}
+            />
+          </div>
         </div>
 
-        {/* Host Profile and ESG Panel - Side by side */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-          <PresetsSection 
-            state={state}
-            onApplyPreset={applyPreset}
-          />
-          <ESGPanel state={state} onStateChange={updateState} />
-        </div>
+        {/* ESG Panel */}
+        <ESGPanel state={state} onStateChange={updateState} />
 
         {/* Platform Revenue Panel */}
         <PlatformRevenuePanel />
+
+        {/* Jobs Per Day Panel */}
+        <JobsPerDayPanel state={state} onStateChange={updateState} />
 
         {/* Premium Positioning Showcase */}
         <PremiumShowcase state={state} onStateChange={updateState} />

@@ -1,67 +1,6 @@
 import { SimulationState, CalculationResult, Device } from '../types/simulation';
 import { SCENARIOS, FIBRE_PROVIDERS, ENERGY_PROVIDERS } from '../data/constants';
 
-// Industry multipliers for pricing
-const INDUSTRY_MULTIPLIERS = {
-  retail: 1.2,
-  healthcare: 1.5, 
-  financial: 1.7,
-  'sports/media': 1.4,
-  generic: 1.0
-} as const;
-
-function getCallPrice({
-  base_price,   // minimum price per inference call (USD)
-  latency_ms,   // measured latency in ms
-  esg_cert,     // boolean: true if node ESG certified
-  industry,     // workload type: 'retail', 'healthcare', etc.
-  platform_fee, // platform fee as percent (e.g. 0.25 for 25%)
-  opex_monthly, // sum fixed monthly OPEX ($)
-  utilization,  // percent node utilization (0-1)
-  job_volume    // number of inference calls per month
-}: {
-  base_price: number;
-  latency_ms: number;
-  esg_cert: boolean;
-  industry: keyof typeof INDUSTRY_MULTIPLIERS;
-  platform_fee: number;
-  opex_monthly: number;
-  utilization: number;
-  job_volume: number;
-}) {
-  // Multiplier for latency and industry
-  let latencyMultiplier = latency_ms <= 20 ? 1.7 :
-                         latency_ms <= 50 ? 1.2 : 1.0;
-
-  let industryMultiplier = INDUSTRY_MULTIPLIERS[industry] || 1.0;
-
-  let esgPremium = esg_cert ? 1.15 : 1.0;
-
-  // Final price per call
-  let pricePerCall = base_price * latencyMultiplier * industryMultiplier * esgPremium;
-
-  // Monthly gross revenue
-  let grossRevenue = pricePerCall * job_volume * utilization;
-
-  // Platform fee deduction
-  let platformShare = grossRevenue * platform_fee;
-  let hostShare     = grossRevenue - platformShare;
-
-  // Net revenue after OPEX
-  let netHostRevenue = hostShare - opex_monthly;
-
-  return {
-    pricePerCall: pricePerCall,
-    grossRevenue: grossRevenue,
-    netHostRevenue: netHostRevenue,
-    breakdown: {
-      platformShare,
-      hostShare,
-      opex_monthly
-    }
-  }
-}
-
 export function calculateDynamicCallsPerJob(
   currentYear: number = new Date().getFullYear(),
   baseCalls: number = 1.5,
@@ -80,16 +19,8 @@ export function calculateDynamicCallsPerJob(
   return Math.min(calls, 20); // Conservative cap for realism
 }
 
-export function getSelectedFibreRate(state: SimulationState): number {
-  const providers = FIBRE_PROVIDERS[state.city] || [];
-  const provider = providers.find(p => p.name === state.connectivityProvider) || providers[0];
-  return provider?.rate || 0;
-}
-
-export function getSelectedEnergyRate(state: SimulationState): number {
-  const providers = ENERGY_PROVIDERS[state.city] || [];
-  const provider = providers.find(p => p.name === state.energyProvider) || providers[0];
-  return provider?.rate || 0.12; // Default fallback rate per kWh
+export function cityPriceFactor(city: string): number {
+  return 1.00; // Base factor for all cities
 }
 
 export function edgeTierMultiplier(devices: Device[]): number {
@@ -113,12 +44,16 @@ export function ruralFactorFromKm(km: number): number {
   return 4.0;                      // Deep rural/agriculture - 4x premium
 }
 
-// Helper function to convert latency tier to milliseconds
-function getLatencyMs(latencyTier: string): number {
-  if (latencyTier.includes('<25') || latencyTier.includes('< 25')) return 20;
-  if (latencyTier.includes('25–50') || latencyTier.includes('25-50')) return 35;
-  if (latencyTier.includes('50–100') || latencyTier.includes('50-100')) return 75;
-  return 100; // Default for unknown tiers
+export function getSelectedFibreRate(state: SimulationState): number {
+  const providers = FIBRE_PROVIDERS[state.city] || [];
+  const provider = providers.find(p => p.name === state.connectivityProvider) || providers[0];
+  return provider?.rate || 0;
+}
+
+export function getSelectedEnergyRate(state: SimulationState): number {
+  const providers = ENERGY_PROVIDERS[state.city] || [];
+  const provider = providers.find(p => p.name === state.energyProvider) || providers[0];
+  return provider?.rate || 0.12; // Default fallback rate per kWh
 }
 
 export function calculateRevenue(state: SimulationState): CalculationResult {
@@ -136,6 +71,20 @@ export function calculateRevenue(state: SimulationState): CalculationResult {
   const inventoryIPS = state.devices.reduce((sum, device) => sum + (device.ips || 0) * (device.qty || 1), 0);
   const devicesRows = state.devices.map(d => `${d.qty}× ${d.label}`).join(', ');
 
+  // Price factor calculation - use pricePerCallBase directly as it already includes premium
+  const esgMultiplier = state.esgEnabled ? 1.1 : 1.0;
+  
+  // Calculate rural multiplier correctly (state.rural is already the multiplier, not percentage)
+  const ruralMultiplier = 1 + (state.rural || 0);
+  
+  const locationMultiplier = cityPriceFactor(state.city) * 
+                           edgeTierMultiplier(state.devices) * 
+                           scenario.price * 
+                           ruralMultiplier * 
+                           (1 + (state.greenUplift || 0) / 100);
+  
+  const pricePerCall = state.pricePerCallBase * locationMultiplier * esgMultiplier;
+  
   // Calculate dynamic calls per job based on agentic AI evolution
   const currentYear = new Date().getFullYear();
   const dynamicCallsPerJob = state.callsPerJob > 0 ? state.callsPerJob : calculateDynamicCallsPerJob(
@@ -147,15 +96,7 @@ export function calculateRevenue(state: SimulationState): CalculationResult {
     1.5  // hybridOverhead
   );
   
-  // Calculate monthly calls using new formula: Jobs Per Day = Total Daily Calls / Calls Per Job
-  const jobsPerDay = Math.round(state.callsPerDay / dynamicCallsPerJob);
-  const monthlyCallsFromJobs = state.callsPerDay * 30; // 30 days in month
-  
-  // Traditional calculation for comparison/fallback
-  const monthlyCallsFromUtil = Math.round(inventoryIPS * util * state.secondsInMonth * dynamicCallsPerJob);
-  
-  // Use the more realistic jobs-based calculation
-  const monthlyCalls = Math.min(monthlyCallsFromJobs, monthlyCallsFromUtil);
+  const monthlyCalls = Math.round(inventoryIPS * util * state.secondsInMonth * dynamicCallsPerJob);
 
   // OPEX calculation
   const fibreCost = state.linkRate ? getSelectedFibreRate(state) : (state.costs.fibre || 0);
@@ -176,41 +117,23 @@ export function calculateRevenue(state: SimulationState): CalculationResult {
                (state.costs.legal || 0) +
                fibreCost;
 
-  // Get average latency from devices for pricing
-  const avgLatency = state.devices.length > 0 
-    ? state.devices.reduce((sum, device) => sum + getLatencyMs(device.latencyTier), 0) / state.devices.length
-    : 100;
-
-  // Apply rural multiplier to base price
-  const ruralMultiplier = 1 + (state.rural || 0);
-  const basePrice = state.pricePerCallBase * ruralMultiplier * scenario.price;
-
-  // Use the new getCallPrice function
-  const pricing = getCallPrice({
-    base_price: basePrice,
-    latency_ms: avgLatency,
-    esg_cert: state.esgEnabled,
-    industry: 'generic', // Default industry, could be made configurable
-    platform_fee: 0.25,
-    opex_monthly: opex,
-    utilization: util,
-    job_volume: monthlyCalls
-  });
+  const gross = monthlyCalls * pricePerCall;
+  const platformFee = gross * 0.25;
+  const cashNet = gross - platformFee - opex;
 
   return {
     util,
     inventoryIPS,
     devicesRows,
-    pricePerCall: pricing.pricePerCall,
+    pricePerCall,
     monthlyCalls,
-    gross: pricing.grossRevenue,
-    platformFee: pricing.breakdown.platformShare,
+    gross,
+    platformFee,
     opex,
-    cashNet: pricing.netHostRevenue,
+    cashNet,
     fibreCost,
     energyCost,
     adjustedUtil,
-    dynamicCallsPerJob,
-    jobsPerDay
+    dynamicCallsPerJob
   };
 }

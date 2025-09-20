@@ -3,13 +3,10 @@ import { Slider } from '../ui/slider';
 import { Input } from '../ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
 import { Button } from '../ui/button';
-import { ExternalLink, RefreshCw } from 'lucide-react';
+import { ExternalLink } from 'lucide-react';
 import { CLOUD_BASELINES, getCloudProviderById } from '../../data/cloud-baselines';
 import { InfoTooltip } from '../ui/info-tooltip';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../ui/tooltip';
-import { PricingRefreshService } from '../../services/pricing-refresh';
-import { useState } from 'react';
-import { useToast } from '../ui/use-toast';
 interface PremiumShowcaseProps {
   state: SimulationState;
   onStateChange: (updates: Partial<SimulationState>) => void;
@@ -18,13 +15,10 @@ export function PremiumShowcase({
   state,
   onStateChange
 }: PremiumShowcaseProps) {
-  const [isRefreshing, setIsRefreshing] = useState(false);
-  const { toast } = useToast();
-  
   const selectedProvider = getCloudProviderById(state.baselineProvider || 'market-average');
   const rawBaselinePrice = selectedProvider?.pricePerCall || 0.00076;
-  const baselinePrice = state.baselineCloudPrice || 0.0002;
-  const multiplier = state.premiumMultiplier || 2.70;
+  const baselinePrice = rawBaselinePrice * 0.2; // Apply 80% discount (20% of original)
+  const multiplier = state.premiumMultiplier || 8;
   const edgePrice = baselinePrice * multiplier;
   const handleProviderChange = (providerId: string) => {
     const provider = getCloudProviderById(providerId);
@@ -54,45 +48,6 @@ export function PremiumShowcase({
       pricePerCallBase: newEdgePrice,
       baselineProvider: 'custom' // Mark as custom when manually edited
     });
-  };
-
-  const handleRefreshPricing = async () => {
-    setIsRefreshing(true);
-    try {
-      const updates = await PricingRefreshService.refreshCloudPricing();
-      const successCount = updates.filter(u => u.success).length;
-      
-      if (successCount > 0) {
-        // Update the current provider's price if it was refreshed
-        const currentUpdate = updates.find(u => u.providerId === state.baselineProvider && u.success);
-        if (currentUpdate) {
-          const newEdgePrice = currentUpdate.newPrice * multiplier;
-          onStateChange({
-            baselineCloudPrice: currentUpdate.newPrice,
-            pricePerCallBase: newEdgePrice
-          });
-        }
-        
-        toast({
-          title: "Pricing Updated",
-          description: `Successfully refreshed ${successCount} provider${successCount > 1 ? 's' : ''}`,
-        });
-      } else {
-        toast({
-          title: "Refresh Failed",
-          description: "Unable to update pricing from web sources",
-          variant: "destructive",
-        });
-      }
-    } catch (error) {
-      toast({
-        title: "Refresh Error",
-        description: "Failed to connect to pricing sources",
-        variant: "destructive",
-      });
-    } finally {
-      setIsRefreshing(false);
-    }
   };
   const industries = [{
     name: "RETAIL",
@@ -154,32 +109,23 @@ export function PremiumShowcase({
               <span className="text-xs text-muted-foreground">1.0x</span>
               <span className="text-xs text-muted-foreground">5.0x</span>
             </div>
-            <Slider 
-              value={[multiplier]} 
-              onValueChange={handleMultiplierChange} 
-              min={1} 
-              max={5} 
-              step={0.1} 
-              className="w-full" 
-            />
+            <Slider value={[multiplier]} onValueChange={handleMultiplierChange} min={1} max={5} step={0.1} className="w-full" />
           </div>
           {/* Industry Labels */}
-          <div className="flex justify-between text-sm mb-4">
-            {industries.slice(0, 6).map(industry => (
-              <Tooltip key={industry.name}>
+          <div className="flex justify-between text-xs mb-4">
+            {industries.slice(0, 6).map(industry => <Tooltip key={industry.name}>
                 <TooltipTrigger asChild>
                   <div className="text-center cursor-pointer hover:text-primary transition-colors">
                     <div className="font-medium text-foreground">{industry.name}</div>
                   </div>
                 </TooltipTrigger>
-                <TooltipContent side="top" className="max-w-xs p-3 bg-popover border border-border">
+                <TooltipContent side="top" className="max-w-xs p-3">
                   <div className="text-sm">
                     <div className="font-medium mb-1">{industry.description}</div>
                     <div className="text-muted-foreground">{industry.subtitle}</div>
                   </div>
                 </TooltipContent>
-              </Tooltip>
-            ))}
+              </Tooltip>)}
           </div>
         </div>
 
@@ -187,47 +133,34 @@ export function PremiumShowcase({
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Baseline Cloud Compute */}
           <div className="bg-background border border-border rounded-none p-6">
-            <div className="flex items-center justify-between mb-4">
-              <div className="text-sm text-muted-foreground text-center flex-1">
-                Baseline Cloud Compute ??
-                <InfoTooltip content="Baseline pricing gathered from major cloud providers (AWS, Azure, GCP, OpenAI). We apply an 80% forward projection discount based on industry analysis showing compute prices drop 80% year-over-year due to hardware advances and competition." />
-              </div>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={handleRefreshPricing}
-                disabled={isRefreshing}
-                className="ml-2"
-              >
-                <RefreshCw className={`h-4 w-4 ${isRefreshing ? 'animate-spin' : ''}`} />
-              </Button>
+            <div className="text-sm text-muted-foreground mb-4 text-center">
+              Baseline Cloud Compute ??
+              <InfoTooltip content="Baseline pricing gathered from major cloud providers (AWS, Azure, GCP, OpenAI). We apply an 80% forward projection discount based on industry analysis showing compute prices drop 80% year-over-year due to hardware advances and competition." />
             </div>
             
             <div className="text-center mb-4">
               <div className="text-4xl font-bold text-white mb-2">
-                ${baselinePrice.toFixed(6)}
+                ${baselinePrice.toFixed(4)}
               </div>
               <div className="text-sm text-muted-foreground">per call</div>
               <div className="text-xs text-muted-foreground mt-1">
-                $200 per million tokens
+                ${(baselinePrice * 1000000).toFixed(0)} per million tokens
               </div>
             </div>
             
             {/* Provider Selection */}
             <div className="space-y-3">
               <Select value={state.baselineProvider || 'market-average'} onValueChange={handleProviderChange}>
-                <SelectTrigger className="w-full h-12">
+                <SelectTrigger className="w-full">
                   <SelectValue />
                 </SelectTrigger>
-                <SelectContent className="z-50 bg-popover border border-border">
-                  {CLOUD_BASELINES.map(provider => (
-                    <SelectItem key={provider.id} value={provider.id}>
+                <SelectContent className="z-50">
+                  {CLOUD_BASELINES.map(provider => <SelectItem key={provider.id} value={provider.id}>
                       <div className="flex flex-col items-start">
                         <div className="font-medium">{provider.name}</div>
                         <div className="text-xs text-muted-foreground">{provider.description}</div>
                       </div>
-                    </SelectItem>
-                  ))}
+                    </SelectItem>)}
                 </SelectContent>
               </Select>
             </div>
@@ -246,13 +179,13 @@ export function PremiumShowcase({
               </div>
               <div className="text-sm text-muted-foreground">per call</div>
               <div className="text-xs text-muted-foreground mt-1">
-                $410 per million tokens
+                ${(edgePrice * 1000000).toFixed(0)} per million tokens
               </div>
             </div>
 
             <div className="bg-primary/20 border border-primary/30 rounded-none p-4 text-center">
               <div className="text-lg font-bold text-white">
-                +{Math.round(((edgePrice - baselinePrice) / baselinePrice) * 100)}% Premium
+                +{((multiplier - 1) * 100).toFixed(0)}% Premium
               </div>
               <div className="text-sm text-muted-foreground">
                 vs. baseline cloud
