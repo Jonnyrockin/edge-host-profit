@@ -67,7 +67,7 @@ export function KPIDashboard({
         <div className="bg-kpi-card-bg border border-kpi-card-border rounded-lg p-panel-gap min-h-[86px] flex flex-col text-center">
           <div className="text-black text-lg mb-1">Cash Net (per/mo) <InfoTooltip content="Final monthly profit after platform fees and operational expenses. Your actual take-home revenue." /></div>
           <div className="text-2xl font-semibold text-black">${Math.round(calculations.cashNet).toLocaleString()}</div>
-          <div className="text-black text-lg">after 25% platform<br/>fee + OPEX</div>
+          <div className="text-black text-lg">after 25% platform fee + OPEX</div>
         </div>
       </div>
     </div>;

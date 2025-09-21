@@ -42,6 +42,8 @@ const Index = () => {
               onResetToPreset={resetToPreset}
             />
             
+            <PremiumShowcase state={state} onStateChange={updateState} />
+            
             <CostsSection
               state={state}
               calculations={calculations}
@@ -51,13 +53,6 @@ const Index = () => {
             <ESGPanel state={state} onStateChange={updateState} />
             
             <PlatformRevenuePanel />
-            
-            <PresetsSection 
-              state={state}
-              onApplyPreset={applyPreset}
-            />
-            
-            <PremiumShowcase state={state} onStateChange={updateState} />
             
             <MathSection
               state={state}
