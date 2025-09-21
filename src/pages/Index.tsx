@@ -7,7 +7,7 @@ import { CostsSection } from '../components/simulation/CostsSection';
 import { MathSection } from '../components/simulation/MathSection';
 import { PresetsSection } from '../components/simulation/PresetsSection';
 import { PremiumShowcase } from '../components/simulation/PremiumShowcase';
-import { CallToAction } from '../components/simulation/CallToAction';
+
 import { PlatformRevenuePanel } from '../components/simulation/PlatformRevenuePanel';
 
 import { ESGPanel } from '../components/simulation/ESGPanel';
@@ -27,16 +27,14 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <div className="w-full p-4">
-        <CallToAction />
-        
         {/* KPI Dashboard - Sticky Header */}
         <KPIDashboard state={state} calculations={calculations} onStateChange={updateState} />
 
-        {/* Main 34" Wide Screen Layout - With Scrolling */}
+        {/* Main 2-Column Layout - 50% each */}
         <div className="grid grid-cols-12 gap-4">
           
-          {/* Left Column - Controls & Device Stack */}
-          <div className="col-span-4 flex flex-col gap-4">
+          {/* Left Column - All Controls & Panels */}
+          <div className="col-span-6 flex flex-col gap-4">
             <ControlsSection
               state={state}
               calculations={calculations}
@@ -44,18 +42,6 @@ const Index = () => {
               onResetToPreset={resetToPreset}
             />
             
-            <DeviceStack
-              devices={state.devices}
-              state={state}
-              calculations={calculations}
-              onAddDevice={addDevice}
-              onUpdateDevice={updateDevice}
-              onRemoveDevice={removeDevice}
-            />
-          </div>
-
-          {/* Center Column - Costs, ESG, Platform Revenue */}
-          <div className="col-span-4 flex flex-col gap-4">
             <CostsSection
               state={state}
               calculations={calculations}
@@ -65,10 +51,7 @@ const Index = () => {
             <ESGPanel state={state} onStateChange={updateState} />
             
             <PlatformRevenuePanel />
-          </div>
-
-          {/* Right Column - Presets, Premium, Math */}
-          <div className="col-span-4 flex flex-col gap-4">
+            
             <PresetsSection 
               state={state}
               onApplyPreset={applyPreset}
@@ -79,6 +62,18 @@ const Index = () => {
             <MathSection
               state={state}
               calculations={calculations}
+            />
+          </div>
+
+          {/* Right Column - Device Stack */}
+          <div className="col-span-6 flex flex-col gap-4">
+            <DeviceStack
+              devices={state.devices}
+              state={state}
+              calculations={calculations}
+              onAddDevice={addDevice}
+              onUpdateDevice={updateDevice}
+              onRemoveDevice={removeDevice}
             />
           </div>
         </div>
