@@ -7,6 +7,7 @@ import { CostsSection } from '../components/simulation/CostsSection';
 import { MathSection } from '../components/simulation/MathSection';
 import { PresetsSection } from '../components/simulation/PresetsSection';
 import { PremiumShowcase } from '../components/simulation/PremiumShowcase';
+import { CallToAction } from '../components/simulation/CallToAction';
 
 import { PlatformRevenuePanel } from '../components/simulation/PlatformRevenuePanel';
 
@@ -27,7 +28,10 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <div className="w-full p-4">
-        {/* KPI Dashboard - Sticky Header */}
+        {/* CallToAction - Scrolls away */}
+        <CallToAction />
+        
+        {/* KPI Dashboard - Becomes sticky when CallToAction scrolls out */}
         <KPIDashboard state={state} calculations={calculations} onStateChange={updateState} />
 
         {/* Main 2-Column Layout - 50% each */}
