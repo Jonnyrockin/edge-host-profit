@@ -35,39 +35,39 @@ export function KPIDashboard({
       
       <div className="grid grid-cols-6 gap-panel-gap mt-lg">
         <div className="bg-kpi-card-bg border border-kpi-card-border rounded-lg p-panel-gap min-h-[86px] flex flex-col text-center">
-          <div className="text-black text-core mb-1">Util (effective) <InfoTooltip content="Adjusted utilization incorporating lightweight VLM impacts: on-device shift (20% conservative) and ecosystem growth (20% annually). This reflects real demand accounting for edge AI evolution." /></div>
-          <div className="text-headline font-semibold text-black">{Math.round(calculations.adjustedUtil * 100)}%</div>
-          <div className="text-black text-core">VLM-adjusted</div>
+          <div className="text-black text-lg mb-1">Util (effective) <InfoTooltip content="Adjusted utilization incorporating lightweight VLM impacts: on-device shift (20% conservative) and ecosystem growth (20% annually). This reflects real demand accounting for edge AI evolution." /></div>
+          <div className="text-2xl font-semibold text-black">{Math.round(calculations.adjustedUtil * 100)}%</div>
+          <div className="text-black text-lg">VLM-adjusted</div>
         </div>
         
         <div className="bg-kpi-card-bg border border-kpi-card-border rounded-lg p-panel-gap min-h-[86px] flex flex-col text-center">
-          <div className="text-black text-core mb-1">Monthly Calls <InfoTooltip content="Total AI inference calls per month calculated from: Device IPS × Calls per job × Utilization rate × Seconds in month. Higher utilization means more calls and revenue." /></div>
-          <div className="text-headline font-semibold text-black">{calculations.monthlyCalls.toLocaleString()}</div>
-          <div className="text-black text-core">{state.devices.length} device rows</div>
+          <div className="text-black text-lg mb-1">Monthly Calls <InfoTooltip content="Total AI inference calls per month calculated from: Device IPS × Calls per job × Utilization rate × Seconds in month. Higher utilization means more calls and revenue." /></div>
+          <div className="text-2xl font-semibold text-black">{calculations.monthlyCalls.toLocaleString()}</div>
+          <div className="text-black text-lg">{state.devices.length} device rows</div>
         </div>
         
         <div className="bg-kpi-card-bg border border-kpi-card-border rounded-lg p-panel-gap min-h-[86px] flex flex-col text-center">
-          <div className="text-black text-core mb-1">Calls/Job (dynamic) <InfoTooltip content="Dynamic calls per job based on agentic AI evolution. Accounts for multi-step reasoning, tool-calling, and hybrid edge/cloud workflows. Increases with AI complexity over time." /></div>
-          <div className="text-headline font-semibold text-black">{calculations.dynamicCallsPerJob.toFixed(1)}</div>
-          <div className="text-black text-core">Agentic evolution</div>
+          <div className="text-black text-lg mb-1">Calls/Job (dynamic) <InfoTooltip content="Dynamic calls per job based on agentic AI evolution. Accounts for multi-step reasoning, tool-calling, and hybrid edge/cloud workflows. Increases with AI complexity over time." /></div>
+          <div className="text-2xl font-semibold text-black">{calculations.dynamicCallsPerJob.toFixed(1)}</div>
+          <div className="text-black text-lg">Agentic evolution</div>
         </div>
         
         <div className="bg-kpi-card-bg border border-kpi-card-border rounded-lg p-panel-gap min-h-[86px] flex flex-col text-center">
-          <div className="text-black text-core mb-1">Gross (per/mo) <InfoTooltip content={`Monthly gross revenue before fees and expenses. Calculated as: ${calculations.monthlyCalls.toLocaleString()} calls × $${calculations.pricePerCall.toFixed(6)} per call = $${Math.round(calculations.gross).toLocaleString()}`} /></div>
-          <div className="text-headline font-semibold text-black">${Math.round(calculations.gross).toLocaleString()}</div>
-          <div className="text-black text-core">${calculations.pricePerCall.toFixed(6)}/call</div>
+          <div className="text-black text-lg mb-1">Gross (per/mo) <InfoTooltip content={`Monthly gross revenue before fees and expenses. Calculated as: ${calculations.monthlyCalls.toLocaleString()} calls × $${calculations.pricePerCall.toFixed(6)} per call = $${Math.round(calculations.gross).toLocaleString()}`} /></div>
+          <div className="text-2xl font-semibold text-black">${Math.round(calculations.gross).toLocaleString()}</div>
+          <div className="text-black text-lg">${calculations.pricePerCall.toFixed(6)}/call</div>
         </div>
         
         <div className="bg-kpi-card-bg border border-kpi-card-border rounded-lg p-panel-gap min-h-[86px] flex flex-col text-center">
-          <div className="text-black text-core mb-1">Platform fee (25%)</div>
-          <div className="text-headline font-semibold text-black">${Math.round(calculations.platformFee).toLocaleString()}</div>
-          <div className="text-black text-core">fee = 25% of gross</div>
+          <div className="text-black text-lg mb-1">Platform fee (25%)</div>
+          <div className="text-2xl font-semibold text-black">${Math.round(calculations.platformFee).toLocaleString()}</div>
+          <div className="text-black text-lg">fee = 25% of gross</div>
         </div>
         
         <div className="bg-kpi-card-bg border border-kpi-card-border rounded-lg p-panel-gap min-h-[86px] flex flex-col text-center">
-          <div className="text-black text-core mb-1">Cash Net (per/mo) <InfoTooltip content="Final monthly profit after platform fees and operational expenses. Your actual take-home revenue." /></div>
-          <div className="text-headline font-semibold text-black">${Math.round(calculations.cashNet).toLocaleString()}</div>
-          <div className="text-black text-core">after 25% platform<br/>fee + OPEX</div>
+          <div className="text-black text-lg mb-1">Cash Net (per/mo) <InfoTooltip content="Final monthly profit after platform fees and operational expenses. Your actual take-home revenue." /></div>
+          <div className="text-2xl font-semibold text-black">${Math.round(calculations.cashNet).toLocaleString()}</div>
+          <div className="text-black text-lg">after 25% platform<br/>fee + OPEX</div>
         </div>
       </div>
     </div>;
