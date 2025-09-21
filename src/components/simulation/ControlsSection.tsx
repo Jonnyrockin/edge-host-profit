@@ -51,8 +51,8 @@ export function ControlsSection({
       <div className="text-headline font-semibold text-foreground">Deployment Scenario</div>
       <div className="text-help text-core mb-panel-gap">Configure your edge AI deployment parameters and operational assumptions.</div>
       
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-lg items-center">
-        <div>
+      <div className="flex gap-lg items-end">
+        <div className="flex-1">
           <div className="flex items-center gap-md">
             <div className="text-help text-core mb-md">City</div>
             <InfoTooltip content="Geographic location affects baseline pricing, available connectivity providers, and energy costs." />
@@ -69,7 +69,7 @@ export function ControlsSection({
           </Select>
         </div>
         
-        <div>
+        <div className="flex-[3]">
           <div className="flex items-center gap-md">
             <div className="text-help text-core mb-md">Utilization (%)</div>
             <InfoTooltip content="Base utilization percentage gets multiplied by scenario factor. Conservative=0.9×, Median=1.0×, Optimistic=1.1×" />
@@ -78,40 +78,42 @@ export function ControlsSection({
             <Slider value={[Math.round(state.util * 100)]} onValueChange={([value]) => onStateChange({
             util: value / 100
           })} min={10} max={100} step={1} className="flex-1" />
-            <div className="text-core text-foreground font-semibold">
+            <div className="text-core text-foreground font-semibold min-w-[100px]">
               {Math.round(state.util * 100)}% → {Math.round(calculations.util * 100)}%
             </div>
           </div>
         </div>
         
-        <div className="ml-5">
-          <div className="flex items-center gap-md">
-            <div className="text-help text-core mb-md">Calls per Job</div>
-            <InfoTooltip content="How many AI inference calls each customer job requires. Complex tasks need more calls." />
+        <div className="flex gap-sm">
+          <div>
+            <div className="flex items-center gap-md">
+              <div className="text-help text-core mb-md">Calls per Job</div>
+              <InfoTooltip content="How many AI inference calls each customer job requires. Complex tasks need more calls." />
+            </div>
+            <Input type="number" min="1" step="1" value={state.callsPerJob} onChange={e => onStateChange({
+            callsPerJob: Math.max(1, parseInt(e.target.value) || 1)
+          })} className="w-20 font-mono bg-input border-input-border" />
           </div>
-          <Input type="number" min="1" step="1" value={state.callsPerJob} onChange={e => onStateChange({
-          callsPerJob: Math.max(1, parseInt(e.target.value) || 1)
-        })} className="w-20 font-mono bg-input border-input-border" />
-        </div>
-        
-        <div>
-          <div className="flex items-center gap-md">
-            <div className="text-help text-core mb-md">Calls per Day</div>
-            <InfoTooltip content="Total AI inference calls processed per day across all jobs and customers." />
+          
+          <div>
+            <div className="flex items-center gap-md">
+              <div className="text-help text-core mb-md">Calls per Day</div>
+              <InfoTooltip content="Total AI inference calls processed per day across all jobs and customers." />
+            </div>
+            <Input type="number" min="1" step="1000" value={state.callsPerDay || 50000} onChange={e => onStateChange({
+            callsPerDay: Math.max(1, parseInt(e.target.value) || 50000)
+          })} className="w-24 font-mono bg-input border-input-border" />
           </div>
-          <Input type="number" min="1" step="1000" value={state.callsPerDay || 50000} onChange={e => onStateChange({
-          callsPerDay: Math.max(1, parseInt(e.target.value) || 50000)
-        })} className="w-24 font-mono bg-input border-input-border" />
-        </div>
-        
-        <div>
-          <div className="flex items-center gap-md">
-            <div className="text-help text-core mb-md">Base price per call ($)</div>
-            <InfoTooltip content="Starting price before applying location, rural, and premium multipliers. This sets your baseline pricing strategy." />
+          
+          <div>
+            <div className="flex items-center gap-md">
+              <div className="text-help text-core mb-md">Base price per call ($)</div>
+              <InfoTooltip content="Starting price before applying location, rural, and premium multipliers. This sets your baseline pricing strategy." />
+            </div>
+            <Input type="number" min="0" step="0.0001" value={state.pricePerCallBase} onChange={e => onStateChange({
+            pricePerCallBase: Math.max(0, parseFloat(e.target.value) || 0)
+          })} className="w-28 font-mono bg-input border-input-border" />
           </div>
-          <Input type="number" min="0" step="0.0001" value={state.pricePerCallBase} onChange={e => onStateChange({
-          pricePerCallBase: Math.max(0, parseFloat(e.target.value) || 0)
-        })} className="w-28 font-mono bg-input border-input-border" />
         </div>
       </div>
       
