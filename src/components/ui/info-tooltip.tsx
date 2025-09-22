@@ -11,11 +11,11 @@ export function InfoTooltip({ content, className = "" }: InfoTooltipProps) {
     <TooltipProvider>
       <Tooltip>
         <TooltipTrigger asChild>
-          <span className={`cursor-help font-bold text-yellow-500 ${className}`}>
+          <span className={`cursor-pointer font-bold text-yellow-500 ${className}`}>
             (i)
           </span>
         </TooltipTrigger>
-        <TooltipContent className="max-w-md p-5">
+        <TooltipContent className="max-w-md p-5 shadow-[0_20px_60px_-10px] shadow-black/10">
           <p className="text-lg">{content}</p>
         </TooltipContent>
       </Tooltip>
