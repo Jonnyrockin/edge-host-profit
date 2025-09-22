@@ -54,9 +54,20 @@ export function CostsSection({
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Connectivity */}
             <div>
-              <div className="flex items-center gap-2">
-                <div className="font-semibold text-foreground mb-3">Connectivity</div>
-                <InfoTooltip content="Internet connectivity affects operational costs and service quality. Fibre providers vary significantly in price and reliability." />
+              <div className="flex items-center justify-between mb-3">
+                <div className="flex items-center gap-2">
+                  <div className="font-semibold text-foreground">Connectivity</div>
+                  <InfoTooltip content="Internet connectivity affects operational costs and service quality. Fibre providers vary significantly in price and reliability." />
+                </div>
+                <div className="flex items-center gap-2">
+                  <Checkbox id="link-rate" checked={state.linkRate} onCheckedChange={checked => onStateChange({
+                  linkRate: !!checked
+                })} />
+                  <label htmlFor="link-rate" className="text-help text-core">
+                    Link cost to provider rate
+                  </label>
+                  <InfoTooltip content="Automatically update fibre cost when provider changes. Uncheck to set custom pricing independent of provider selection." />
+                </div>
               </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3 items-end">
               <div>
@@ -79,20 +90,11 @@ export function CostsSection({
               </div>
               <div>
                 <div className="flex items-center gap-2">
-                  <div className="text-help text-core mb-2">Fibre (per/mo)</div>
+                  <div className="text-help text-core mb-2">$Fibre (per/mo)</div>
                   <InfoTooltip content="Monthly fibre internet cost. Higher speeds cost more but enable better service quality and more concurrent users." />
                 </div>
                 <Input type="number" min="0" step="10" value={state.costs.fibre} onChange={e => handleCostChange('fibre', parseFloat(e.target.value) || 0)} className="w-30 font-mono bg-input border-input-border" />
               </div>
-            </div>
-            <div className="flex items-center gap-2 mt-3">
-              <Checkbox id="link-rate" checked={state.linkRate} onCheckedChange={checked => onStateChange({
-              linkRate: !!checked
-            })} />
-              <label htmlFor="link-rate" className="text-help text-core">
-                Link cost to provider rate
-              </label>
-              <InfoTooltip content="Automatically update fibre cost when provider changes. Uncheck to set custom pricing independent of provider selection." />
             </div>
           </div>
 
@@ -111,7 +113,7 @@ export function CostsSection({
                 <Select value={state.energyProvider} onValueChange={value => onStateChange({
                 energyProvider: value
               })}>
-                  <SelectTrigger className="bg-input border-input-border">
+                  <SelectTrigger className="bg-input border-input-border w-[140%]">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent className="z-50">
@@ -128,7 +130,7 @@ export function CostsSection({
               </div>
               <div>
                 <div className="flex items-center gap-md">
-                  <div className="text-help text-core mb-md">Renewable Energy (%)</div>
+                  <div className="text-help text-core mb-md">Renewable Energy %</div>
                   <InfoTooltip content="Percentage of your energy from renewable sources. Higher percentage improves ESG credentials but may increase operational costs." />
                 </div>
                 <Input type="number" min="0" step="1" value={state.greenUplift} onChange={e => onStateChange({
@@ -137,7 +139,7 @@ export function CostsSection({
               </div>
               <div>
                 <div className="flex items-center gap-md">
-                  <div className="text-help text-core mb-md">Green Pricing Premium (%)</div>
+                  <div className="text-help text-core mb-md">Green Premium %</div>
                   <InfoTooltip content="Price markup you charge customers for sustainable computing. This is your revenue premium for being environmentally responsible." />
                 </div>
                 <Input type="number" min="0" step="1" value={state.greenPremium} onChange={e => onStateChange({
@@ -153,41 +155,41 @@ export function CostsSection({
       <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-x-6 gap-y-3 items-end mt-6">
         <div>
           <div className="flex items-center gap-2">
-            <div className="text-help text-core mb-2">Energy (per/mo)</div>
+            <div className="text-help text-core mb-2">$Energy (per/mo)</div>
             <InfoTooltip content="Monthly electricity costs for powering servers and cooling systems. Scales with device count and utilization." />
           </div>
           <Input type="number" min="0" step="50" value={state.costs.energy} onChange={e => handleCostChange('energy', parseFloat(e.target.value) || 0)} className="w-30 font-mono bg-input border-input-border px-[10px] mx-0" />
         </div>
         <div>
           <div className="flex items-center gap-2">
-            <div className="text-help text-core mb-2">Rent (per/mo)</div>
+            <div className="text-help text-core mb-2">$Rent (per/mo)</div>
             <InfoTooltip content="Facility rental costs including data center space, cooling, and physical security. Fixed monthly expense." />
           </div>
           <Input type="number" min="0" step="50" value={state.costs.rent} onChange={e => handleCostChange('rent', parseFloat(e.target.value) || 0)} className="w-30 font-mono bg-input border-input-border" />
         </div>
         <div>
-          <div className="text-help text-core mb-2">Staff (per/mo)</div>
+          <div className="text-help text-core mb-2">$Staff (per/mo)</div>
           <Input type="number" min="0" step="50" value={state.costs.staff} onChange={e => handleCostChange('staff', parseFloat(e.target.value) || 0)} className="w-30 font-mono bg-input border-input-border" />
         </div>
         <div>
-          <div className="text-help text-core mb-2">Misc (per/mo)</div>
+          <div className="text-help text-core mb-2">$Misc (per/mo)</div>
           <Input type="number" min="0" step="25" value={state.costs.misc} onChange={e => handleCostChange('misc', parseFloat(e.target.value) || 0)} className="w-30 font-mono bg-input border-input-border" />
         </div>
         <div>
-          <div className="text-help text-core mb-2">Insurance (per/mo)</div>
+          <div className="text-help text-core mb-2">$Insurance (per/mo)</div>
           <Input type="number" min="0" step="25" value={state.costs.insurance} onChange={e => handleCostChange('insurance', parseFloat(e.target.value) || 0)} className="w-30 font-mono bg-input border-input-border" />
         </div>
         <div>
-          <div className="text-help text-core mb-2">Maintenance (per/mo)</div>
+          <div className="text-help text-core mb-2">$Maintenance (per/mo)</div>
           <Input type="number" min="0" step="25" value={state.costs.maintenance} onChange={e => handleCostChange('maintenance', parseFloat(e.target.value) || 0)} className="w-30 font-mono bg-input border-input-border" />
         </div>
         <div>
-          <div className="text-help text-core mb-2">Licenses / SaaS (per/mo)</div>
+          <div className="text-help text-core mb-2">$Licenses / SaaS (per/mo)</div>
           <Input type="number" min="0" step="25" value={state.costs.licenses} onChange={e => handleCostChange('licenses', parseFloat(e.target.value) || 0)} className="w-30 font-mono bg-input border-input-border" />
         </div>
         <div>
           <div className="flex items-center gap-2">
-            <div className="text-help text-core mb-2">Legal Fees (per/mo)</div>
+            <div className="text-help text-core mb-2">$Legal Fees (per/mo)</div>
             <InfoTooltip content="Legal and compliance costs including contracts, regulatory compliance, and intellectual property protection." />
           </div>
           <Input type="number" min="0" step="25" value={state.costs.legal} onChange={e => handleCostChange('legal', parseFloat(e.target.value) || 0)} className="w-30 font-mono bg-input border-input-border" />
