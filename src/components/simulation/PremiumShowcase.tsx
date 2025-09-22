@@ -112,15 +112,15 @@ export function PremiumShowcase({
             <Slider value={[multiplier]} onValueChange={handleMultiplierChange} min={1} max={5} step={0.1} className="w-full" />
           </div>
           {/* Industry Labels */}
-          <div className="flex justify-between text-xs mb-4">
+          <div className="flex justify-between text-xl mb-4">
             {industries.slice(0, 6).map(industry => <Tooltip key={industry.name}>
                 <TooltipTrigger asChild>
                   <div className="text-center cursor-pointer hover:text-primary transition-colors">
                     <div className="font-medium text-foreground">{industry.name}</div>
                   </div>
                 </TooltipTrigger>
-                <TooltipContent side="top" className="max-w-xs p-3">
-                  <div className="text-sm">
+                <TooltipContent side="top" className="max-w-xs p-5">
+                  <div className="text-lg">
                     <div className="font-medium mb-1">{industry.description}</div>
                     <div className="text-muted-foreground">{industry.subtitle}</div>
                   </div>
@@ -134,7 +134,7 @@ export function PremiumShowcase({
           {/* Baseline Cloud Compute */}
           <div className="bg-background border border-border rounded-none p-6">
             <div className="text-sm text-muted-foreground mb-4 text-center">
-              Baseline Cloud Compute ??
+              Baseline Cloud Compute 
               <InfoTooltip content="Baseline pricing gathered from major cloud providers (AWS, Azure, GCP, OpenAI). We apply an 80% forward projection discount based on industry analysis showing compute prices drop 80% year-over-year due to hardware advances and competition." />
             </div>
             
@@ -169,7 +169,7 @@ export function PremiumShowcase({
           {/* Edge AI Premium Price */}
           <div className="bg-background border border-border rounded-none p-6">
             <div className="text-sm text-muted-foreground mb-4 text-center">
-              Edge AI Premium Price ??
+              Edge AI Premium Price 
               <InfoTooltip content="Final edge inference price after applying premium multiplier to the discounted baseline. This reflects the value of ultra-low latency, local processing, and premium service quality." />
             </div>
             
