@@ -38,10 +38,11 @@ export function DeviceStack({
       {/* Device Table */}
       <div className="mb-4">
         {/* Header Row */}
-        <div className="grid grid-cols-8 gap-4 items-center py-2 text-help border-b border-border">
-          <div className="text-left text-core">Device</div>
+        <div className="grid grid-cols-9 gap-3 items-center py-2 text-help border-b border-border">
           <div className="text-left text-core">Vendor</div>
-          <div className="text-left text-core flex items-center gap-1 mx-[59px]">
+          <div className="text-left text-core">Function</div>
+          <div className="text-left text-core">Device</div>
+          <div className="text-left text-core flex items-center gap-1">
             Latency
             <InfoTooltip content="Response time categories: <25ms (ultra-fast), 25-50ms (fast), 50-100ms (standard). Lower latency commands premium pricing." />
           </div>
@@ -54,41 +55,50 @@ export function DeviceStack({
             <InfoTooltip content="Approximate unit price in USD. Higher-end systems cost more but deliver superior performance and capabilities." />
           </div>
           <div className="text-right text-core flex items-center gap-1 justify-end">
-            IPS / row
+            IPS
             <InfoTooltip content="Inferences Per Second - maximum AI processing capacity per device. Higher IPS = more concurrent jobs." />
           </div>
           <div className="text-center text-core flex items-center gap-1 justify-center">
-            Qty
+            #Units
             <InfoTooltip content="Number of identical devices. More devices = higher total capacity and redundancy." />
           </div>
-          <div className="text-center text-core font-medium">Actions</div>
+          <div className="text-center text-core font-medium">Remove</div>
         </div>
         
         {/* Device Rows */}
         {devices.length === 0 ? <div className="text-help py-4 text-center text-core">
             No devices yet. Use the catalog below.
-          </div> : [...devices].reverse().map(device => <div key={device.id} className="border border-muted rounded-md p-1 mx-0 px-px my-[10px] py-px bg-gray-800">
-              <div className="grid grid-cols-8 gap-4 items-center min-h-[22px] bg-blue-500 py-px my-0">
-                <div className="text-foreground text-core font-normal px-[7px]">{device.label}</div>
-                <div className="text-foreground text-core mx-[7px]">{device.vendor}</div>
-                <div className="text-right text-foreground text-core py-0 mx-[30px]">{device.latencyTier}</div>
-                <div className="text-right text-foreground text-core">{device.tops?.toLocaleString() || 'N/A'}</div>
-                <div className="text-right text-foreground text-core">
-                  {device.price === 0 ? 'Vizrt' : `$${(device.price / 1000).toFixed(0)}K`}
-                </div>
-                <div className="text-right text-foreground text-core">{device.ips}</div>
-                <div className="text-center mx-[24px] my-0 px-0 py-[3px]">
-                  <Input type="number" min="0" step="1" value={device.qty} onChange={e => onUpdateDevice(device.id, {
-              qty: Math.max(0, parseInt(e.target.value) || 0)
-            })} className="w-14 h-7 font-mono border-input-border text-center text-core bg-blue-400 mx-[20px]" />
-                </div>
-                <div className="text-center">
-                  <Button variant="outline" size="sm" onClick={() => onRemoveDevice(device.id)} className="h-7 w-7 p-0 border-destructive/40 mx-auto text-yellow-500 text-base bg-orange-800 hover:bg-orange-700">
-                    <Trash2 className="h-3 w-3" />
-                  </Button>
+          </div> : [...devices].reverse().map(device => {
+            const isMemoryNode = device.category === 'memory';
+            const deviceBgColor = isMemoryNode ? 'bg-blue-600' : 'bg-blue-500'; // Memory nodes 15pts darker
+            const truncatedLabel = device.label.length > 15 ? device.label.substring(0, 15) : device.label;
+            
+            return (
+              <div key={device.id} className="border border-muted rounded-md p-1 mx-0 px-px my-[10px] py-px bg-gray-800">
+                <div className={`grid grid-cols-9 gap-3 items-center min-h-[22px] ${deviceBgColor} py-px my-0`}>
+                  <div className="text-foreground text-core font-normal px-[7px]">{device.vendor}</div>
+                  <div className="text-foreground text-core">{device.category === 'memory' ? 'Memory' : 'Inference'}</div>
+                  <div className="text-foreground text-core font-normal">{truncatedLabel}</div>
+                  <div className="text-right text-foreground text-core">{device.latencyTier}</div>
+                  <div className="text-right text-foreground text-core">{device.tops?.toLocaleString() || 'N/A'}</div>
+                  <div className="text-right text-foreground text-core">
+                    {device.price === 0 ? 'CapX' : `$${(device.price / 1000).toFixed(0)}K`}
+                  </div>
+                  <div className="text-right text-foreground text-core">{device.ips}</div>
+                  <div className="text-center mx-[12px] my-0 px-0 py-[3px]">
+                    <Input type="number" min="0" step="1" value={device.qty} onChange={e => onUpdateDevice(device.id, {
+                qty: Math.max(0, parseInt(e.target.value) || 0)
+              })} className="w-14 h-7 font-mono border-input-border text-center text-core bg-blue-400 mx-[8px]" />
+                  </div>
+                  <div className="text-center">
+                    <Button variant="outline" size="sm" onClick={() => onRemoveDevice(device.id)} className="h-7 w-7 p-0 border-destructive/40 mx-auto text-yellow-500 text-base bg-orange-800 hover:bg-orange-700">
+                      <Trash2 className="h-3 w-3" />
+                    </Button>
+                  </div>
                 </div>
               </div>
-            </div>)}
+            );
+          })}
       </div>
 
       {/* Compute Power Capacity */}
@@ -168,7 +178,7 @@ export function DeviceStack({
                     </div>
                     <div className="text-right ml-3">
                       <div className="text-sm font-bold text-white">
-                        {device.price === 0 ? 'Vizrt' : `$${(device.price / 1000).toFixed(0)}K`}
+                        {device.price === 0 ? 'CapX' : `$${(device.price / 1000).toFixed(0)}K`}
                       </div>
                       <div className="text-xs text-gray-400">
                         {device.price === 0 ? 'owned' : 'per unit'}
@@ -242,7 +252,7 @@ export function DeviceStack({
                     </div>
                     <div className="text-right ml-3">
                       <div className="text-sm font-bold text-white">
-                        {device.price === 0 ? 'Vizrt' : `$${(device.price / 1000).toFixed(0)}K`}
+                        {device.price === 0 ? 'CapX' : `$${(device.price / 1000).toFixed(0)}K`}
                       </div>
                       <div className="text-xs text-gray-400">
                         {device.price === 0 ? 'owned' : 'per unit'}
