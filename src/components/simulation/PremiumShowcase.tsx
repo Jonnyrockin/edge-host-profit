@@ -112,7 +112,7 @@ export function PremiumShowcase({
             <Slider value={[multiplier]} onValueChange={handleMultiplierChange} min={1} max={5} step={0.1} className="w-full" />
           </div>
           {/* Industry Labels */}
-          <div className="flex justify-between text-xl mb-4">
+          <div className="flex justify-between text-base text-muted-foreground mb-4">
             {industries.slice(0, 6).map(industry => <Tooltip key={industry.name}>
                 <TooltipTrigger asChild>
                   <div className="text-center cursor-pointer hover:text-primary transition-colors">

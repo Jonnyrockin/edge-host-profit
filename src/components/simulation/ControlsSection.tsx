@@ -72,7 +72,7 @@ export function ControlsSection({
         <div className="flex-[3]">
           <div className="flex items-center gap-md">
             <div className="text-help text-core mb-md">Utilization (%)</div>
-            <InfoTooltip content="Base utilization percentage gets multiplied by scenario factor. Conservative=0.9×, Median=1.0×, Optimistic=1.1×" />
+            <InfoTooltip content="Utilization shows what percent of your node's computing power is busy running jobs. Higher utilization means more revenue; lower means idle time. Industry targets are 30–60% for healthy operations" />
           </div>
           <div className="flex items-center gap-md">
             <Slider value={[Math.round(state.util * 100)]} onValueChange={([value]) => onStateChange({
