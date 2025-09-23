@@ -59,7 +59,7 @@ export function KPIDashboard({
         </div>
         
         <div className="bg-kpi-card-bg border border-kpi-card-border rounded-lg p-panel-gap min-h-[86px] flex flex-col text-center">
-          <div className="text-black text-lg mb-1">Platform fee (25%)</div>
+          <div className="text-black text-lg mb-1">Platform fee (25%) <InfoTooltip content="What the Federation provides: Global network orchestration, customer acquisition and billing, technical support infrastructure, compliance and security monitoring, load balancing and traffic routing, business development partnerships, legal framework and contracts, insurance coverage, and continuous platform development and maintenance." /></div>
           <div className="text-2xl font-semibold text-black">${Math.round(calculations.platformFee).toLocaleString()}</div>
           <div className="text-black text-lg">fee = 25% of gross</div>
         </div>
