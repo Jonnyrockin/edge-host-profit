@@ -27,7 +27,7 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <div className="w-full p-4">
+      <div className="w-full p-8">
         {/* CallToAction - Scrolls away */}
         <CallToAction />
         
@@ -35,10 +35,10 @@ const Index = () => {
         <KPIDashboard state={state} calculations={calculations} onStateChange={updateState} />
 
         {/* Main 2-Column Layout - 50% each */}
-        <div className="grid grid-cols-12 gap-4">
+        <div className="grid grid-cols-12 gap-5">
           
           {/* Left Column - All Controls & Panels */}
-          <div className="col-span-6 flex flex-col gap-4">
+          <div className="col-span-6 flex flex-col gap-5">
             <ControlsSection
               state={state}
               calculations={calculations}
@@ -56,8 +56,6 @@ const Index = () => {
             
             <ESGPanel state={state} onStateChange={updateState} />
             
-            <PlatformRevenuePanel />
-            
             <MathSection
               state={state}
               calculations={calculations}
@@ -65,7 +63,7 @@ const Index = () => {
           </div>
 
           {/* Right Column - Device Stack */}
-          <div className="col-span-6 flex flex-col gap-4">
+          <div className="col-span-6 flex flex-col gap-5">
             <DeviceStack
               devices={state.devices}
               state={state}
@@ -74,6 +72,8 @@ const Index = () => {
               onUpdateDevice={updateDevice}
               onRemoveDevice={removeDevice}
             />
+            
+            <PlatformRevenuePanel />
           </div>
         </div>
       </div>

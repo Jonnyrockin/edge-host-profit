@@ -2,7 +2,7 @@ import { InfoTooltip } from '../ui/info-tooltip';
 
 export function PlatformRevenuePanel() {
   return (
-    <div className="bg-card border border-border rounded-none p-panel-padding mb-panel">
+    <div className="bg-card/75 border border-border rounded-none p-panel-padding mb-panel">
       <div className="flex items-center justify-between mb-md">
         <div className="flex items-center gap-md">
           <div className="text-headline font-semibold text-foreground">Platform Revenue Share</div>

@@ -130,12 +130,12 @@ export function CostsSection({
               </div>
               <div>
                 <div className="flex items-center gap-md">
-                  <div className="text-help text-core mb-md">Renewable Energy %</div>
+                  <div className="text-help text-core mb-md">Renewables %</div>
                   <InfoTooltip content="Percentage of your energy from renewable sources. Higher percentage improves ESG credentials but may increase operational costs." />
                 </div>
                 <Input type="number" min="0" step="1" value={state.greenUplift} onChange={e => onStateChange({
                 greenUplift: parseFloat(e.target.value) || 0
-              })} className="w-24 font-mono bg-input border-input-border" title="Percentage of energy sourced from renewables" />
+              })} className="w-24 font-mono bg-input border-input-border ml-5" title="Percentage of energy sourced from renewables" />
               </div>
               <div>
                 <div className="flex items-center gap-md">
