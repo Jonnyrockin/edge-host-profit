@@ -47,7 +47,7 @@ export function KPIDashboard({
         </div>
         
         <div className="bg-kpi-card-bg border border-kpi-card-border rounded-lg p-panel-gap min-h-[86px] flex flex-col text-center">
-          <div className="text-black text-lg mb-1">Calls/Job (dynamic) <InfoTooltip content="Dynamic calls per job based on agentic AI evolution. Accounts for multi-step reasoning, tool-calling, and hybrid edge/cloud workflows. Increases with AI complexity over time." /></div>
+          <div className="text-black text-lg mb-1">Calls/Job (dynamic) <InfoTooltip content="Each job triggers several inference calls as the AI agent solves a task, asks questions, or uses external tools. The number rises as agents become smarter and tasks grow more complex. Higher calls/job means multi-step reasoning, workflows, and richer results." /></div>
           <div className="text-2xl font-semibold text-black">{calculations.dynamicCallsPerJob.toFixed(1)}</div>
           <div className="text-black text-lg">Agentic evolution</div>
         </div>
