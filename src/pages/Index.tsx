@@ -13,6 +13,8 @@ import { PlatformRevenuePanel } from '../components/simulation/PlatformRevenuePa
 
 import { ESGPanel } from '../components/simulation/ESGPanel';
 
+import { HardwareUploadPanel } from '../components/simulation/HardwareUploadPanel';
+
 const Index = () => {
   const {
     state,
@@ -72,6 +74,8 @@ const Index = () => {
               onUpdateDevice={updateDevice}
               onRemoveDevice={removeDevice}
             />
+            
+            <HardwareUploadPanel />
             
             <PlatformRevenuePanel />
           </div>
