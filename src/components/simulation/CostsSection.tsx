@@ -53,17 +53,17 @@ export function CostsSection({
         <div className="bg-muted/20 border border-border/50 rounded-md p-panel-padding mt-2">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Connectivity */}
-            <div>
-              <div className="flex items-center justify-between mb-3">
+            <div className="relative">
+              <div className="mb-3">
                 <div className="flex items-center gap-2">
                   <div className="font-semibold text-foreground">Connectivity</div>
                   <InfoTooltip content="Internet connectivity affects operational costs and service quality. Fibre providers vary significantly in price and reliability." />
                 </div>
-                <div className="flex items-center gap-2">
+                <div className="absolute top-0 right-0 flex items-center gap-2">
                   <Checkbox id="link-rate" checked={state.linkRate} onCheckedChange={checked => onStateChange({
                   linkRate: !!checked
                 })} />
-                  <label htmlFor="link-rate" className="text-help text-core">
+                  <label htmlFor="link-rate" className="text-help text-core whitespace-nowrap">
                     Link cost to provider rate
                   </label>
                   <InfoTooltip content="Automatically update fibre cost when provider changes. Uncheck to set custom pricing independent of provider selection." />
@@ -99,7 +99,7 @@ export function CostsSection({
           </div>
 
           {/* Energy */}
-          <div>
+          <div className="-ml-4">
             <div className="flex items-center gap-2">
               <div className="font-semibold text-foreground mb-3">Energy</div>
               <InfoTooltip content="Power costs vary by provider and green energy sourcing. Energy efficiency directly impacts operational profitability." />
@@ -113,7 +113,7 @@ export function CostsSection({
                 <Select value={state.energyProvider} onValueChange={value => onStateChange({
                 energyProvider: value
               })}>
-                  <SelectTrigger className="bg-input border-input-border w-[140%]">
+                  <SelectTrigger className="bg-input border-input-border w-[180%]">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent className="z-50">
