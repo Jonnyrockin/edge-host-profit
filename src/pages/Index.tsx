@@ -62,6 +62,8 @@ const Index = () => {
               state={state}
               calculations={calculations}
             />
+            
+            <PlatformRevenuePanel />
           </div>
 
           {/* Right Column - Device Stack */}
@@ -76,8 +78,6 @@ const Index = () => {
             />
             
             <HardwareUploadPanel />
-            
-            <PlatformRevenuePanel />
           </div>
         </div>
       </div>
