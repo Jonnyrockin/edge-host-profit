@@ -25,11 +25,11 @@ const SAMPLE_NODES: HostNode[] = [
       misc: 100
     },
     uptime: 99.8,
-    nodeType: 'INFERENCE'
+    nodeType: 'MEMORY'
   },
   {
     id: 'node-2',
-    label: 'Supermicro node-001',
+    label: 'Dell R7',
     location: 'The Beaches, Toronto, CA',
     city: 'Toronto',
     ruralKm: 15,
@@ -71,7 +71,7 @@ const SAMPLE_NODES: HostNode[] = [
       misc: 150
     },
     uptime: 97.2,
-    nodeType: 'INFERENCE'
+    nodeType: 'MEMORY'
   },
   {
     id: 'node-4',
@@ -177,7 +177,9 @@ export function useHostDashboard() {
         if (parsed.nodes) {
           parsed.nodes = parsed.nodes.map((node: HostNode, index: number) => ({
             ...node,
-            nodeType: node.nodeType || (SAMPLE_NODES[index]?.nodeType || 'INFERENCE')
+            nodeType: (node.nodeType === 'INFERENCE' || node.nodeType === 'MEMORY')
+              ? node.nodeType
+              : (SAMPLE_NODES[index]?.nodeType || 'INFERENCE')
           }));
         }
         return parsed;

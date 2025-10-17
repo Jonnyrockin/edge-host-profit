@@ -40,6 +40,8 @@ export function NodeCard({ node, selectedScenario, currentYear }: NodeCardProps)
 
   const currentTime = new Date().toLocaleTimeString('en-US', { hour12: true });
   const inferenceLoad = Math.round(revenue.adjustedUtil * 100);
+  const titleParts = [node.label, node.nodeType as string, node.location].filter(Boolean) as string[];
+  const title = Array.from(new Set(titleParts)).join(' / ');
 
   return (
     <Card className="relative overflow-hidden hover:border-primary/50 transition-colors bg-card">
@@ -50,7 +52,7 @@ export function NodeCard({ node, selectedScenario, currentYear }: NodeCardProps)
           <div className="flex items-center gap-3">
             <div className={`w-3 h-3 rounded-full ${getNodeTypeColor(node.nodeType)} flex-shrink-0`} />
             <h3 className="font-semibold text-base">
-              {node.label} / {node.nodeType} / {node.location}
+              {title}
             </h3>
             <Badge variant={getStatusBadge(node.status)} className="text-xs font-semibold">
               {node.status}
