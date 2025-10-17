@@ -172,7 +172,15 @@ export function useHostDashboard() {
     const saved = localStorage.getItem('hostDashboardState');
     if (saved) {
       try {
-        return JSON.parse(saved);
+        const parsed = JSON.parse(saved);
+        // Ensure all nodes have nodeType field (migration from old data)
+        if (parsed.nodes) {
+          parsed.nodes = parsed.nodes.map((node: HostNode, index: number) => ({
+            ...node,
+            nodeType: node.nodeType || (SAMPLE_NODES[index]?.nodeType || 'INFERENCE')
+          }));
+        }
+        return parsed;
       } catch {
         // If parsing fails, use default
       }
