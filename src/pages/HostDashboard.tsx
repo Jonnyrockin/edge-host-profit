@@ -19,7 +19,7 @@ export default function HostDashboard() {
           <h1 className="text-4xl font-bold text-foreground mb-2">
             Host Dashboard
           </h1>
-          <p className="text-muted-foreground">Monitor your fleet performance and earnings</p>
+          <p className="text-foreground/85">Monitor your fleet performance and earnings</p>
         </div>
         <Select value={state.selectedScenario} onValueChange={updateScenario}>
           <SelectTrigger className="w-[180px]">
@@ -90,7 +90,7 @@ export default function HostDashboard() {
                   <AlertCircle className="w-5 h-5 text-warning flex-shrink-0 mt-0.5" />
                   <div>
                     <div className="font-semibold mb-1">Latency spike detected on node-003 (lng berlin)</div>
-                    <div className="text-muted-foreground text-sm">Latency: 45ms (usual 18ms) • 33 minutes ago</div>
+                    <div className="text-foreground/85 text-sm">Latency: 45ms (usual 18ms) • 33 minutes ago</div>
                   </div>
                 </div>
               </div>
@@ -100,7 +100,7 @@ export default function HostDashboard() {
                   <AlertCircle className="w-5 h-5 text-destructive flex-shrink-0 mt-0.5" />
                   <div>
                     <div className="font-semibold mb-1">Energy efficiency below threshold on node-002 (lng munich)</div>
-                    <div className="text-muted-foreground text-sm">Current: 0.85 J/inf (target: 0.7) • 2 hours ago</div>
+                    <div className="text-foreground/85 text-sm">Current: 0.85 J/inf (target: 0.7) • 2 hours ago</div>
                   </div>
                 </div>
               </div>
