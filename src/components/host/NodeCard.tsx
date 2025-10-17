@@ -123,8 +123,8 @@ export function NodeCard({ node, selectedScenario, currentYear }: NodeCardProps)
           </div>
         </div>
 
-        {/* Bottom metrics row */}
-        <div className="flex items-center gap-6 mb-3">
+        {/* Bottom metrics row with Inference Load bar */}
+        <div className="flex items-center gap-6">
           <div className="flex items-center gap-2">
             <Activity className="w-4 h-4 text-green-500" />
             <span className="text-sm text-foreground/70">Util:</span>
@@ -142,19 +142,19 @@ export function NodeCard({ node, selectedScenario, currentYear }: NodeCardProps)
             <span className="text-sm text-foreground/70">Uptime:</span>
             <span className="text-sm font-bold">{node.uptime}%</span>
           </div>
-        </div>
 
-        {/* Inference Load progress bar with 100% grey track */}
-        <div>
-          <div className="flex items-center justify-between text-xs text-foreground/70 mb-2">
-            <span>Inference Load:</span>
-            <span className="font-bold">{inferenceLoad}%</span>
-          </div>
-          <div className="h-2 bg-foreground/20 rounded-full overflow-hidden">
-            <div 
-              className="h-full bg-gradient-to-r from-blue-500 to-blue-400 transition-all duration-500"
-              style={{ width: `${inferenceLoad}%` }}
-            />
+          {/* Inference Load progress bar */}
+          <div className="flex-1 max-w-md ml-auto">
+            <div className="flex items-center justify-between text-xs text-foreground/70 mb-1">
+              <span>Inference Load:</span>
+              <span className="font-bold">{inferenceLoad}%</span>
+            </div>
+            <div className="h-2 bg-foreground/20 rounded-full overflow-hidden">
+              <div 
+                className="h-full bg-gradient-to-r from-blue-500 to-blue-400 transition-all duration-500"
+                style={{ width: `${inferenceLoad}%` }}
+              />
+            </div>
           </div>
         </div>
       </div>
