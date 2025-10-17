@@ -41,7 +41,7 @@ export function NodeCard({ node, selectedScenario, currentYear }: NodeCardProps)
           <div className={`w-3 h-3 rounded-full ${getStatusColor(node.status)} animate-pulse`} />
           <div>
             <h3 className="font-semibold text-sm">{node.label}</h3>
-            <p className="text-muted-foreground text-xs mt-0.5">{node.location}</p>
+            <p className="text-foreground/70 text-xs mt-0.5">{node.location}</p>
           </div>
         </div>
         <Badge variant={getStatusBadge(node.status)} className="text-xs">
@@ -51,7 +51,7 @@ export function NodeCard({ node, selectedScenario, currentYear }: NodeCardProps)
 
       <div className="grid grid-cols-3 gap-3 mb-3">
         <div className="bg-card-hover rounded p-2">
-          <div className="flex items-center gap-1 text-muted-foreground text-xs mb-1">
+          <div className="flex items-center gap-1 text-foreground/70 text-xs mb-1">
             <Cpu className="w-3 h-3" />
             <span>CPU</span>
           </div>
@@ -59,7 +59,7 @@ export function NodeCard({ node, selectedScenario, currentYear }: NodeCardProps)
         </div>
 
         <div className="bg-card-hover rounded p-2">
-          <div className="flex items-center gap-1 text-muted-foreground text-xs mb-1">
+          <div className="flex items-center gap-1 text-foreground/70 text-xs mb-1">
             <HardDrive className="w-3 h-3" />
             <span>Memory</span>
           </div>
@@ -67,7 +67,7 @@ export function NodeCard({ node, selectedScenario, currentYear }: NodeCardProps)
         </div>
 
         <div className="bg-card-hover rounded p-2">
-          <div className="flex items-center gap-1 text-muted-foreground text-xs mb-1">
+          <div className="flex items-center gap-1 text-foreground/70 text-xs mb-1">
             <Zap className="w-3 h-3" />
             <span>GPU</span>
           </div>
@@ -77,7 +77,7 @@ export function NodeCard({ node, selectedScenario, currentYear }: NodeCardProps)
 
       <div className="grid grid-cols-2 gap-3 mb-3">
         <div className="bg-card-hover rounded p-2">
-          <div className="flex items-center gap-1 text-muted-foreground text-xs mb-1">
+          <div className="flex items-center gap-1 text-foreground/70 text-xs mb-1">
             <TrendingUp className="w-3 h-3" />
             <span>IPS</span>
           </div>
@@ -85,7 +85,7 @@ export function NodeCard({ node, selectedScenario, currentYear }: NodeCardProps)
         </div>
 
         <div className="bg-card-hover rounded p-2">
-          <div className="flex items-center gap-1 text-muted-foreground text-xs mb-1">
+          <div className="flex items-center gap-1 text-foreground/70 text-xs mb-1">
             <Wifi className="w-3 h-3" />
             <span>Latency</span>
           </div>
@@ -99,23 +99,23 @@ export function NodeCard({ node, selectedScenario, currentYear }: NodeCardProps)
           style={{ width: `${Math.round(revenue.adjustedUtil * 100)}%` }}
         />
       </div>
-      <div className="flex justify-between text-xs text-muted-foreground mb-3">
+      <div className="flex justify-between text-xs text-foreground/70 mb-3">
         <span>Utilization: {Math.round(revenue.adjustedUtil * 100)}%</span>
         <span>Uptime: {node.uptime}%</span>
       </div>
 
       <div className="border-t border-border pt-3">
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-1 text-muted-foreground text-xs">
+          <div className="flex items-center gap-1 text-foreground/70 text-xs">
             <DollarSign className="w-3 h-3" />
             <span>Net Revenue</span>
           </div>
           <div className="text-success text-lg font-bold">
             ${Math.round(revenue.netRevenue).toLocaleString()}
-            <span className="text-xs text-muted-foreground ml-1">/mo</span>
+            <span className="text-xs text-foreground/70 ml-1">/mo</span>
           </div>
         </div>
-        <div className="text-right text-xs text-muted-foreground mt-1">
+        <div className="text-right text-xs text-foreground/70 mt-1">
           ${Math.round(revenue.dailyRevenue).toLocaleString()}/day • ${Math.round(revenue.hourlyRevenue).toLocaleString()}/hr
         </div>
       </div>
