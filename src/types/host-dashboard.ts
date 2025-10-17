@@ -20,6 +20,7 @@ export interface HostNode {
   };
   uptime: number; // Percentage
   lastSeen?: Date;
+  nodeType: 'INFERENCE' | 'MEMORY';
 }
 
 export interface FleetMetrics {

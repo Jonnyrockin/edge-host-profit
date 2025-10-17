@@ -34,26 +34,23 @@ export function NodeCard({ node, selectedScenario, currentYear }: NodeCardProps)
     }
   };
 
+  const getNodeTypeColor = (type: 'INFERENCE' | 'MEMORY') => {
+    return type === 'INFERENCE' ? 'bg-[hsl(217_91%_60%)]' : 'bg-purple-500';
+  };
+
   const currentTime = new Date().toLocaleTimeString('en-US', { hour12: true });
   const inferenceLoad = Math.round(revenue.adjustedUtil * 100);
 
   return (
     <Card className="relative overflow-hidden hover:border-primary/50 transition-colors bg-card">
-      {/* Blue vertical inference label */}
-      <div className="absolute left-0 top-0 bottom-0 w-10 bg-[hsl(217_91%_60%)] flex items-center justify-center">
-        <div className="text-white text-xs font-bold tracking-wider transform -rotate-90 whitespace-nowrap">
-          INFERENCE
-        </div>
-      </div>
-
-      {/* Main content with left margin for the blue bar */}
-      <div className="ml-10 p-4">
-        {/* Header row */}
+      {/* Main content */}
+      <div className="p-4">
+        {/* Header row with colored dot indicator */}
         <div className="flex items-center justify-between mb-2">
           <div className="flex items-center gap-3">
-            <MapPin className="w-4 h-4 text-foreground/70" />
+            <div className={`w-3 h-3 rounded-full ${getNodeTypeColor(node.nodeType)} flex-shrink-0`} />
             <h3 className="font-semibold text-base">
-              {node.label} / {node.location}
+              {node.label} / {node.nodeType} / {node.location}
             </h3>
             <Badge variant={getStatusBadge(node.status)} className="text-xs font-semibold">
               {node.status}
@@ -147,13 +144,13 @@ export function NodeCard({ node, selectedScenario, currentYear }: NodeCardProps)
           </div>
         </div>
 
-        {/* Inference Load progress bar */}
+        {/* Inference Load progress bar with 100% grey track */}
         <div>
           <div className="flex items-center justify-between text-xs text-foreground/70 mb-2">
             <span>Inference Load:</span>
             <span className="font-bold">{inferenceLoad}%</span>
           </div>
-          <div className="h-2 bg-card-hover rounded-full overflow-hidden">
+          <div className="h-2 bg-foreground/20 rounded-full overflow-hidden">
             <div 
               className="h-full bg-gradient-to-r from-blue-500 to-blue-400 transition-all duration-500"
               style={{ width: `${inferenceLoad}%` }}
