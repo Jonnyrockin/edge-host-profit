@@ -40,8 +40,13 @@ export function NodeCard({ node, selectedScenario, currentYear }: NodeCardProps)
 
   const currentTime = new Date().toLocaleTimeString('en-US', { hour12: true });
   const inferenceLoad = Math.round(revenue.adjustedUtil * 100);
-  const titleParts = [node.label, node.nodeType as string, node.location].filter(Boolean) as string[];
-  const title = Array.from(new Set(titleParts)).join(' / ');
+  // Build normalized title without duplicate location artifacts
+  const hasLocationInLabel = node.label && node.location
+    ? node.label.toLowerCase().includes(node.location.toLowerCase())
+    : false;
+  const parts: string[] = [node.label, node.nodeType as string];
+  if (!hasLocationInLabel && node.location) parts.push(node.location);
+  const title = Array.from(new Set(parts.filter(Boolean))).join(' / ');
 
   return (
     <Card className="relative overflow-hidden hover:border-primary/50 transition-colors bg-card">
