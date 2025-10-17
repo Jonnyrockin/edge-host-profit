@@ -46,7 +46,7 @@ export function NodeCard({ node, selectedScenario, currentYear }: NodeCardProps)
       {/* Main content */}
       <div className="p-4">
         {/* Header row with colored dot indicator */}
-        <div className="flex items-center justify-between mb-2">
+        <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-3">
             <div className={`w-3 h-3 rounded-full ${getNodeTypeColor(node.nodeType)} flex-shrink-0`} />
             <h3 className="font-semibold text-base">
@@ -65,47 +65,42 @@ export function NodeCard({ node, selectedScenario, currentYear }: NodeCardProps)
           </div>
         </div>
 
-        {/* Model subtitle */}
-        <div className="text-sm text-foreground/70 mb-4">
-          {node.gpuModel} Series
-        </div>
-
         {/* Metrics row */}
         <div className="grid grid-cols-6 gap-4 mb-4">
           <div>
-            <div className="flex items-center gap-1 text-foreground/70 text-xs mb-1">
-              <Activity className="w-3 h-3" />
+            <div className="flex items-center gap-1 text-foreground/70 text-sm mb-1">
+              <Activity className="w-4 h-4" />
               <span>TOPS</span>
             </div>
             <div className="text-lg font-bold">{node.ips}</div>
           </div>
 
           <div>
-            <div className="flex items-center gap-1 text-foreground/70 text-xs mb-1">
-              <Cpu className="w-3 h-3" />
+            <div className="flex items-center gap-1 text-foreground/70 text-sm mb-1">
+              <Cpu className="w-4 h-4" />
               <span>CPU</span>
             </div>
             <div className="text-sm font-semibold">{node.cpuCores}x Intel Xeon</div>
           </div>
 
           <div>
-            <div className="flex items-center gap-1 text-foreground/70 text-xs mb-1">
-              <HardDrive className="w-3 h-3" />
+            <div className="flex items-center gap-1 text-foreground/70 text-sm mb-1">
+              <HardDrive className="w-4 h-4" />
               <span>MEMORY</span>
             </div>
             <div className="text-sm font-semibold">{node.memory}</div>
           </div>
 
           <div>
-            <div className="flex items-center gap-1 text-foreground/70 text-xs mb-1">
-              <Zap className="w-3 h-3" />
+            <div className="flex items-center gap-1 text-foreground/70 text-sm mb-1">
+              <Zap className="w-4 h-4" />
               <span>GPU</span>
             </div>
             <div className="text-sm font-semibold">{node.gpuModel}</div>
           </div>
 
           <div>
-            <div className="text-foreground/70 text-xs mb-1">GPU COUNT</div>
+            <div className="text-foreground/70 text-sm mb-1">GPU COUNT</div>
             <div className="text-lg font-bold">x2</div>
           </div>
 
