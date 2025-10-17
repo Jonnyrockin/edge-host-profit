@@ -2,6 +2,7 @@ import React from 'react';
 import { useHostDashboard } from '@/hooks/useHostDashboard';
 import { NodeCard } from '@/components/host/NodeCard';
 import { FleetSummary } from '@/components/host/FleetSummary';
+import { StatusBar } from '@/components/host/StatusBar';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -31,6 +32,9 @@ export default function HostDashboard() {
           </SelectContent>
         </Select>
       </div>
+
+      {/* Status Metrics Bar */}
+      <StatusBar />
 
       {/* Main Grid Layout */}
       <div className="grid grid-cols-12 gap-6">
