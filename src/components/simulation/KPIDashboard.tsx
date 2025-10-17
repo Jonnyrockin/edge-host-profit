@@ -33,7 +33,7 @@ export function KPIDashboard({
         </div>
       </div>
       
-      <div className="grid grid-cols-6 gap-panel-gap mt-lg">
+      <div className="grid grid-cols-7 gap-panel-gap mt-lg">
         <div className="bg-kpi-card-bg border border-kpi-card-border rounded-lg p-panel-gap min-h-[86px] flex flex-col text-center">
           <div className="text-black text-lg mb-1">Util (effective) <InfoTooltip content="Adjusted utilization incorporating lightweight VLM impacts: on-device shift (20% conservative) and ecosystem growth (20% annually). This reflects real demand accounting for edge AI evolution." /></div>
           <div className="text-2xl font-semibold text-black">{Math.round(calculations.adjustedUtil * 100)}%</div>
@@ -56,6 +56,12 @@ export function KPIDashboard({
           <div className="text-black text-lg mb-1">Gross (per/mo) <InfoTooltip content={`Monthly gross revenue before fees and expenses. Calculated as: ${calculations.monthlyCalls.toLocaleString()} calls × $${calculations.pricePerCall.toFixed(6)} per call = $${Math.round(calculations.gross).toLocaleString()}`} /></div>
           <div className="text-2xl font-semibold text-black">${Math.round(calculations.gross).toLocaleString()}</div>
           <div className="text-black text-lg">${calculations.pricePerCall.toFixed(6)}/call</div>
+        </div>
+        
+        <div className="bg-kpi-card-bg border border-kpi-card-border rounded-lg p-panel-gap min-h-[86px] flex flex-col text-center">
+          <div className="text-black text-lg mb-1">Costs/Expenses <InfoTooltip content="Total monthly operational expenses (OPEX) including energy, connectivity, rent, staff, insurance, maintenance, licenses, and legal fees." /></div>
+          <div className="text-2xl font-semibold text-black">${Math.round(calculations.opex).toLocaleString()}</div>
+          <div className="text-black text-lg">monthly OPEX</div>
         </div>
         
         <div className="bg-kpi-card-bg border border-kpi-card-border rounded-lg p-panel-gap min-h-[86px] flex flex-col text-center">
