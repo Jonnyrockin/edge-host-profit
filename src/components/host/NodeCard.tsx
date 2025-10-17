@@ -35,13 +35,13 @@ export function NodeCard({ node, selectedScenario, currentYear }: NodeCardProps)
   };
 
   return (
-    <Card className="bg-[#0a1628] border-[#1e3a5f] p-4 hover:border-blue-500/50 transition-colors">
+    <Card className="p-4 hover:border-primary/50 transition-colors bg-card">
       <div className="flex items-start justify-between mb-3">
         <div className="flex items-center gap-3">
           <div className={`w-3 h-3 rounded-full ${getStatusColor(node.status)} animate-pulse`} />
           <div>
-            <h3 className="text-white font-semibold text-sm">{node.label}</h3>
-            <p className="text-gray-400 text-xs mt-0.5">{node.location}</p>
+            <h3 className="font-semibold text-sm">{node.label}</h3>
+            <p className="text-muted-foreground text-xs mt-0.5">{node.location}</p>
           </div>
         </div>
         <Badge variant={getStatusBadge(node.status)} className="text-xs">
@@ -50,72 +50,72 @@ export function NodeCard({ node, selectedScenario, currentYear }: NodeCardProps)
       </div>
 
       <div className="grid grid-cols-3 gap-3 mb-3">
-        <div className="bg-[#0d1f3a] rounded p-2">
-          <div className="flex items-center gap-1 text-gray-400 text-xs mb-1">
+        <div className="bg-card-hover rounded p-2">
+          <div className="flex items-center gap-1 text-muted-foreground text-xs mb-1">
             <Cpu className="w-3 h-3" />
             <span>CPU</span>
           </div>
-          <div className="text-white text-sm font-semibold">{node.cpuCores} Cores</div>
+          <div className="text-sm font-semibold">{node.cpuCores} Cores</div>
         </div>
 
-        <div className="bg-[#0d1f3a] rounded p-2">
-          <div className="flex items-center gap-1 text-gray-400 text-xs mb-1">
+        <div className="bg-card-hover rounded p-2">
+          <div className="flex items-center gap-1 text-muted-foreground text-xs mb-1">
             <HardDrive className="w-3 h-3" />
             <span>Memory</span>
           </div>
-          <div className="text-white text-sm font-semibold">{node.memory}</div>
+          <div className="text-sm font-semibold">{node.memory}</div>
         </div>
 
-        <div className="bg-[#0d1f3a] rounded p-2">
-          <div className="flex items-center gap-1 text-gray-400 text-xs mb-1">
+        <div className="bg-card-hover rounded p-2">
+          <div className="flex items-center gap-1 text-muted-foreground text-xs mb-1">
             <Zap className="w-3 h-3" />
             <span>GPU</span>
           </div>
-          <div className="text-white text-sm font-semibold">{node.gpuModel}</div>
+          <div className="text-sm font-semibold">{node.gpuModel}</div>
         </div>
       </div>
 
       <div className="grid grid-cols-2 gap-3 mb-3">
-        <div className="bg-[#0d1f3a] rounded p-2">
-          <div className="flex items-center gap-1 text-gray-400 text-xs mb-1">
+        <div className="bg-card-hover rounded p-2">
+          <div className="flex items-center gap-1 text-muted-foreground text-xs mb-1">
             <TrendingUp className="w-3 h-3" />
             <span>IPS</span>
           </div>
-          <div className="text-cyan-400 text-lg font-bold">{node.ips}</div>
+          <div className="text-primary text-lg font-bold">{node.ips}</div>
         </div>
 
-        <div className="bg-[#0d1f3a] rounded p-2">
-          <div className="flex items-center gap-1 text-gray-400 text-xs mb-1">
+        <div className="bg-card-hover rounded p-2">
+          <div className="flex items-center gap-1 text-muted-foreground text-xs mb-1">
             <Wifi className="w-3 h-3" />
             <span>Latency</span>
           </div>
-          <div className="text-cyan-400 text-sm font-semibold">{node.latencyTier}</div>
+          <div className="text-primary text-sm font-semibold">{node.latencyTier}</div>
         </div>
       </div>
 
-      <div className="h-2 bg-[#0d1f3a] rounded-full overflow-hidden mb-2">
+      <div className="h-2 bg-card-hover rounded-full overflow-hidden mb-2">
         <div 
-          className="h-full bg-gradient-to-r from-blue-500 to-cyan-400 transition-all duration-500"
+          className="h-full bg-gradient-to-r from-primary to-accent transition-all duration-500"
           style={{ width: `${Math.round(revenue.adjustedUtil * 100)}%` }}
         />
       </div>
-      <div className="flex justify-between text-xs text-gray-400 mb-3">
+      <div className="flex justify-between text-xs text-muted-foreground mb-3">
         <span>Utilization: {Math.round(revenue.adjustedUtil * 100)}%</span>
         <span>Uptime: {node.uptime}%</span>
       </div>
 
-      <div className="border-t border-[#1e3a5f] pt-3">
+      <div className="border-t border-border pt-3">
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-1 text-gray-400 text-xs">
+          <div className="flex items-center gap-1 text-muted-foreground text-xs">
             <DollarSign className="w-3 h-3" />
             <span>Net Revenue</span>
           </div>
-          <div className="text-green-400 text-lg font-bold">
+          <div className="text-success text-lg font-bold">
             ${Math.round(revenue.netRevenue).toLocaleString()}
-            <span className="text-xs text-gray-400 ml-1">/mo</span>
+            <span className="text-xs text-muted-foreground ml-1">/mo</span>
           </div>
         </div>
-        <div className="text-right text-xs text-gray-500 mt-1">
+        <div className="text-right text-xs text-muted-foreground mt-1">
           ${Math.round(revenue.dailyRevenue).toLocaleString()}/day • ${Math.round(revenue.hourlyRevenue).toLocaleString()}/hr
         </div>
       </div>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSimulationState } from '../hooks/useSimulationState';
 import { KPIDashboard } from '../components/simulation/KPIDashboard';
 import { ControlsSection } from '../components/simulation/ControlsSection';
@@ -12,9 +12,11 @@ import { PlatformRevenuePanel } from '../components/simulation/PlatformRevenuePa
 import { ESGPanel } from '../components/simulation/ESGPanel';
 import { HardwareUploadPanel } from '../components/simulation/HardwareUploadPanel';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Sidebar } from '../components/layout/Sidebar';
 import HostDashboard from './HostDashboard';
 
 const Index = () => {
+  const [sidebarSection, setSidebarSection] = useState('dashboard');
   const {
     state,
     calculations,
@@ -27,8 +29,12 @@ const Index = () => {
   } = useSimulationState();
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
-      <div className="w-full p-8">
+    <div className="flex min-h-screen bg-background text-foreground w-full">
+      {/* Sidebar - Always Visible */}
+      <Sidebar activeSection={sidebarSection} onSectionChange={setSidebarSection} />
+      
+      {/* Main Content */}
+      <div className="flex-1 p-8">
         <Tabs defaultValue="simulation" className="w-full">
           <TabsList className="mb-6 bg-muted">
             <TabsTrigger value="simulation" className="text-lg px-6">Revenue Host Simulation</TabsTrigger>

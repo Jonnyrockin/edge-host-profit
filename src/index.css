@@ -52,6 +52,13 @@
     --badge: 0 0% 12%;
     --badge-foreground: 0 0% 90%;
     --help: 0 0% 60%;
+    
+    /* Sidebar */
+    --sidebar: 0 0% 5%;
+    --sidebar-border: 0 0% 12%;
+    
+    /* Card Hover State */
+    --card-hover: 0 0% 10%;
 
     /* KPI Colors - Clean grayscale */
     --kpi-bg: 0 0% 12%;
